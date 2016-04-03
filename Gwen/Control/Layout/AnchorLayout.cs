@@ -6,7 +6,7 @@ namespace Gwen.Control.Layout
 	/// Arrange child controls by anchoring them proportionally into the edges of this control.
 	/// </summary>
 	/// <remarks>
-	/// You can control the anchoring process by setting <see cref="Anchor"/> and <see cref="AnchorBounds"/>
+	/// You can control the anchoring process by setting Anchor and AnchorBounds
 	/// properties of the child control. You must set an AnchorBounds property of this control to
 	/// inform the layout process the default size of the area.
 	/// </remarks>

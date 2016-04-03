@@ -249,7 +249,7 @@ namespace Gwen.XmlDesigner
 
 		private void OnAbout(Base sender, EventArgs args)
 		{
-			About about = Component.Create<About>(View);
+			Component.Create<About>(View);
 		}
 
 		private void OnDebugOutlinesChanged(Base sender, EventArgs args)

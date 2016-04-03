@@ -16,8 +16,8 @@ namespace Gwen.Control
 		/// <summary>
 		/// Delegate used for all control event handlers.
 		/// </summary>
-		/// <param name="control">Event source.</param>
-		/// <param name="args" >Additional arguments. May be empty (EventArgs.Empty).</param>
+		/// <param name="sender">Event source.</param>
+		/// <param name="arguments" >Additional arguments. May be empty (EventArgs.Empty).</param>
 		public delegate void GwenEventHandler<in T>(Base sender, T arguments) where T : System.EventArgs;
 
 		private bool m_Disposed;
@@ -538,12 +538,12 @@ namespace Gwen.Control
 		public virtual Rectangle DesiredBounds { get { return m_DesiredBounds; } set { if (m_DesiredBounds == value) return; m_DesiredBounds = value; InvalidateParent(); } }
 
 		/// <summary>
-		/// Default location and size of the control insize the container. Used only on <see cref="AnchorLayout"/>.
+		/// Default location and size of the control insize the container. Used only on AnchorLayout.
 		/// </summary>
 		[Xml.XmlProperty]
 		public Rectangle AnchorBounds { get { return m_AnchorBounds; } set { if (m_AnchorBounds == value) return; m_AnchorBounds = value; Invalidate(); } }
 		/// <summary>
-		/// How the control is moved and/or stretched if the container size changes. Used only on <see cref="AnchorLayout"/>.
+		/// How the control is moved and/or stretched if the container size changes. Used only on AnchorLayout.
 		/// </summary>
 		[Xml.XmlProperty]
 		public Anchor Anchor { get { return m_Anchor; } set { if (m_Anchor == value) return; m_Anchor = value; Invalidate(); } }

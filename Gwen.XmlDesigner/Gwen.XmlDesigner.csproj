@@ -55,11 +55,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\media\skins\DefaultSkin.png">
+    <Content Include="..\Media\Skins\DefaultSkin.png">
       <Link>Skins\DefaultSkin.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\media\skins\Transparent.png">
+    <Content Include="..\Media\Skins\Transparent.png">
       <Link>Skins\Transparent.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

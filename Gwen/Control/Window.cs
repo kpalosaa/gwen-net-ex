@@ -41,8 +41,6 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Window"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		/// <param name="caption">Window caption.</param>
-		/// <param name="modal">Determines whether the window should be modal.</param>
 		public Window(Base parent)
 			: base(parent)
 		{

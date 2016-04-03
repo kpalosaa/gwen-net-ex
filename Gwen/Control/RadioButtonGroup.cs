@@ -42,7 +42,6 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="RadioButtonGroup"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		/// <param name="label">Label for the outlining GroupBox.</param>
 		public RadioButtonGroup(Base parent) : base(parent)
 		{
 			IsTabable = false;

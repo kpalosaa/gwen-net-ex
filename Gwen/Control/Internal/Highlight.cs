@@ -4,7 +4,7 @@ using Gwen.Control;
 namespace Gwen.Control.Internal
 {
     /// <summary>
-    /// Drag&drop highlight.
+    /// Drag and drop highlight.
     /// </summary>
     public class Highlight : Base
     {

@@ -176,8 +176,6 @@ namespace Gwen.XmlDesigner.OpenTK
 			
 			if (m_Stopwatch.ElapsedMilliseconds > 1000)
 			{
-				float ft = 1000 * (float)e.Time;
-
 				m_Stopwatch.Restart();
 
 				if (m_Renderer.TextCacheSize > 1000) // each cached string is an allocated texture, flush the cache once in a while in your real project

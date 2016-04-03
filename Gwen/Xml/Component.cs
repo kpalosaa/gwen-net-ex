@@ -96,7 +96,7 @@ namespace Gwen.Xml
 		/// <summary>
 		/// Create a new instance of component by name. Component must be created with Create function, not calling constructor.
 		/// </summary>
-		/// <param name="type">Type of component.</param>
+		/// <param name="name">Name of component.</param>
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="data">Optional data for a component constructor. If the component registration contains also data, that data is used first, then this optional data.</param>
 		/// <returns>Created instance of the component.</returns>

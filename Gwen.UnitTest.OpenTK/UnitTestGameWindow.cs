@@ -178,8 +178,6 @@ namespace Gwen.UnitTest.OpenTK
 				m_UnitTest.Note = String.Format("String Cache size: {0} Draw Calls: {1} Vertex Count: {2}", m_Renderer.TextCacheSize, m_Renderer.DrawCallCount, m_Renderer.VertexCount);
 				m_UnitTest.Fps = 1000f * m_Ftime.Count / m_Ftime.Sum();
 
-				float ft = 1000 * (float)e.Time;
-
 				m_Stopwatch.Restart();
 
 				if (m_Renderer.TextCacheSize > 1000) // each cached string is an allocated texture, flush the cache once in a while in your real project
