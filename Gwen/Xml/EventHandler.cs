@@ -1,0 +1,76 @@
+﻿using System;
+using System.Reflection;
+
+namespace Gwen.Xml
+{
+	/// <summary>
+	/// XML based event handler.
+	/// </summary>
+	/// <typeparam name="T">Type of event arguments.</typeparam>
+	public class XmlEventHandler <T> where T : System.EventArgs
+	{
+		private string m_eventName;
+		private string m_handlerName;
+		private Type[] m_paramsType = new Type[] { typeof(Gwen.Control.Base), typeof(T) };
+
+		public XmlEventHandler(string handlerName, string eventName)
+		{
+			m_eventName = eventName;
+			m_handlerName = handlerName;
+		}
+
+		public void OnEvent(Gwen.Control.Base sender, T args)
+		{
+			Gwen.Control.Base handlerElement = sender.Parent;
+
+			if (sender is Gwen.Control.Window)
+				handlerElement = sender;
+			else if (sender is Gwen.Control.TreeNode)
+				handlerElement = ((Gwen.Control.TreeNode)sender).TreeControl.Parent;
+
+			while (handlerElement != null)
+			{
+				if (handlerElement.Component != null)
+				{
+					if (handlerElement.Component.HandleEvent(m_eventName, m_handlerName, sender, args))
+					{
+						break;
+					}
+					else
+					{
+						Type type = handlerElement.Component.GetType();
+
+						MethodInfo methodInfo;
+						do
+						{
+							methodInfo = type.GetMethod(m_handlerName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, m_paramsType, null);
+							if (methodInfo != null)
+								break;
+							type = type.BaseType;
+						}
+						while (type != null);
+
+						if (methodInfo != null)
+						{
+							methodInfo.Invoke(handlerElement.Component, new object[] { sender, args });
+							break;
+						}
+					}
+				}
+
+				if (handlerElement is Gwen.Control.Menu)
+				{
+					Gwen.Control.Menu menu = handlerElement as Gwen.Control.Menu;
+					if (menu.ParentMenuItem != null)
+						handlerElement = menu.ParentMenuItem;
+					else
+						handlerElement = handlerElement.Parent;
+				}
+				else
+				{
+					handlerElement = handlerElement.Parent;
+				}
+			}
+		}
+	}
+}
