@@ -111,7 +111,7 @@ namespace Gwen.UnitTest.OpenTK
 			Platform.Platform.Init(new Platform.Windows());
 
 			m_Renderer = new Gwen.Renderer.OpenTK();
-			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, Path.Combine("Skins", "DefaultSkin.png"));
+			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
 
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 10);
 			m_Canvas = new Canvas(m_Skin);
