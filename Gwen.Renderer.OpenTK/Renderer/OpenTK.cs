@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
-namespace Gwen.Renderer
+namespace Gwen.Renderer.OpenTK
 {
 	public class OpenTK : Base
 	{

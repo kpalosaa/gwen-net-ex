@@ -8,7 +8,7 @@
     <ProjectGuid>{41650C82-D630-4E5C-845A-F1513C8FDC99}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gwen.Renderer</RootNamespace>
+    <RootNamespace>Gwen.Renderer.OpenTK</RootNamespace>
     <AssemblyName>Gwen.Renderer.OpenTK</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

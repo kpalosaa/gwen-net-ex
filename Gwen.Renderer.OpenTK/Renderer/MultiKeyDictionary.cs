@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Gwen.Renderer
+namespace Gwen.Renderer.OpenTK
 {
 	internal class MultiKeyDictionary<TKey1, TKey2, TValue> : Dictionary<TKey1, Dictionary<TKey2, TValue>>
 	{

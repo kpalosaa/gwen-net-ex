@@ -83,8 +83,12 @@
       <Project>{84c52ba6-c8d5-4d68-bf1b-a5d7e9e2eb8c}</Project>
       <Name>Gwen.Platform.Windows</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gwen.Renderer.OpenTK.Legacy\Gwen.Renderer.OpenTK.Legacy.csproj">
+      <Project>{0cb92d38-5b04-44da-8cc7-a06e30bb8e53}</Project>
+      <Name>Gwen.Renderer.OpenTK.Legacy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gwen.Renderer.OpenTK\Gwen.Renderer.OpenTK.csproj">
-      <Project>{41650C82-D630-4E5C-845A-F1513C8FDC99}</Project>
+      <Project>{41650c82-d630-4e5c-845a-f1513c8fdc99}</Project>
       <Name>Gwen.Renderer.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.UnitTest\Gwen.UnitTest.csproj">

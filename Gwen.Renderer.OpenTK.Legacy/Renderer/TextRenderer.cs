@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using OpenTK.Graphics;
 
-namespace Gwen.Renderer.OpenTK
+namespace Gwen.Renderer.OpenTK.Legacy
 {
     /// <summary>
     /// Uses System.Drawing for 2d text rendering.
@@ -46,8 +46,7 @@ namespace Gwen.Renderer.OpenTK
             //          Until 1st problem is fixed we should use TextRenderingHint.AntiAlias...  :-(
 
             gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
-			//gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-			gfx.Clear(System.Drawing.Color.Transparent);
+            gfx.Clear(System.Drawing.Color.Transparent);
             texture = new Texture(renderer) {Width = width, Height = height};
         }
 

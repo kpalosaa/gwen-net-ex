@@ -1,15 +1,14 @@
-﻿using System;
+﻿#define LEGACY_OPENTK_RENDERER
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.IO;
 using OpenTK;
 using OpenTK.Input;
-using OpenTK.Graphics.OpenGL;
 using OpenTK.Graphics;
-using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 using Gwen.Control;
-using Gwen.Renderer;
 
 namespace Gwen.UnitTest.OpenTK
 {
@@ -18,9 +17,14 @@ namespace Gwen.UnitTest.OpenTK
     /// </summary>
     public class UnitTestGameWindow : GameWindow
     {
-        private Gwen.Input.OpenTK m_Input;
-        private Gwen.Renderer.OpenTK m_Renderer;
-        private Gwen.Skin.Base m_Skin;
+#if LEGACY_OPENTK_RENDERER
+		private Gwen.Renderer.OpenTK.Legacy.Input.OpenTK m_Input;
+		private Gwen.Renderer.OpenTK.Legacy.OpenTK m_Renderer;
+#else
+		private Gwen.Renderer.OpenTK.Input.OpenTK m_Input;
+		private Gwen.Renderer.OpenTK.OpenTK m_Renderer;
+#endif
+		private Gwen.Skin.Base m_Skin;
         private Gwen.Control.Canvas m_Canvas;
         private Gwen.UnitTest.UnitTest m_UnitTest;
 
@@ -32,7 +36,11 @@ namespace Gwen.UnitTest.OpenTK
 		private float m_TotalTime = 0f;
 
 		public UnitTestGameWindow()
-			: base(1024, 768, new GraphicsMode (), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 3, GraphicsContextFlags.Default)
+#if LEGACY_OPENTK_RENDERER
+			: base(1024, 768)
+#else
+			: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 3, GraphicsContextFlags.Default)
+#endif
 		{
 			KeyDown += Keyboard_KeyDown;
 			KeyUp += Keyboard_KeyUp;
@@ -110,13 +118,21 @@ namespace Gwen.UnitTest.OpenTK
 
 			Platform.Platform.Init(new Platform.Windows());
 
-			m_Renderer = new Gwen.Renderer.OpenTK();
+#if LEGACY_OPENTK_RENDERER
+			m_Renderer = new Gwen.Renderer.OpenTK.Legacy.OpenTK();
+#else
+			m_Renderer = new Gwen.Renderer.OpenTK.OpenTK();
+#endif
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
 
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 10);
 			m_Canvas = new Canvas(m_Skin);
 
-			m_Input = new Input.OpenTK(this);
+#if LEGACY_OPENTK_RENDERER
+			m_Input = new Gwen.Renderer.OpenTK.Legacy.Input.OpenTK(this);
+#else
+			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
+#endif
 			m_Input.Initialize(m_Canvas);
 
             m_Canvas.SetSize(Width, Height);

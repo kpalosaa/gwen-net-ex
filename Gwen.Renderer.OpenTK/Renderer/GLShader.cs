@@ -1,14 +1,9 @@
 using System;
-using System.IO;
-
-using OpenTK;
-using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-
 using System.Diagnostics;
 using System.Collections.Generic;
 
-namespace Gwen.Renderer
+namespace Gwen.Renderer.OpenTK
 {
 	public class GLShader : IDisposable
 	{

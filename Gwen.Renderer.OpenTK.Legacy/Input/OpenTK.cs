@@ -4,10 +4,11 @@ using Gwen.Input;
 using OpenTK.Input;
 using OpenTK;
 
-namespace Gwen.Renderer.OpenTK.Input
+namespace Gwen.Renderer.OpenTK.Legacy.Input
 {
     public class OpenTK
     {
+
         #region Properties
 
         private Canvas m_Canvas = null;
@@ -124,6 +125,7 @@ namespace Gwen.Renderer.OpenTK.Input
 
             return false;
         }
+
 
         public bool ProcessKeyDown(EventArgs args)
         {
