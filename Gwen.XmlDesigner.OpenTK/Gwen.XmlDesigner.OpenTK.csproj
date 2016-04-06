@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -34,14 +34,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
     <ApplicationIcon>gwen.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
-      <HintPath>..\lib\OpenTK\OpenTK.dll</HintPath>
+      <HintPath>..\Lib\OpenTK\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -52,23 +49,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gwen.Platform.Windows\Gwen.Platform.Windows.csproj">
-      <Project>{84c52ba6-c8d5-4d68-bf1b-a5d7e9e2eb8c}</Project>
+      <Project>{84C52BA6-C8D5-4D68-BF1B-A5D7E9E2EB8C}</Project>
       <Name>Gwen.Platform.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.Renderer.OpenTK.Legacy\Gwen.Renderer.OpenTK.Legacy.csproj">
-      <Project>{0cb92d38-5b04-44da-8cc7-a06e30bb8e53}</Project>
+      <Project>{0CB92D38-5B04-44DA-8CC7-A06E30BB8E53}</Project>
       <Name>Gwen.Renderer.OpenTK.Legacy</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.Renderer.OpenTK\Gwen.Renderer.OpenTK.csproj">
-      <Project>{41650c82-d630-4e5c-845a-f1513c8fdc99}</Project>
+      <Project>{41650C82-D630-4E5C-845A-F1513C8FDC99}</Project>
       <Name>Gwen.Renderer.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.XmlDesigner\Gwen.XmlDesigner.csproj">
-      <Project>{d71c277e-f684-4d2f-8fc3-83d4a6374080}</Project>
+      <Project>{D71C277E-F684-4D2F-8FC3-83D4A6374080}</Project>
       <Name>Gwen.XmlDesigner</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen\Gwen.csproj">
-      <Project>{adda2f43-96c0-497f-8216-29c67abc9806}</Project>
+      <Project>{ADDA2F43-96C0-497F-8216-29C67ABC9806}</Project>
       <Name>Gwen</Name>
     </ProjectReference>
   </ItemGroup>

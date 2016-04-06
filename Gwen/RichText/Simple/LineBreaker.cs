@@ -49,7 +49,7 @@ namespace Gwen.RichText.Simple
 					for (int i = lineStart; i <= lineStop; i++)
 					{
 						height = Math.Max(height, nodes[i].Size.Height);
-						baseline = Math.Max(baseline, ((TextPart)nodes[i].Part).Font.BaseLine);
+						baseline = Math.Max(baseline, (int)((TextPart)nodes[i].Part).Font.FontMetrics.Baseline);
 					}
 
 					StringBuilder str = new StringBuilder(1000);
@@ -78,7 +78,7 @@ namespace Gwen.RichText.Simple
 								}
 							}
 
-							textBlock.Position = new Point(x, y + baseline - ((TextPart)part).Font.BaseLine);
+							textBlock.Position = new Point(x, y + baseline - (int)((TextPart)part).Font.FontMetrics.Baseline);
 							textBlock.Text = str.ToString();
 							textBlock.Size = new Size(Renderer.MeasureText(((TextPart)part).Font, textBlock.Text).Width, h);
 

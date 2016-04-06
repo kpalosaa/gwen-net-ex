@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using OpenTK.Graphics.OpenGL;
@@ -378,6 +379,58 @@ namespace Gwen.Renderer.OpenTK.Legacy
             font.RendererData = null;
         }
 
+		public override FontMetrics GetFontMetrics(Font font)
+		{
+			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
+
+			if (sysFont == null || Math.Abs(font.RealSize - font.Size * Scale) > 2)
+			{
+				FreeFont(font);
+				LoadFont(font);
+				sysFont = font.RendererData as System.Drawing.Font;
+			}
+
+			// from: http://csharphelper.com/blog/2014/08/get-font-metrics-in-c
+			float emHeight = sysFont.FontFamily.GetEmHeight(sysFont.Style);
+			float emHeightPixels = ConvertToPixels(sysFont.Size, sysFont.Unit);
+			float designToPixels = emHeightPixels / emHeight;
+
+			float ascentPixels = designToPixels * sysFont.FontFamily.GetCellAscent(sysFont.Style);
+			float descentPixels = designToPixels * sysFont.FontFamily.GetCellDescent(sysFont.Style);
+			float cellHeightPixels = ascentPixels + descentPixels;
+			float internalLeadingPixels = cellHeightPixels - emHeightPixels;
+			float lineSpacingPixels = designToPixels * sysFont.FontFamily.GetLineSpacing(sysFont.Style);
+			float externalLeadingPixels = lineSpacingPixels - cellHeightPixels;
+			
+			FontMetrics fm = new FontMetrics
+			(
+				emHeightPixels,
+				ascentPixels,
+				descentPixels,
+				cellHeightPixels,
+				internalLeadingPixels,
+				lineSpacingPixels,
+				externalLeadingPixels
+			);
+
+			return fm;
+		}
+
+		private float ConvertToPixels(float value, GraphicsUnit unit)
+		{
+			switch (unit)
+			{
+				case GraphicsUnit.Document: value *= m_Graphics.DpiX / 300; break;
+				case GraphicsUnit.Inch: value *= m_Graphics.DpiX; break;
+				case GraphicsUnit.Millimeter: value *= m_Graphics.DpiX / 25.4F; break;
+				case GraphicsUnit.Pixel: break;
+				case GraphicsUnit.Point: value *= m_Graphics.DpiX / 72; break;
+				default: throw new Exception("Unknown unit " + unit.ToString());
+			}
+
+			return value;
+		}
+
         public override Size MeasureText(Font font, string text)
         {
             //Debug.Print(String.Format("MeasureText '{0}'", text));
@@ -403,7 +456,7 @@ namespace Gwen.Renderer.OpenTK.Legacy
 
             SizeF size = m_Graphics.MeasureString(text, sysFont, System.Drawing.Point.Empty, m_StringFormat);
 
-            return new Size((int)Math.Round(size.Width), (int)Math.Round(size.Height));
+			return new Size((int)Math.Round(size.Width, MidpointRounding.AwayFromZero), (int)Math.Round(size.Height, MidpointRounding.AwayFromZero));
         }
 
         public override void RenderText(Font font, Point position, string text)
@@ -432,7 +485,7 @@ namespace Gwen.Renderer.OpenTK.Legacy
 
                 Size size = MeasureText(font, text);
                 TextRenderer tr = new TextRenderer(size.Width, size.Height, this);
-                tr.DrawString(text, sysFont, Brushes.White, Point.Zero, m_StringFormat); // renders string on the texture
+				tr.DrawString(text, sysFont, Brushes.White, Point.Zero, m_StringFormat); // renders string on the texture
 
                 DrawTexturedRect(tr.Texture, new Rectangle(position.X, position.Y, tr.Texture.Width, tr.Texture.Height));
 

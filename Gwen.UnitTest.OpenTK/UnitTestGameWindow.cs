@@ -56,9 +56,21 @@ namespace Gwen.UnitTest.OpenTK
 
         public override void Dispose()
         {
-            m_Canvas.Dispose();
-            m_Skin.Dispose();
-            m_Renderer.Dispose();
+			if (m_Canvas != null)
+			{
+				m_Canvas.Dispose();
+				m_Canvas = null;
+			}
+			if (m_Skin != null)
+			{
+				m_Skin.Dispose();
+				m_Skin = null;
+			}
+			if (m_Renderer != null)
+			{
+				m_Renderer.Dispose();
+				m_Renderer = null;
+			}
             base.Dispose();
         }
 
@@ -125,7 +137,7 @@ namespace Gwen.UnitTest.OpenTK
 #endif
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
 
-			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 10);
+			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 			m_Canvas = new Canvas(m_Skin);
 
 #if LEGACY_OPENTK_RENDERER
@@ -205,11 +217,14 @@ namespace Gwen.UnitTest.OpenTK
 		[STAThread]
 		public static void Main()
 		{
-			using (UnitTestGameWindow window = new UnitTestGameWindow())
+			using (Toolkit.Init())
 			{
-				window.Title = "Gwen.net OpenTK Unit Test";
-				window.VSync = VSyncMode.Off; // to measure performance
-				window.Run(0.0, 0.0);
+				using (UnitTestGameWindow window = new UnitTestGameWindow())
+				{
+					window.Title = "Gwen.net OpenTK Unit Test";
+					window.VSync = VSyncMode.Off; // to measure performance
+					window.Run(0.0, 0.0);
+				}
 			}
 		}
 	}

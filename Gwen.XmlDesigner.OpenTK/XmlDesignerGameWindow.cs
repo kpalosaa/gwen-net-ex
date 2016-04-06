@@ -57,9 +57,21 @@ namespace Gwen.XmlDesigner.OpenTK
 
 		public override void Dispose()
 		{
-			m_Canvas.Dispose();
-			m_Skin.Dispose();
-			m_Renderer.Dispose();
+			if (m_Canvas != null)
+			{
+				m_Canvas.Dispose();
+				m_Canvas = null;
+			}
+			if (m_Skin != null)
+			{
+				m_Skin.Dispose();
+				m_Skin = null;
+			}
+			if (m_Renderer != null)
+			{
+				m_Renderer.Dispose();
+				m_Renderer = null;
+			}
 			base.Dispose();
 		}
 
@@ -126,7 +138,7 @@ namespace Gwen.XmlDesigner.OpenTK
 #endif
 
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, Gwen.XmlDesigner.XmlDesigner.Settings.Skin);
-			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 10);
+			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 
 			m_Canvas = new Canvas(m_Skin);
 
@@ -209,18 +221,21 @@ namespace Gwen.XmlDesigner.OpenTK
 		[STAThread]
 		public static void Main()
 		{
-			do
+			using (Toolkit.Init())
 			{
-				XmlDesignerGameWindow.m_Restart = false;
-
-				using (XmlDesignerGameWindow window = new XmlDesignerGameWindow())
+				do
 				{
-					window.Title = "Gwen.net Xml Designer";
-					window.VSync = VSyncMode.On;
-					window.Run(60.0, 60.0);
+					XmlDesignerGameWindow.m_Restart = false;
+
+					using (XmlDesignerGameWindow window = new XmlDesignerGameWindow())
+					{
+						window.Title = "Gwen.net Xml Designer";
+						window.VSync = VSyncMode.On;
+						window.Run(60.0, 60.0);
+					}
 				}
+				while (XmlDesignerGameWindow.m_Restart);
 			}
-			while (XmlDesignerGameWindow.m_Restart);
 		}
 	}
 }

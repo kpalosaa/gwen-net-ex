@@ -307,7 +307,7 @@ namespace Gwen.RichText.KnuthPlass
 						if (m_Nodes[nodeIndex].Type == NodeType.Box)
 						{
 							height = Math.Max(height, ((BoxNode)m_Nodes[nodeIndex]).Height);
-							baseline = Math.Max(baseline, ((TextPart)((BoxNode)m_Nodes[nodeIndex]).Part).Font.BaseLine);
+							baseline = Math.Max(baseline, (int)((TextPart)((BoxNode)m_Nodes[nodeIndex]).Part).Font.FontMetrics.Baseline);
 						}
 					}
 
@@ -334,7 +334,7 @@ namespace Gwen.RichText.KnuthPlass
 								}
 							}
 
-							textBlock.Position = new Point(x, y + baseline - ((TextPart)part).Font.BaseLine);
+							textBlock.Position = new Point(x, y + baseline - (int)((TextPart)part).Font.FontMetrics.Baseline);
 							textBlock.Text = str.ToString();
 							textBlock.Size = new Size(formatter.MeasureText(((TextPart)part).Font, textBlock.Text).Width, height);
 

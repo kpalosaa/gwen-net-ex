@@ -435,7 +435,7 @@ namespace Gwen.Renderer.OpenTK
 			font.RendererData = null;
 		}
 
-		public override int GetFontBaseline(Font font)
+		public override FontMetrics GetFontMetrics(Font font)
 		{
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
 
@@ -446,14 +446,45 @@ namespace Gwen.Renderer.OpenTK
 				sysFont = font.RendererData as System.Drawing.Font;
 			}
 
-			FontFamily ff = sysFont.FontFamily;
+			// from: http://csharphelper.com/blog/2014/08/get-font-metrics-in-c
+			float emHeight = sysFont.FontFamily.GetEmHeight(sysFont.Style);
+			float emHeightPixels = ConvertToPixels(sysFont.Size, sysFont.Unit);
+			float designToPixels = emHeightPixels / emHeight;
 
-			float lineSpace = ff.GetLineSpacing(sysFont.Style);
-			float ascent = ff.GetCellAscent(sysFont.Style);
-			float height = sysFont.GetHeight(m_Graphics);
-			float baseline = height * ascent / lineSpace;
+			float ascentPixels = designToPixels * sysFont.FontFamily.GetCellAscent(sysFont.Style);
+			float descentPixels = designToPixels * sysFont.FontFamily.GetCellDescent(sysFont.Style);
+			float cellHeightPixels = ascentPixels + descentPixels;
+			float internalLeadingPixels = cellHeightPixels - emHeightPixels;
+			float lineSpacingPixels = designToPixels * sysFont.FontFamily.GetLineSpacing(sysFont.Style);
+			float externalLeadingPixels = lineSpacingPixels - cellHeightPixels;
 
-			return (int)Math.Round(baseline);
+			FontMetrics fm = new FontMetrics
+				(
+					emHeightPixels,
+					ascentPixels,
+					descentPixels,
+					cellHeightPixels,
+					internalLeadingPixels,
+					lineSpacingPixels,
+					externalLeadingPixels
+				);
+
+			return fm;
+		}
+
+		private float ConvertToPixels(float value, GraphicsUnit unit)
+		{
+			switch (unit)
+			{
+				case GraphicsUnit.Document: value *= m_Graphics.DpiX / 300; break;
+				case GraphicsUnit.Inch: value *= m_Graphics.DpiX; break;
+				case GraphicsUnit.Millimeter: value *= m_Graphics.DpiX / 25.4F; break;
+				case GraphicsUnit.Pixel: break;
+				case GraphicsUnit.Point: value *= m_Graphics.DpiX / 72; break;
+				default: throw new Exception("Unknown unit " + unit.ToString());
+			}
+
+			return value;
 		}
 
 		public override Size MeasureText(Font font, string text)

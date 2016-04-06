@@ -14,9 +14,9 @@ namespace Gwen.UnitTest
         public TextBox(Base parent)
             : base(parent)
 		{
-			m_Font1 = new Font(Skin.Renderer, "Consolas", 14); // fixed width font!
-			m_Font2 = new Font(Skin.Renderer, "Impact", 50);
-			m_Font3 = new Font(Skin.Renderer, "Arial", 14);
+			m_Font1 = new Font(Skin.Renderer, "Courier New", 15); // fixed width font!
+			m_Font2 = new Font(Skin.Renderer, "Times New Roman", 50);
+			m_Font3 = new Font(Skin.Renderer, "Arial", 15);
 
 			VerticalLayout vlayout = new VerticalLayout(this);
 			{

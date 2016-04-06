@@ -192,13 +192,13 @@ namespace Gwen.Renderer
         { }
 
 		/// <summary>
-		/// Get the baseline of the font.
+		/// Gets the font metrics.
 		/// </summary>
 		/// <param name="font">Font.</param>
-		/// <returns>Baseline in pixels from the top of the font.</returns>
-		public virtual int GetFontBaseline(Font font)
+		/// <returns>The font metrics.</returns>
+		public virtual FontMetrics GetFontMetrics(Font font)
 		{
-			return font.Size - 1;
+			return new FontMetrics(font);
 		}
 
         /// <summary>

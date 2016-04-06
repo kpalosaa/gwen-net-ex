@@ -20,7 +20,7 @@ namespace Gwen
 	/// </summary>
 	public class Font : IDisposable
 	{
-		private int m_Baseline;
+		private FontMetrics? m_FontMetrics;
 
 		/// <summary>
 		/// Font face name. Exact meaning depends on renderer.
@@ -55,15 +55,15 @@ namespace Gwen
 		public float RealSize { get; set; }
 
 		/// <summary>
-		/// Font baseline in pixels from the top of the font.
+		/// Gets the font metrics.
 		/// </summary>
-		public int BaseLine
+		public FontMetrics FontMetrics
 		{
 			get
 			{
-				if (m_Baseline == 0)
-					m_Baseline = m_Renderer.GetFontBaseline(this);
-				return m_Baseline;
+				if (m_FontMetrics == null)
+					m_FontMetrics = m_Renderer.GetFontMetrics(this);
+				return (FontMetrics)m_FontMetrics;
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace Gwen
 		public Font(Renderer.Base renderer, string faceName, int size = 10)
 		{
 			m_Renderer = renderer;
-			m_Baseline = 0;
+			m_FontMetrics = null;
 			FaceName = faceName;
 			Size = size;
 			Smooth = false;
