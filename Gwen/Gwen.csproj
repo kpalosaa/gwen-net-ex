@@ -28,6 +28,7 @@
     <DocumentationFile>..\Binaries\Debug\Gwen.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
     <Optimize>false</Optimize>
+    <NoWarn>1591, 1573</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\Binaries\Release\</OutputPath>
@@ -44,6 +45,7 @@
     <CodeAnalysisRuleDirectories>;C:\vs10\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <DocumentationFile>..\Binaries\Release\Gwen.xml</DocumentationFile>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>1591, 1573</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -75,6 +77,7 @@
     <Compile Include="Control\Internal\DownArrow.cs" />
     <Compile Include="Control\Internal\MenuDivider.cs" />
     <Compile Include="Control\Internal\Modal.cs" />
+    <Compile Include="Control\Internal\MultilineText.cs" />
     <Compile Include="Control\Internal\Resizer.cs" />
     <Compile Include="Control\Internal\RightArrow.cs" />
     <Compile Include="Control\Internal\ScrollArea.cs" />

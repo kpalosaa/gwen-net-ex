@@ -180,7 +180,7 @@ namespace Gwen.Control.Internal
 			for (int i = 0; i < String.Length + 1; i++)
 			{
 				Point cp = GetCharacterPosition(i);
-				int dist = Math.Abs(cp.X - p.X) + Math.Abs(cp.Y - p.Y); // this isn't proper // [omeg] todo: sqrt
+				int dist = Math.Abs(cp.X - p.X);
 
 				if (dist > distance)
 					continue;

@@ -152,7 +152,7 @@ namespace Gwen.Renderer.OpenTK.Legacy
                 GL.ColorPointer(4, ColorPointerType.UnsignedByte, m_VertexSize, (IntPtr)ptr2);
                 GL.TexCoordPointer(2, TexCoordPointerType.Float, m_VertexSize, (IntPtr)ptr3);
 
-                GL.DrawArrays(BeginMode.Quads, 0, m_VertNum);
+                GL.DrawArrays(PrimitiveType.Quads, 0, m_VertNum);
             }
 
             m_DrawCallCount++;

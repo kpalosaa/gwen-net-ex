@@ -10,12 +10,12 @@ namespace Gwen.Renderer.OpenTK
     /// </summary>
     public sealed class TextRenderer : IDisposable
     {
-        readonly Bitmap bmp;
-        readonly Graphics gfx;
-        readonly Gwen.Texture texture;
-        bool disposed;
+        private readonly Bitmap m_Bitmap;
+		private readonly Graphics m_Graphics;
+		private readonly Gwen.Texture m_Texture;
+		private bool m_Disposed;
 
-        public Texture Texture { get { return texture; } }
+        public Texture Texture { get { return m_Texture; } }
 
         /// <summary>
         /// Constructs a new instance.
@@ -32,8 +32,8 @@ namespace Gwen.Renderer.OpenTK
             if (GraphicsContext.CurrentContext == null)
                 throw new InvalidOperationException("No GraphicsContext is current on the calling thread.");
 
-            bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            gfx = Graphics.FromImage(bmp);
+            m_Bitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            m_Graphics = Graphics.FromImage(m_Bitmap);
 
             // NOTE:    TextRenderingHint.AntiAliasGridFit looks sharper and in most cases better
             //          but it comes with a some problems.
@@ -45,10 +45,9 @@ namespace Gwen.Renderer.OpenTK
             // 
             //          Until 1st problem is fixed we should use TextRenderingHint.AntiAlias...  :-(
 
-            gfx.TextRenderingHint = TextRenderingHint.AntiAlias;
-			//gfx.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-			gfx.Clear(System.Drawing.Color.Transparent);
-            texture = new Texture(renderer) {Width = width, Height = height};
+            m_Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+			m_Graphics.Clear(System.Drawing.Color.Transparent);
+            m_Texture = new Texture(renderer) { Width = width, Height = height };
         }
 
         /// <summary>
@@ -61,22 +60,22 @@ namespace Gwen.Renderer.OpenTK
         /// The origin (0, 0) lies at the top-left corner of the backing store.</param>
         public void DrawString(string text, System.Drawing.Font font, Brush brush, Point point, StringFormat format)
         {
-            gfx.DrawString(text, font, brush, new System.Drawing.Point(point.X, point.Y), format); // render text on the bitmap
-            OpenTK.LoadTextureInternal(texture, bmp); // copy bitmap to gl texture
+            m_Graphics.DrawString(text, font, brush, new System.Drawing.Point(point.X, point.Y), format); // render text on the bitmap
+            OpenTK.LoadTextureInternal(m_Texture, m_Bitmap); // copy bitmap to gl texture
         }
 
         void Dispose(bool manual)
         {
-            if (!disposed)
+            if (!m_Disposed)
             {
                 if (manual)
                 {
-                    bmp.Dispose();
-                    gfx.Dispose();
-                    texture.Dispose();
+                    m_Bitmap.Dispose();
+                    m_Graphics.Dispose();
+                    m_Texture.Dispose();
                 }
 
-                disposed = true;
+                m_Disposed = true;
             }
         }
 
@@ -86,9 +85,11 @@ namespace Gwen.Renderer.OpenTK
             GC.SuppressFinalize(this);
         }
 
-        ~TextRenderer()
+#if DEBUG
+		~TextRenderer()
         {
-            Console.WriteLine("[Warning] Resource leaked: {0}", typeof(TextRenderer));
+			throw new InvalidOperationException(String.Format("[Warning] Resource leaked: {0}", typeof(TextRenderer)));
         }
-    }
+#endif
+	}
 }
