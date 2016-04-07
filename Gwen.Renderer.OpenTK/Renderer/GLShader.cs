@@ -117,7 +117,6 @@ void main(void)
 	gl_Position = vec4(ndc_position, 0.0, 1);
 }";
 
-
 		private const string fShaderSource = @"
 #version 420
 
@@ -134,11 +133,9 @@ void main(void)
 {
 	vec4 texColor = texture(tex, frag_uv);
 	if (uUseTexture > 0.0)
-		out_frag_color = vec4(texColor.rgb * frag_color.rgb, texColor.a);
+		out_frag_color = texColor * frag_color;
 	else
 		out_frag_color = frag_color;
-
-	//out_frag_color = texColor * uUseTexture + frag_color * (1.0 - uUseTexture);
 }";
 
 	}

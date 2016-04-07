@@ -1,4 +1,4 @@
-﻿//#define USE_GL42_RENDERER
+﻿// #define USE_GL42_RENDERER
 
 using System;
 using System.Collections.Generic;

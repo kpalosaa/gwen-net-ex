@@ -174,22 +174,50 @@ namespace Gwen.Control.Internal
 		/// <returns>Character index.</returns>
 		public int GetClosestCharacter(Point p)
 		{
-			int distance = Util.Infinity;
-			int c = 0;
+			int px = p.X;
+			int left = 0;
+			int right = String.Length;
 
-			for (int i = 0; i < String.Length + 1; i++)
+			int center;
+			int cx;
+			while (true)
 			{
-				Point cp = GetCharacterPosition(i);
-				int dist = Math.Abs(cp.X - p.X);
+				center = (right + left) / 2;
+				cx = GetCharacterPosition(center).X;
 
-				if (dist > distance)
-					continue;
+				if (px < cx)
+				{
+					right = center;
+				}
+				else if (px > cx)
+				{
+					left = center;
+				}
+				else
+				{
+					left = center;
+					right = center;
+					break;
+				}
 
-				distance = dist;
-				c = i;
+				if (right - left < 2)
+				{
+					break;
+				}
 			}
 
-			return c;
+			int lx = cx, rx = cx;
+			if (left == center)
+				rx = GetCharacterPosition(right).X;
+			else if (right == center)
+				lx = GetCharacterPosition(left).X;
+
+			if (px - lx < rx - px)
+				center = left;
+			else
+				center = right;
+
+			return center;
 		}
 	}
 }
