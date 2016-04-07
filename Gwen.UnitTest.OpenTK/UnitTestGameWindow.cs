@@ -1,4 +1,4 @@
-﻿#define LEGACY_OPENTK_RENDERER
+﻿//#define USE_GL42_RENDERER
 
 using System;
 using System.Collections.Generic;
@@ -17,12 +17,11 @@ namespace Gwen.UnitTest.OpenTK
     /// </summary>
     public class UnitTestGameWindow : GameWindow
     {
-#if LEGACY_OPENTK_RENDERER
-		private Gwen.Renderer.OpenTK.Legacy.Input.OpenTK m_Input;
-		private Gwen.Renderer.OpenTK.Legacy.OpenTK m_Renderer;
-#else
 		private Gwen.Renderer.OpenTK.Input.OpenTK m_Input;
-		private Gwen.Renderer.OpenTK.OpenTK m_Renderer;
+#if USE_GL42_RENDERER
+		private Gwen.Renderer.OpenTK.OpenTKGL42 m_Renderer;
+#else
+		private Gwen.Renderer.OpenTK.OpenTKGL21 m_Renderer;
 #endif
 		private Gwen.Skin.Base m_Skin;
         private Gwen.Control.Canvas m_Canvas;
@@ -36,10 +35,10 @@ namespace Gwen.UnitTest.OpenTK
 		private float m_TotalTime = 0f;
 
 		public UnitTestGameWindow()
-#if LEGACY_OPENTK_RENDERER
-			: base(1024, 768)
+#if USE_GL42_RENDERER
+			: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
 #else
-			: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 3, GraphicsContextFlags.Default)
+			: base(1024, 768)
 #endif
 		{
 			KeyDown += Keyboard_KeyDown;
@@ -130,21 +129,15 @@ namespace Gwen.UnitTest.OpenTK
 
 			Platform.Platform.Init(new Platform.Windows());
 
-#if LEGACY_OPENTK_RENDERER
-			m_Renderer = new Gwen.Renderer.OpenTK.Legacy.OpenTK();
+#if USE_GL42_RENDERER
+			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
 #else
-			m_Renderer = new Gwen.Renderer.OpenTK.OpenTK();
+			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL21();
 #endif
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
-
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 			m_Canvas = new Canvas(m_Skin);
-
-#if LEGACY_OPENTK_RENDERER
-			m_Input = new Gwen.Renderer.OpenTK.Legacy.Input.OpenTK(this);
-#else
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
-#endif
 			m_Input.Initialize(m_Canvas);
 
             m_Canvas.SetSize(Width, Height);

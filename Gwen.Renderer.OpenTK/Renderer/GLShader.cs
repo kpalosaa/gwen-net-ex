@@ -133,9 +133,13 @@ uniform float uUseTexture = 0.0;
 void main(void)
 {
 	vec4 texColor = texture(tex, frag_uv);
-	out_frag_color = texColor * uUseTexture + frag_color * (1.0 - uUseTexture);
+	if (uUseTexture > 0.0)
+		out_frag_color = vec4(texColor.rgb * frag_color.rgb, texColor.a);
+	else
+		out_frag_color = frag_color;
+
+	//out_frag_color = texColor * uUseTexture + frag_color * (1.0 - uUseTexture);
 }";
 
 	}
 }
-

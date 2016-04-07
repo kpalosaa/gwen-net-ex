@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Text;
 using OpenTK.Graphics;
+using OpenTK;
 
 namespace Gwen.Renderer.OpenTK
 {
@@ -12,7 +13,7 @@ namespace Gwen.Renderer.OpenTK
     {
         private readonly Bitmap m_Bitmap;
 		private readonly Graphics m_Graphics;
-		private readonly Gwen.Texture m_Texture;
+		private readonly Texture m_Texture;
 		private bool m_Disposed;
 
         public Texture Texture { get { return m_Texture; } }
@@ -23,7 +24,7 @@ namespace Gwen.Renderer.OpenTK
         /// <param name="width">The width of the backing store in pixels.</param>
         /// <param name="height">The height of the backing store in pixels.</param>
         /// <param name="renderer">GWEN renderer.</param>
-        public TextRenderer(int width, int height, OpenTK renderer)
+        public TextRenderer(int width, int height, OpenTKBase renderer)
         {
             if (width <= 0)
                 throw new ArgumentOutOfRangeException("width");
@@ -46,8 +47,11 @@ namespace Gwen.Renderer.OpenTK
             //          Until 1st problem is fixed we should use TextRenderingHint.AntiAlias...  :-(
 
             m_Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
-			m_Graphics.Clear(System.Drawing.Color.Transparent);
-            m_Texture = new Texture(renderer) { Width = width, Height = height };
+			if (Configuration.RunningOnMono)
+				m_Graphics.Clear(System.Drawing.Color.Black);
+			else
+				m_Graphics.Clear(System.Drawing.Color.Transparent);
+			m_Texture = new Texture(renderer) { Width = width, Height = height };
         }
 
         /// <summary>
@@ -60,8 +64,42 @@ namespace Gwen.Renderer.OpenTK
         /// The origin (0, 0) lies at the top-left corner of the backing store.</param>
         public void DrawString(string text, System.Drawing.Font font, Brush brush, Point point, StringFormat format)
         {
-            m_Graphics.DrawString(text, font, brush, new System.Drawing.Point(point.X, point.Y), format); // render text on the bitmap
-            OpenTK.LoadTextureInternal(m_Texture, m_Bitmap); // copy bitmap to gl texture
+			if (Configuration.RunningOnMono)
+			{
+				// from https://stackoverflow.com/questions/5167937/ugly-looking-text-problem
+				m_Graphics.DrawString(text, font, Brushes.White, new System.Drawing.Point(point.X, point.Y), format); // render text on the bitmap
+				var lockData = m_Bitmap.LockBits(new System.Drawing.Rectangle(0, 0, m_Bitmap.Width, m_Bitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+				unsafe
+				{
+					// Pointer to the current pixel
+					uint* pPixel = (uint*)lockData.Scan0;
+					// Pointer value at which we terminate the loop (end of pixel data)
+					var pLastPixel = pPixel + m_Bitmap.Width * m_Bitmap.Height;
+
+					while (pPixel < pLastPixel)
+					{
+						// Get pixel data
+						uint pixelValue = *pPixel;
+						// Average RGB
+						uint brightness = ((pixelValue & 0xFF) + ((pixelValue >> 8) & 0xFF) + ((pixelValue >> 16) & 0xFF)) / 3;
+
+						// Use brightness for alpha value, set R, G, and B 0xff (white)
+						pixelValue = brightness << 24 | 0xffffff;
+
+						// Copy back to image
+						*pPixel = pixelValue;
+						// Next pixel
+						pPixel++;
+					}
+				}
+				m_Bitmap.UnlockBits(lockData);
+			}
+			else
+			{
+				m_Graphics.DrawString(text, font, brush, new System.Drawing.Point(point.X, point.Y), format); // render text on the bitmap
+			}
+
+			OpenTKBase.LoadTextureInternal(m_Texture, m_Bitmap); // copy bitmap to gl texture
         }
 
         void Dispose(bool manual)

@@ -1,91 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
-using System.Linq;
 using OpenTK.Graphics.OpenGL;
 
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace Gwen.Renderer.OpenTK
 {
-	public class OpenTK : Base
+	public abstract class OpenTKBase : Base
 	{
-		[StructLayout(LayoutKind.Sequential, Pack = 1)]
-		public struct Vertex
-		{
-			public float x, y;
-			public float u, v;
-			public float r, g, b, a;
-		}
+		protected Color m_Color;
 
-		private const int MaxVerts = 4096;
-		private Color m_Color;
-		private int m_VertNum;
-		private readonly Vertex[] m_Vertices;
-		private readonly int m_VertexSize;
-		private int m_TotalVertNum;
-
-		private readonly MultiKeyDictionary<Font, String, Color, TextRenderer> m_StringCache;
+		private readonly Dictionary<Tuple<String, Font>, TextRenderer> m_StringCache;
 		private readonly Graphics m_Graphics; // only used for text measurement
-		private int m_DrawCallCount;
-		private bool m_ClipEnabled;
-		private bool m_TextureEnabled;
-		static private int m_LastTextureID;
-
-		private bool m_WasBlendEnabled, m_WasDepthTestEnabled;
-		private int m_PrevBlendSrc, m_PrevBlendDst, m_PrevAlphaFunc;
-		private float m_PrevAlphaRef;
-		private bool m_RestoreRenderState;
+		protected int m_DrawCallCount;
+		protected bool m_ClipEnabled;
+		protected bool m_TextureEnabled;
+		static protected int m_LastTextureID;
 
 		private StringFormat m_StringFormat;
 
-		private int vbo, vao;
-
-		GLShader guiShader;
-
-		public OpenTK(bool restoreRenderState = true)
-			: base()
-		{
-			m_Vertices = new Vertex[MaxVerts];
-			m_VertexSize = Marshal.SizeOf(m_Vertices[0]);
-			m_StringCache = new MultiKeyDictionary<Font, String, Color, TextRenderer>();
+		public OpenTKBase()
+            : base()
+        {
+			m_StringCache = new Dictionary<Tuple<String, Font>, TextRenderer>();
 			m_Graphics = Graphics.FromImage(new Bitmap(1024, 1024, PixelFormat.Format32bppArgb));
 			m_StringFormat = new StringFormat(StringFormat.GenericTypographic);
 			m_StringFormat.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
-			m_RestoreRenderState = restoreRenderState;
-
-			CreateBuffers ();
-
-			guiShader = new GLShader ();
-			guiShader.Load ("gui");
-		}
-
-		private void CreateBuffers ()
-		{
-			GL.GenVertexArrays (1, out vao);
-			GL.BindVertexArray (vao);
-
-			GL.GenBuffers (1, out vbo);
-			GL.BindBuffer (BufferTarget.ArrayBuffer, vbo);
-			GL.BufferData (BufferTarget.ArrayBuffer, (IntPtr)(m_VertexSize * MaxVerts), IntPtr.Zero, BufferUsageHint.StreamDraw); // Allocate
-
-			// Vertex positions
-			GL.EnableVertexAttribArray (0);
-			GL.VertexAttribPointer (0, 2, VertexAttribPointerType.Float, false, m_VertexSize, 0);
-			
-			// Tex coords
-			GL.EnableVertexAttribArray (1);
-			GL.VertexAttribPointer (1, 2, VertexAttribPointerType.Float, false, m_VertexSize, 2 * sizeof(float));
-			
-			// Colors
-			GL.EnableVertexAttribArray (2);
-			GL.VertexAttribPointer (2, 4, VertexAttribPointerType.Float, false, m_VertexSize, 2 * (sizeof (float) + sizeof (float)));
-
-			GL.BindBuffer (BufferTarget.ArrayBuffer, 0);
-			GL.BindVertexArray (0);
 		}
 
 		public override void Dispose()
@@ -94,60 +36,7 @@ namespace Gwen.Renderer.OpenTK
 			base.Dispose();
 		}
 
-		public override void Begin()
-		{
-			GL.ActiveTexture (TextureUnit.Texture0);
-			GL.UseProgram (guiShader.Program);
-
-			GL.BindVertexArray (vao);
-			GL.BindBuffer (BufferTarget.ArrayBuffer, vbo);
-
-			if (m_RestoreRenderState)
-			{
-				// Get previous parameter values before changing them.
-				GL.GetInteger(GetPName.BlendSrc, out m_PrevBlendSrc);
-				GL.GetInteger(GetPName.BlendDst, out m_PrevBlendDst);
-				GL.GetInteger(GetPName.AlphaTestFunc, out m_PrevAlphaFunc);
-				GL.GetFloat(GetPName.AlphaTestRef, out m_PrevAlphaRef);
-
-				m_WasBlendEnabled = GL.IsEnabled(EnableCap.Blend);
-				m_WasDepthTestEnabled = GL.IsEnabled(EnableCap.DepthTest);
-			}
-
-			// Set default values and enable/disable caps.
-			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
-			GL.Enable(EnableCap.Blend);
-			GL.Disable(EnableCap.DepthTest);
-
-			m_VertNum = 0;
-			m_TotalVertNum = 0;
-			m_DrawCallCount = 0;
-			m_ClipEnabled = false;
-			m_TextureEnabled = false;
-			m_LastTextureID = -1;
-		}
-
-		public override void End()
-		{
-			Flush();
-			GL.BindVertexArray (0);
-			GL.BindBuffer (BufferTarget.ArrayBuffer, 0);
-			
-			if (m_RestoreRenderState)
-			{
-				GL.BindTexture(TextureTarget.Texture2D, 0);
-				m_LastTextureID = 0;
-
-				// Restore the previous parameter values.
-				GL.BlendFunc((BlendingFactorSrc)m_PrevBlendSrc, (BlendingFactorDest)m_PrevBlendDst);
-
-				if (!m_WasBlendEnabled)
-					GL.Disable(EnableCap.Blend);
-
-				if (m_WasDepthTestEnabled)
-					GL.Enable(EnableCap.DepthTest);
-			}
-		}
+		protected abstract void Flush();
 
 		/// <summary>
 		/// Returns number of cached strings in the text cache.
@@ -156,34 +45,19 @@ namespace Gwen.Renderer.OpenTK
 
 		public int DrawCallCount { get { return m_DrawCallCount; } }
 
-		public int VertexCount { get { return m_TotalVertNum; } }
+		public abstract int VertexCount { get; }
+
 		/// <summary>
 		/// Clears the text rendering cache. Make sure to call this if cached strings size becomes too big (check TextCacheSize).
 		/// </summary>
 		public void FlushTextCache()
 		{
 			// todo: some auto-expiring cache? based on number of elements or age
-			foreach (var textRenderer in m_StringCache.AllValues)
+			foreach (var textRenderer in m_StringCache.Values)
 			{
 				textRenderer.Dispose();
 			}
 			m_StringCache.Clear();
-		}
-
-		private unsafe void Flush()
-		{
-			if (m_VertNum == 0) return;
-
-			GL.InvalidateBufferData (vbo);
-			GL.BufferSubData<Vertex> (BufferTarget.ArrayBuffer, IntPtr.Zero, (IntPtr)(m_VertNum * m_VertexSize), m_Vertices);
-
-			GL.Uniform1 (guiShader.Uniforms["uUseTexture"], m_TextureEnabled ? 1.0f : 0.0f);
-
-			GL.DrawArrays (PrimitiveType.Triangles, 0, m_VertNum);
-
-			m_DrawCallCount++;
-			m_TotalVertNum += m_VertNum;
-			m_VertNum = 0;
 		}
 
 		public override void DrawFilledRect(Rectangle rect)
@@ -191,6 +65,7 @@ namespace Gwen.Renderer.OpenTK
 			if (m_TextureEnabled)
 			{
 				Flush();
+				GL.Disable(EnableCap.Texture2D);
 				m_TextureEnabled = false;
 			}
 
@@ -238,6 +113,7 @@ namespace Gwen.Renderer.OpenTK
 
 			if (!m_TextureEnabled)
 			{
+				GL.Enable(EnableCap.Texture2D);
 				m_TextureEnabled = true;
 			}
 
@@ -250,157 +126,10 @@ namespace Gwen.Renderer.OpenTK
 			DrawRect(rect, u1, v1, u2, v2);
 		}
 
-		private void DrawRect(Rectangle rect, float u1 = 0, float v1 = 0, float u2 = 1, float v2 = 1)
-		{
-			if (m_VertNum + 4 >= MaxVerts)
-			{
-				Flush();
-			}
-
-			if (m_ClipEnabled)
-			{
-				// cpu scissors test
-
-				if (rect.Y < ClipRegion.Y)
-				{
-					int oldHeight = rect.Height;
-					int delta = ClipRegion.Y - rect.Y;
-					rect.Y = ClipRegion.Y;
-					rect.Height -= delta;
-
-					if (rect.Height <= 0)
-					{
-						return;
-					}
-
-					float dv = (float)delta / (float)oldHeight;
-
-					v1 += dv * (v2 - v1);
-				}
-
-				if ((rect.Y + rect.Height) > (ClipRegion.Y + ClipRegion.Height))
-				{
-					int oldHeight = rect.Height;
-					int delta = (rect.Y + rect.Height) - (ClipRegion.Y + ClipRegion.Height);
-
-					rect.Height -= delta;
-
-					if (rect.Height <= 0)
-					{
-						return;
-					}
-
-					float dv = (float)delta / (float)oldHeight;
-
-					v2 -= dv * (v2 - v1);
-				}
-
-				if (rect.X < ClipRegion.X)
-				{
-					int oldWidth = rect.Width;
-					int delta = ClipRegion.X - rect.X;
-					rect.X = ClipRegion.X;
-					rect.Width -= delta;
-
-					if (rect.Width <= 0)
-					{
-						return;
-					}
-
-					float du = (float)delta / (float)oldWidth;
-
-					u1 += du * (u2 - u1);
-				}
-
-				if ((rect.X + rect.Width) > (ClipRegion.X + ClipRegion.Width))
-				{
-					int oldWidth = rect.Width;
-					int delta = (rect.X + rect.Width) - (ClipRegion.X + ClipRegion.Width);
-
-					rect.Width -= delta;
-
-					if (rect.Width <= 0)
-					{
-						return;
-					}
-
-					float du = (float)delta / (float)oldWidth;
-
-					u2 -= du * (u2 - u1);
-				}
-			}
-
-			float cR = m_Color.R / 255f;
-			float cG = m_Color.G / 255f;
-			float cB = m_Color.B / 255f;
-			float cA = m_Color.A / 255f;
-
-			int vertexIndex = m_VertNum;
-			m_Vertices[vertexIndex].x = (short)rect.X;
-			m_Vertices[vertexIndex].y = (short)rect.Y;
-			m_Vertices[vertexIndex].u = u1;
-			m_Vertices[vertexIndex].v = v1;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			vertexIndex++;
-			m_Vertices[vertexIndex].x = (short)(rect.X + rect.Width);
-			m_Vertices[vertexIndex].y = (short)rect.Y;
-			m_Vertices[vertexIndex].u = u2;
-			m_Vertices[vertexIndex].v = v1;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			vertexIndex++;
-			m_Vertices[vertexIndex].x = (short)(rect.X + rect.Width);
-			m_Vertices[vertexIndex].y = (short)(rect.Y + rect.Height);
-			m_Vertices[vertexIndex].u = u2;
-			m_Vertices[vertexIndex].v = v2;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			vertexIndex++;
-			m_Vertices[vertexIndex].x = (short)rect.X;
-			m_Vertices[vertexIndex].y = (short)rect.Y;
-			m_Vertices[vertexIndex].u = u1;
-			m_Vertices[vertexIndex].v = v1;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			vertexIndex++;
-			m_Vertices[vertexIndex].x = (short)(rect.X + rect.Width);
-			m_Vertices[vertexIndex].y = (short)(rect.Y + rect.Height);
-			m_Vertices[vertexIndex].u = u2;
-			m_Vertices[vertexIndex].v = v2;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			vertexIndex++;
-			m_Vertices[vertexIndex].x = (short)rect.X;
-			m_Vertices[vertexIndex].y = (short)(rect.Y + rect.Height);
-			m_Vertices[vertexIndex].u = u1;
-			m_Vertices[vertexIndex].v = v2;
-			m_Vertices[vertexIndex].r = cR;
-			m_Vertices[vertexIndex].g = cG;
-			m_Vertices[vertexIndex].b = cB;
-			m_Vertices[vertexIndex].a = cA;
-
-			m_VertNum += 6;
-		}
+		protected abstract void DrawRect(Rectangle rect, float u1 = 0, float v1 = 0, float u2 = 1, float v2 = 1);
 
 		public override bool LoadFont(Font font)
 		{
-			//Debug.Print(String.Format("LoadFont {0}", font.FaceName));
 			font.RealSize = font.Size * Scale;
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
 
@@ -417,16 +146,15 @@ namespace Gwen.Renderer.OpenTK
 			// "If you attempt to use a font that is not supported, or the font is not installed on the machine that is running the application, the Microsoft Sans Serif font will be substituted."
 			sysFont = new System.Drawing.Font(font.FaceName, font.Size, fontStyle);
 			font.RendererData = sysFont;
+
 			return true;
 		}
 
 		public override void FreeFont(Font font)
 		{
-			//Debug.Print(String.Format("FreeFont {0}", font.FaceName));
 			if (font.RendererData == null)
 				return;
 
-			//Debug.Print(String.Format("FreeFont {0} - actual free", font.FaceName));
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
 			if (sysFont == null)
 				throw new InvalidOperationException("Freeing empty font");
@@ -459,15 +187,15 @@ namespace Gwen.Renderer.OpenTK
 			float externalLeadingPixels = lineSpacingPixels - cellHeightPixels;
 
 			FontMetrics fm = new FontMetrics
-				(
-					emHeightPixels,
-					ascentPixels,
-					descentPixels,
-					cellHeightPixels,
-					internalLeadingPixels,
-					lineSpacingPixels,
-					externalLeadingPixels
-				);
+			(
+				emHeightPixels,
+				ascentPixels,
+				descentPixels,
+				cellHeightPixels,
+				internalLeadingPixels,
+				lineSpacingPixels,
+				externalLeadingPixels
+			);
 
 			return fm;
 		}
@@ -489,7 +217,6 @@ namespace Gwen.Renderer.OpenTK
 
 		public override Size MeasureText(Font font, string text)
 		{
-			//Debug.Print(String.Format("MeasureText '{0}'", text));
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
 
 			if (sysFont == null || Math.Abs(font.RealSize - font.Size * Scale) > 2)
@@ -499,10 +226,11 @@ namespace Gwen.Renderer.OpenTK
 				sysFont = font.RendererData as System.Drawing.Font;
 			}
 
-			var tr = m_StringCache.GetAnyValue(font, text);
-			if (tr != null)
+			var key = new Tuple<String, Font>(text, font);
+
+			if (m_StringCache.ContainsKey(key))
 			{
-				Texture tex = tr.Texture;
+				var tex = m_StringCache[key].Texture;
 				return new Size(tex.Width, tex.Height);
 			}
 
@@ -511,15 +239,11 @@ namespace Gwen.Renderer.OpenTK
 
 			SizeF size = m_Graphics.MeasureString(text, sysFont, System.Drawing.Point.Empty, m_StringFormat);
 
-			return new Size((int)Math.Round(size.Width), (int)Math.Round(size.Height));
+			return new Size((int)Math.Round(size.Width, MidpointRounding.AwayFromZero), (int)Math.Round(size.Height, MidpointRounding.AwayFromZero));
 		}
 
 		public override void RenderText(Font font, Point position, string text)
 		{
-			//Debug.Print(String.Format("RenderText {0}", font.FaceName));
-
-			// The DrawString(...) below will bind a new texture
-			// so make sure everything is rendered!
 			Flush();
 
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
@@ -531,25 +255,22 @@ namespace Gwen.Renderer.OpenTK
 				sysFont = font.RendererData as System.Drawing.Font;
 			}
 
-			TextRenderer tr;
-			if (!m_StringCache.TryGetValue(font, text, this.DrawColor, out tr))
+			var key = new Tuple<String, Font>(text, font);
+
+			if (!m_StringCache.ContainsKey(key))
 			{
 				// not cached - create text renderer
-				//Debug.Print(String.Format("RenderText: caching \"{0}\", {1}", text, font.FaceName));
-
 				Size size = MeasureText(font, text);
-				tr = new TextRenderer(size.Width, size.Height, this);
-				Color drawColor = this.DrawColor;
-				Brush b = new SolidBrush(System.Drawing.Color.FromArgb(drawColor.A, drawColor.R, drawColor.G, drawColor.B));
-				tr.DrawString(text, sysFont, b, Point.Zero, m_StringFormat); // renders string on the texture
-				b.Dispose ();
+				TextRenderer tr = new TextRenderer(size.Width, size.Height, this);
+				tr.DrawString(text, sysFont, Brushes.White, Point.Zero, m_StringFormat); // renders string on the texture
 
 				DrawTexturedRect(tr.Texture, new Rectangle(position.X, position.Y, tr.Texture.Width, tr.Texture.Height));
 
-				m_StringCache[font][text][this.DrawColor] = tr;
+				m_StringCache[key] = tr;
 			}
 			else
 			{
+				TextRenderer tr = m_StringCache[key];
 				DrawTexturedRect(tr.Texture, new Rectangle(position.X, position.Y, tr.Texture.Width, tr.Texture.Height));
 			}
 		}
@@ -715,49 +436,9 @@ namespace Gwen.Renderer.OpenTK
 				pixel = new Color(data[offset + 3], data[offset + 0], data[offset + 1], data[offset + 2]);
 			}
 
-			//[???] Retrieving the entire texture for a single pixel read
-			// is kind of a waste - maybe cache this pointer in the texture
-			// data and then release later on? It's never called during runtime
-			// - only during initialization.
-
-			//[halfofastaple] RE: It's not really a waste if it's only done once on load.
-			// Despite, it's worth looking into, just in case a user
-			// wishes to hack their code together and use this function at
-			// runtime
 			return pixel;
 		}
 
-		public void Resize(int width, int height)
-		{
-			GL.Viewport (0, 0, width, height);
-			GL.UseProgram (guiShader.Program);
-			GL.Uniform2 (guiShader.Uniforms["uScreenSize"], (float)width, (float)height);
-		}
-	}
-
-	internal static class MultiKeyDictionaryHelper
-	{
-		public static TValue GetAnyValue<TKey1, TKey2, TValue>(this MultiKeyDictionary<TKey1, TKey2, TValue> dict, TKey1 key)
-		{
-			Dictionary<TKey2, TValue> innerDict;
-			if (dict.TryGetValue(key, out innerDict))
-			{
-				if (innerDict.Count > 0)
-					return innerDict.Values.First();
-			}
-
-			return default(TValue);
-		}
-
-		public static TValue GetAnyValue<TKey1, TKey2, TKey3, TValue>(this MultiKeyDictionary<TKey1, TKey2, TKey3, TValue> dict, TKey1 key1, TKey2 key2)
-		{
-			MultiKeyDictionary<TKey2, TKey3, TValue> innerDict;
-			if (dict.TryGetValue(key1, out innerDict))
-			{
-				return innerDict.GetAnyValue(key2);
-			}
-
-			return default(TValue);
-		}
+		public abstract void Resize(int width, int height);
 	}
 }

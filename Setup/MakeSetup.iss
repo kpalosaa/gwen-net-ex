@@ -12,7 +12,6 @@ OutputDir=Output
 
 [Files]
 Source: "Gwen.XmlDesigner.OpenTK.exe"; DestDir: "{app}"
-Source: "Gwen.Renderer.OpenTK.dll"; DestDir: "{app}"
 Source: "Gwen.dll"; DestDir: "{app}"
 Source: "Gwen.xml"; DestDir: "{app}"
 Source: "Gwen.Platform.Windows.dll"; DestDir: "{app}"

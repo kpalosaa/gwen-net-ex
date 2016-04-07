@@ -96,7 +96,7 @@ namespace Gwen.XmlDesigner
 		private static readonly string Xml = @"<?xml version='1.0' encoding='UTF-8'?>
 			<DockLayout>
 				<Container Name='TextEditorContainer' Dock='Fill' Title='Xml'>
-					<MultilineTextBox Name='TextEditor' Font='Consolas;12' TextChanged='OnTextChanged' />
+					<MultilineTextBox Name='TextEditor' Font='Courier New;12' TextChanged='OnTextChanged' />
 				</Container>
 			</DockLayout>
 			";
