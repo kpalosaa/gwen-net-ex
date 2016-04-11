@@ -230,11 +230,6 @@ namespace Gwen.Control
 			m_MeasureQueue.Add(element);
 		}
 
-		protected override Size Arrange(Size finalSize)
-		{
-			return base.Arrange(finalSize);
-		}
-
 		/// <summary>
 		/// Handles mouse movement events. Called from Input subsystems.
 		/// </summary>

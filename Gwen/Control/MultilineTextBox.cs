@@ -157,6 +157,7 @@ namespace Gwen.Control
 
 			MouseInputEnabled = true;
 			KeyboardInputEnabled = true;
+			KeyboardNeeded = true;
 			IsTabable = false;
 			AcceptTabs = true;
 

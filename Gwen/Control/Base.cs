@@ -173,7 +173,7 @@ namespace Gwen.Control
 			get { return (Dock)GetInternalFlag(InternalFlags.Dock_Mask); }
 			set
 			{
-				if (SetInternalFlagIfDiff(InternalFlags.Dock_Mask, (InternalFlags)value))
+				if (CheckAndChangeInternalFlag(InternalFlags.Dock_Mask, (InternalFlags)value))
 					Invalidate();
 			}
 		}
@@ -305,7 +305,7 @@ namespace Gwen.Control
 			get { return (VerticalAlignment)GetInternalFlag(InternalFlags.AlignV_Mask); }
 			set
 			{
-				if (SetInternalFlagIfDiff(InternalFlags.AlignV_Mask, (InternalFlags)value))
+				if (CheckAndChangeInternalFlag(InternalFlags.AlignV_Mask, (InternalFlags)value))
 					Invalidate();
 			}
 		}
@@ -319,7 +319,7 @@ namespace Gwen.Control
 			get { return (HorizontalAlignment)GetInternalFlag(InternalFlags.AlignH_Mask); }
 			set
 			{
-				if (SetInternalFlagIfDiff(InternalFlags.AlignH_Mask, (InternalFlags)value))
+				if (CheckAndChangeInternalFlag(InternalFlags.AlignH_Mask, (InternalFlags)value))
 					Invalidate();
 			}
 		}
@@ -360,13 +360,13 @@ namespace Gwen.Control
 		/// Indicates whether the control is hidden.
 		/// </summary>
 		[Xml.XmlProperty]
-		public virtual bool IsHidden { get { return IsSetInternalFlag(InternalFlags.Hidden); } set { if (SetInternalFlagIfDiff(InternalFlags.Hidden, value)) Redraw(); } }
+		public virtual bool IsHidden { get { return IsSetInternalFlag(InternalFlags.Hidden); } set { if (CheckAndChangeInternalFlag(InternalFlags.Hidden, value)) Redraw(); } }
 
 		/// <summary>
 		/// Indicates whether the control is hidden.
 		/// </summary>
 		[Xml.XmlProperty]
-		public virtual bool IsCollapsed { get { return IsSetInternalFlag(InternalFlags.Collapsed); } set { if (SetInternalFlagIfDiff(InternalFlags.Collapsed, value)) InvalidateParent(); } }
+		public virtual bool IsCollapsed { get { return IsSetInternalFlag(InternalFlags.Collapsed); } set { if (CheckAndChangeInternalFlag(InternalFlags.Collapsed, value)) InvalidateParent(); } }
 
 		/// <summary>
 		/// Determines whether the control's position should be restricted to parent's bounds.
@@ -382,6 +382,11 @@ namespace Gwen.Control
 		/// Determines whether the control receives keyboard input events.
 		/// </summary>
 		public bool KeyboardInputEnabled { get { return IsSetInternalFlag(InternalFlags.KeyboardInputEnabled); } set { SetInternalFlag(InternalFlags.KeyboardInputEnabled, value); } }
+
+		/// <summary>
+		/// Determines whether the control receives keyboard character events.
+		/// </summary>
+		public bool KeyboardNeeded { get { return IsSetInternalFlag(InternalFlags.KeyboardNeeded); } set { SetInternalFlag(InternalFlags.KeyboardNeeded, value); } }
 
 		/// <summary>
 		/// Gets or sets the mouse cursor when the cursor is hovering the control.
@@ -561,7 +566,7 @@ namespace Gwen.Control
 			get { return IsSetInternalFlag(InternalFlags.DrawDebugOutlines); }
 			set
 			{
-				if (!SetInternalFlagIfDiff(InternalFlags.DrawDebugOutlines, value))
+				if (!CheckAndChangeInternalFlag(InternalFlags.DrawDebugOutlines, value))
 					return;
 				foreach (Base child in Children)
 				{
@@ -2366,7 +2371,7 @@ namespace Gwen.Control
 				m_InternalFlags &= ~flag;
 		}
 
-		private bool SetInternalFlagIfDiff(InternalFlags flag, bool value)
+		private bool CheckAndChangeInternalFlag(InternalFlags flag, bool value)
 		{
 			bool oldValue = (m_InternalFlags & flag) != 0;
 			if (oldValue == value)
@@ -2385,7 +2390,7 @@ namespace Gwen.Control
 			m_InternalFlags = (m_InternalFlags & ~mask) | flag;
 		}
 
-		private bool SetInternalFlagIfDiff(InternalFlags mask, InternalFlags flag)
+		private bool CheckAndChangeInternalFlag(InternalFlags mask, InternalFlags flag)
 		{
 			if ((m_InternalFlags & mask) == flag)
 				return false;
@@ -2434,6 +2439,7 @@ namespace Gwen.Control
 			KeyboardInputEnabled= 1 << 23,
 			DrawBackground		= 1 << 24,
 			Tabable				= 1 << 25,
+			KeyboardNeeded		= 1 << 26,
 		}
 	}
 }

@@ -278,38 +278,13 @@ namespace Gwen.Control.Internal
 			p.X -= Padding.Left;
 			p.Y -= Padding.Top;
 
-			Size cp;
-			double distance = Double.MaxValue;
 			Point best = new Point(0, 0);
-			string sub = String.Empty;
 
 			/* Find the appropriate Y (always pick a row whichever the mouse currently is on) */
 			best.Y = Util.Clamp(p.Y / LineHeight, 0, m_TextLines.Count - 1);
 
 			/* Find the best X, closest char */
 			best.X = m_TextLines[best.Y].GetClosestCharacter(p);
-
-			/*
-			sub = String.Empty;
-			distance = Double.MaxValue;
-			cp = Size.Zero;
-			for (int x = 0; x <= m_TextLines[best.Y].Length; x++)
-			{
-				double xDist = Math.Abs(cp.Width - px);
-				if (xDist < distance)
-				{
-					distance = xDist;
-					best.X = x;
-				}
-
-				if (x < m_TextLines[best.Y].Length)
-					sub += m_TextLines[best.Y].String[x];
-				else
-					sub += " ";
-
-				cp = Skin.Renderer.MeasureText(Font, sub);
-			}
-			*/
 
 			return best;
 		}

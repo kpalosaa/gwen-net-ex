@@ -12,27 +12,28 @@ using Gwen.Control;
 
 namespace Gwen.UnitTest.OpenTK
 {
-    /// <summary>
-    /// Demonstrates the GameWindow class.
-    /// </summary>
-    public class UnitTestGameWindow : GameWindow
-    {
+	/// <summary>
+	/// Demonstrates the GameWindow class.
+	/// </summary>
+	public class UnitTestGameWindow : GameWindow
+	{
 		private Gwen.Renderer.OpenTK.Input.OpenTK m_Input;
 #if USE_GL42_RENDERER
 		private Gwen.Renderer.OpenTK.OpenTKGL42 m_Renderer;
 #else
-		private Gwen.Renderer.OpenTK.OpenTKGL21 m_Renderer;
+		private Gwen.Renderer.OpenTK.OpenTKGL20 m_Renderer;
 #endif
 		private Gwen.Skin.Base m_Skin;
-        private Gwen.Control.Canvas m_Canvas;
-        private Gwen.UnitTest.UnitTest m_UnitTest;
+		private Gwen.Control.Canvas m_Canvas;
+		private Gwen.UnitTest.UnitTest m_UnitTest;
 
-        const int FpsFrames = 50;
-        private readonly List<long> m_Ftime;
-        private readonly Stopwatch m_Stopwatch;
-        private long m_LastTime;
-        private bool m_AltDown = false;
+		const int FpsFrames = 50;
+		private readonly List<long> m_Ftime;
+		private readonly Stopwatch m_Stopwatch;
+		private long m_LastTime;
 		private float m_TotalTime = 0f;
+
+		private bool m_AltDown = false;
 
 		public UnitTestGameWindow()
 #if USE_GL42_RENDERER
@@ -50,11 +51,11 @@ namespace Gwen.UnitTest.OpenTK
 			MouseWheel += Mouse_Wheel;
 
 			m_Ftime = new List<long>(FpsFrames);
-            m_Stopwatch = new Stopwatch();
-        }
+			m_Stopwatch = new Stopwatch();
+		}
 
-        public override void Dispose()
-        {
+		public override void Dispose()
+		{
 			if (m_Canvas != null)
 			{
 				m_Canvas.Dispose();
@@ -70,69 +71,69 @@ namespace Gwen.UnitTest.OpenTK
 				m_Renderer.Dispose();
 				m_Renderer = null;
 			}
-            base.Dispose();
-        }
+			base.Dispose();
+		}
 
-        /// <summary>
-        /// Occurs when a key is pressed.
-        /// </summary>
-        /// <param name="sender">The KeyboardDevice which generated this event.</param>
-        /// <param name="e">The key that was pressed.</param>
-        void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
-        {
-            if (e.Key == global::OpenTK.Input.Key.Escape)
-                Exit();
-            else if (e.Key == global::OpenTK.Input.Key.AltLeft)
-                m_AltDown = true;
-            else if (m_AltDown && e.Key == global::OpenTK.Input.Key.Enter)
-                if (WindowState == WindowState.Fullscreen)
-                    WindowState = WindowState.Normal;
-                else
-                    WindowState = WindowState.Fullscreen;
+		/// <summary>
+		/// Occurs when a key is pressed.
+		/// </summary>
+		/// <param name="sender">The KeyboardDevice which generated this event.</param>
+		/// <param name="e">The key that was pressed.</param>
+		void Keyboard_KeyDown(object sender, KeyboardKeyEventArgs e)
+		{
+			if (e.Key == global::OpenTK.Input.Key.Escape)
+				Exit();
+			else if (e.Key == global::OpenTK.Input.Key.AltLeft)
+				m_AltDown = true;
+			else if (m_AltDown && e.Key == global::OpenTK.Input.Key.Enter)
+				if (WindowState == WindowState.Fullscreen)
+					WindowState = WindowState.Normal;
+				else
+					WindowState = WindowState.Fullscreen;
 
-            m_Input.ProcessKeyDown(e);
-        }
+			m_Input.ProcessKeyDown(e);
+		}
 
-        void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
-        {
-            m_AltDown = false;
-            m_Input.ProcessKeyUp(e);
-        }
+		void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
+		{
+			m_AltDown = false;
+			m_Input.ProcessKeyUp(e);
+		}
 
 		void Mouse_ButtonDown(object sender, MouseButtonEventArgs args)
 		{
 			m_Input.ProcessMouseMessage(args);
 		}
 
-        void Mouse_ButtonUp(object sender, MouseButtonEventArgs args)
-        {
-            m_Input.ProcessMouseMessage(args);
-        }
+		void Mouse_ButtonUp(object sender, MouseButtonEventArgs args)
+		{
+			m_Input.ProcessMouseMessage(args);
+		}
 
-        void Mouse_Move(object sender, MouseMoveEventArgs args)
-        {
-            m_Input.ProcessMouseMessage(args);
-        }
+		void Mouse_Move(object sender, MouseMoveEventArgs args)
+		{
+			m_Input.ProcessMouseMessage(args);
+		}
 
-        void Mouse_Wheel(object sender, MouseWheelEventArgs args)
-        {
-            m_Input.ProcessMouseMessage(args);
-        }
+		void Mouse_Wheel(object sender, MouseWheelEventArgs args)
+		{
+			m_Input.ProcessMouseMessage(args);
+		}
 
-        /// <summary>
-        /// Setup OpenGL and load resources here.
-        /// </summary>
-        /// <param name="e">Not used.</param>
-        protected override void OnLoad(EventArgs e)
-        {
-            GL.ClearColor(System.Drawing.Color.MidnightBlue);
+		/// <summary>
+		/// Setup OpenGL and load resources here.
+		/// </summary>
+		/// <param name="e">Not used.</param>
+		protected override void OnLoad(EventArgs e)
+		{
+			GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
 			Platform.Platform.Init(new Platform.Windows());
 
 #if USE_GL42_RENDERER
 			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
 #else
-			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL21();
+			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();
 #endif
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
@@ -140,16 +141,16 @@ namespace Gwen.UnitTest.OpenTK
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
 			m_Input.Initialize(m_Canvas);
 
-            m_Canvas.SetSize(Width, Height);
-            m_Canvas.ShouldDrawBackground = true;
-            m_Canvas.BackgroundColor = new Color(255, 150, 170, 170);
-            //canvas.KeyboardInputEnabled = true;
+			m_Canvas.SetSize(Width, Height);
+			m_Canvas.ShouldDrawBackground = true;
+			m_Canvas.BackgroundColor = new Color(255, 150, 170, 170);
+			//canvas.KeyboardInputEnabled = true;
 
-            m_UnitTest = new Gwen.UnitTest.UnitTest(m_Canvas);
+			m_UnitTest = new Gwen.UnitTest.UnitTest(m_Canvas);
 
-            m_Stopwatch.Restart();
-            m_LastTime = 0;
-        }
+			m_Stopwatch.Restart();
+			m_LastTime = 0;
+		}
 
 		/// <summary>
 		/// Respond to resize events here.
@@ -160,8 +161,8 @@ namespace Gwen.UnitTest.OpenTK
 		{
 			m_Renderer.Resize(Width, Height);
 
-            m_Canvas.SetSize(Width, Height);
-        }
+			m_Canvas.SetSize(Width, Height);
+		}
 
 		/// <summary>
 		/// Add your game logic here.

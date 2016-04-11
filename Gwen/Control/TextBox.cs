@@ -151,6 +151,7 @@ namespace Gwen.Control
 
 			MouseInputEnabled = true;
 			KeyboardInputEnabled = true;
+			KeyboardNeeded = true;
 
 			m_CursorPos = 0;
 			m_CursorEnd = 0;

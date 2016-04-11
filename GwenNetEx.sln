@@ -17,6 +17,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.XmlDesigner.OpenTK", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.Platform.Windows", "Gwen.Platform.Windows\Gwen.Platform.Windows.csproj", "{84C52BA6-C8D5-4D68-BF1B-A5D7E9E2EB8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.UnitTest.Android", "Gwen.UnitTest.Android\Gwen.UnitTest.Android.csproj", "{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.Platform.Android", "Gwen.Platform.Android\Gwen.Platform.Android.csproj", "{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gwen.Renderer.Android.OpenTK", "Gwen.Renderer.Android.OpenTK\Gwen.Renderer.Android.OpenTK.csproj", "{61813EE8-E5A8-477F-B8B8-07E963799F09}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +57,20 @@ Global
 		{84C52BA6-C8D5-4D68-BF1B-A5D7E9E2EB8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84C52BA6-C8D5-4D68-BF1B-A5D7E9E2EB8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84C52BA6-C8D5-4D68-BF1B-A5D7E9E2EB8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C18A1A8D-4C5E-44AB-ACA3-502CFCEEFFD0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61813EE8-E5A8-477F-B8B8-07E963799F09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61813EE8-E5A8-477F-B8B8-07E963799F09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61813EE8-E5A8-477F-B8B8-07E963799F09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61813EE8-E5A8-477F-B8B8-07E963799F09}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
