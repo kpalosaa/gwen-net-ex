@@ -12,7 +12,7 @@ namespace Gwen.Control.Layout
 		/// Initializes a new instance of the <see cref="VerticalLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public VerticalLayout(Base parent)
+		public VerticalLayout(ControlBase parent)
 			: base(parent)
 		{
 			this.HorizontalAlignment = HorizontalAlignment.Stretch;

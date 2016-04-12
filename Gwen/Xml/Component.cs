@@ -15,13 +15,13 @@ namespace Gwen.Xml
 	{
 		private static Dictionary<string, ComponentDef> m_registerdComponents = new Dictionary<string, ComponentDef>();
 
-		private Base m_View;
+		private ControlBase m_View;
 
 		/// <summary>
 		/// Get the view of the component. View is a group of child controls or components that implements
 		/// the visual part of the component.
 		/// </summary>
-		public Base View { get { return m_View; } }
+		public ControlBase View { get { return m_View; } }
 
 		/// <summary>
 		/// Register a component. All components must be registerd before using them.
@@ -65,7 +65,7 @@ namespace Gwen.Xml
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="data">Optional data for a component constructor.</param>
 		/// <returns>Created instance of the component.</returns>
-		public static T Create<T>(Base parent, params object[] data) where T: Component
+		public static T Create<T>(ControlBase parent, params object[] data) where T: Component
 		{
 			return Create(typeof(T), parent, data) as T;
 		}
@@ -77,7 +77,7 @@ namespace Gwen.Xml
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="data">Optional data for a component constructor.</param>
 		/// <returns>Created instance of the component.</returns>
-		public static Component Create(Type type, Base parent, params object[] data)
+		public static Component Create(Type type, ControlBase parent, params object[] data)
 		{
 			Component component;
 			if (data.Length > 0)
@@ -100,7 +100,7 @@ namespace Gwen.Xml
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="data">Optional data for a component constructor. If the component registration contains also data, that data is used first, then this optional data.</param>
 		/// <returns>Created instance of the component.</returns>
-		public static Component Create(string name, Base parent, params object[] data)
+		public static Component Create(string name, ControlBase parent, params object[] data)
 		{
 			ComponentDef compDef;
 			if (m_registerdComponents.TryGetValue(name, out compDef))
@@ -122,7 +122,7 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="view">Gwen control that will be a view of the copmponent.</param>
-		protected Component(Base parent, Base view)
+		protected Component(ControlBase parent, ControlBase view)
 		{
 			if (view == null)
 				throw new NullReferenceException("View must not be null.");
@@ -138,11 +138,11 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <param name="parent">Parent Gwen control of the component.</param>
 		/// <param name="xmlSource">XML to be a view of the component.</param>
-		protected Component(Base parent, IXmlSource xmlSource)
+		protected Component(ControlBase parent, IXmlSource xmlSource)
 		{
 			Stream stream = xmlSource.GetStream();
 
-			Base view = null;
+			ControlBase view = null;
 			using (Parser parser = new Parser(stream))
 			{
 				view = parser.Parse(parent);
@@ -170,7 +170,7 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <param name="child">Child control.</param>
 		/// <remarks>No need to call the base implementation.</remarks>
-		protected virtual void OnChildAdded(Base child)
+		protected virtual void OnChildAdded(ControlBase child)
 		{
 
 		}
@@ -196,7 +196,7 @@ namespace Gwen.Xml
 			if (m_View == null)
 				throw new NullReferenceException("Unable to get a control. Component contains no view.");
 
-			Gwen.Control.Base control = null;
+			Gwen.Control.ControlBase control = null;
 			if (m_View.Name == name)
 				control = m_View;
 			else
@@ -227,7 +227,7 @@ namespace Gwen.Xml
 		/// <param name="args">Event arguments.</param>
 		/// <returns>True if the event was handled, false otherwise.</returns>
 		/// <remarks>No need to call the base implementation.</remarks>
-		public virtual bool HandleEvent(string eventName, string handlerName, Gwen.Control.Base sender, System.EventArgs args)
+		public virtual bool HandleEvent(string eventName, string handlerName, Gwen.Control.ControlBase sender, System.EventArgs args)
 		{
 			return false;
 		}
@@ -271,7 +271,7 @@ namespace Gwen.Xml
 			return false;
 		}
 
-		private static Base ElementHandler(Parser parser, Type type, Base parent)
+		private static ControlBase ElementHandler(Parser parser, Type type, ControlBase parent)
 		{
 			ComponentDef compDef;
 			if (m_registerdComponents.TryGetValue(parser.Name, out compDef))

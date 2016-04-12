@@ -8,7 +8,7 @@ namespace Gwen.Control
 	/// Text box (editable).
 	/// </summary>
 	[Xml.XmlControl]
-	public class TextBox : Base
+	public class TextBox : ControlBase
 	{
 		private readonly ScrollArea m_ScrollArea;
 		private readonly Text m_Text;
@@ -136,7 +136,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="TextBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public TextBox(Base parent)
+		public TextBox(ControlBase parent)
 			: base(parent)
 		{
 			Padding = Padding.Three;
@@ -344,7 +344,7 @@ namespace Gwen.Control
 		/// Handler for Paste event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnPaste(Base from, EventArgs args)
+		protected override void OnPaste(ControlBase from, EventArgs args)
 		{
 			base.OnPaste(from, args);
 			InsertText(Platform.Platform.GetClipboardText());
@@ -354,7 +354,7 @@ namespace Gwen.Control
 		/// Handler for Copy event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnCopy(Base from, EventArgs args)
+		protected override void OnCopy(ControlBase from, EventArgs args)
 		{
 			if (!HasSelection) return;
 			base.OnCopy(from, args);
@@ -366,7 +366,7 @@ namespace Gwen.Control
 		/// Handler for Cut event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnCut(Base from, EventArgs args)
+		protected override void OnCut(ControlBase from, EventArgs args)
 		{
 			if (!HasSelection) return;
 			base.OnCut(from, args);
@@ -379,7 +379,7 @@ namespace Gwen.Control
 		/// Handler for Select All event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnSelectAll(Base from, EventArgs args)
+		protected override void OnSelectAll(ControlBase from, EventArgs args)
 		{
 			//base.OnSelectAll(from);
 			m_CursorEnd = 0;
@@ -696,7 +696,7 @@ namespace Gwen.Control
 		/// Renders the focus overlay.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderFocus(Skin.Base skin)
+		protected override void RenderFocus(Skin.SkinBase skin)
 		{
 			// nothing
 		}
@@ -705,7 +705,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			base.Render(skin);
 

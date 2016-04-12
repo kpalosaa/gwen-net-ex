@@ -12,7 +12,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="TreeNodeLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public TreeNodeLabel(Base parent)
+        public TreeNodeLabel(ControlBase parent)
             : base(parent)
         {
             Alignment = Alignment.Left | Alignment.CenterV;

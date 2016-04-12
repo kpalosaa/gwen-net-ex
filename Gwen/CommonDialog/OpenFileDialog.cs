@@ -9,7 +9,7 @@ namespace Gwen.CommonDialog
 	/// </summary>
 	public class OpenFileDialog : FileDialog
 	{
-		public OpenFileDialog(Base parent)
+		public OpenFileDialog(ControlBase parent)
 			: base(parent)
 		{
 		}

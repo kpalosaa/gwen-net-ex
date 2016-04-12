@@ -5,13 +5,13 @@ namespace Gwen.RichText
 {
 	internal abstract class LineBreaker
 	{
-		private Renderer.Base m_Renderer;
+		private Renderer.RendererBase m_Renderer;
 		private Font m_DefaultFont;
 
-		public Renderer.Base Renderer { get { return m_Renderer; } }
+		public Renderer.RendererBase Renderer { get { return m_Renderer; } }
 		public Font DefaultFont { get { return m_DefaultFont; } }
 
-		public LineBreaker(Renderer.Base renderer, Font defaultFont)
+		public LineBreaker(Renderer.RendererBase renderer, Font defaultFont)
 		{
 			m_Renderer = renderer;
 			m_DefaultFont = defaultFont;

@@ -15,7 +15,7 @@ namespace Gwen.Control.Property
         /// Initializes a new instance of the <see cref="Color"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Color(Control.Base parent) : base(parent)
+        public Color(Control.ControlBase parent) : base(parent)
         {
             m_Button = new ColorButton(m_TextBox);
 			m_Button.Dock = Dock.Right;
@@ -28,7 +28,7 @@ namespace Gwen.Control.Property
         /// Color-select button press handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnButtonPressed(Control.Base control, EventArgs args)
+		protected virtual void OnButtonPressed(Control.ControlBase control, EventArgs args)
         {
 			Canvas canvas = GetCanvas();
 
@@ -55,7 +55,7 @@ namespace Gwen.Control.Property
         /// Color changed handler.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnColorChanged(Control.Base control, EventArgs args)
+		protected virtual void OnColorChanged(Control.ControlBase control, EventArgs args)
         {
             HSVColorPicker picker = control as HSVColorPicker;
             SetTextFromColor(picker.SelectedColor);

@@ -8,19 +8,19 @@ namespace Gwen.UnitTest
     {
         private readonly Control.TabControl m_DockControl;
 
-        public TabControl(Base parent)
+        public TabControl(ControlBase parent)
             : base(parent)
         {
             {
                 m_DockControl = new Control.TabControl(this);
 				m_DockControl.Margin = Margin.Five;
 				m_DockControl.Width = 200;
-				m_DockControl.Height = 150;
+				//m_DockControl.Height = 150;
 				m_DockControl.Dock = Dock.Top;
 
                 {
                     Control.Internal.TabButton button = m_DockControl.AddPage("Controls");
-                    Base page = button.Page;
+                    ControlBase page = button.Page;
 
                     {
 						Control.GroupBox group = new Control.GroupBox(page);
@@ -59,7 +59,7 @@ namespace Gwen.UnitTest
             }
         }
 
-		void OnDockChange(Base control, EventArgs args)
+		void OnDockChange(ControlBase control, EventArgs args)
         {
             RadioButtonGroup rc = (RadioButtonGroup)control;
 

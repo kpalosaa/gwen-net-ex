@@ -8,9 +8,9 @@ namespace Gwen.UnitTest
 	public class Docking : GUnit
 	{
 		private readonly Font font;
-		private Control.Base outer;
+		private Control.ControlBase outer;
 
-		public Docking(Base parent)
+		public Docking(ControlBase parent)
 			: base(parent)
 		{
 			font = Skin.DefaultFont.Copy();
@@ -90,7 +90,7 @@ namespace Gwen.UnitTest
 			//DrawDebugOutlines = true;
 		}
 
-		Base CreateControls(Control.Base subject, Dock docking, string name, Base container)
+		ControlBase CreateControls(Control.ControlBase subject, Dock docking, string name, ControlBase container)
 		{
 			Control.GroupBox gb = new Control.GroupBox(container);
 			gb.Text = name;
@@ -185,60 +185,60 @@ namespace Gwen.UnitTest
 			return gb;
 		}
 
-		void PaddingChanged(Base control, EventArgs args)
+		void PaddingChanged(ControlBase control, EventArgs args)
 		{
 			Control.Internal.Slider val = control as Control.Internal.Slider;
 			int i = (int)val.Value;
 			outer.Padding = new Padding(i, i, i, i);
 		}
 
-		void MarginChanged(Base control, EventArgs args)
+		void MarginChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = control.UserData as Base;
+			ControlBase inner = control.UserData as ControlBase;
 			Control.Internal.Slider val = control as Control.Internal.Slider;
 			int i = (int)val.Value;
 			inner.Margin = new Margin(i, i, i, i);
 		}
 
-		void WidthChanged(Base control, EventArgs args)
+		void WidthChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = control.UserData as Base;
+			ControlBase inner = control.UserData as ControlBase;
 			Control.Internal.Slider val = control as Control.Internal.Slider;
 			if (inner.HorizontalAlignment != HorizontalAlignment.Stretch)
 				inner.Width = (int)val.Value;
 		}
 
-		void HeightChanged(Base control, EventArgs args)
+		void HeightChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = control.UserData as Base;
+			ControlBase inner = control.UserData as ControlBase;
 			Control.Internal.Slider val = control as Control.Internal.Slider;
 			if (inner.VerticalAlignment != VerticalAlignment.Stretch)
 				inner.Height = (int)val.Value;
 		}
 
-		void HAlignChanged(Base control, EventArgs args)
+		void HAlignChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = control.UserData as Base;
+			ControlBase inner = control.UserData as ControlBase;
 			RadioButtonGroup rbg = (RadioButtonGroup)control;
 			inner.HorizontalAlignment = (HorizontalAlignment)rbg.Selected.UserData;
 			if (inner.HorizontalAlignment == HorizontalAlignment.Stretch)
 				inner.Width = Util.Ignore;
 		}
 
-		void VAlignChanged(Base control, EventArgs args)
+		void VAlignChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = control.UserData as Base;
+			ControlBase inner = control.UserData as ControlBase;
 			RadioButtonGroup rbg = (RadioButtonGroup)control;
 			inner.VerticalAlignment = (VerticalAlignment)rbg.Selected.UserData;
 			if (inner.VerticalAlignment == VerticalAlignment.Stretch)
 				inner.Height = Util.Ignore;
 		}
 
-		void DockChanged(Base control, EventArgs args)
+		void DockChanged(ControlBase control, EventArgs args)
 		{
-			Base inner = (Base) control.UserData;
+			ControlBase inner = (ControlBase) control.UserData;
 			RadioButtonGroup rbg = (RadioButtonGroup) control;
-			Base gb = inner.UserData as Base;
+			ControlBase gb = inner.UserData as ControlBase;
 			int w = (int)(gb.FindChildByName("Width", true) as Control.Internal.Slider).Value;
 			int h = (int)(gb.FindChildByName("Height", true) as Control.Internal.Slider).Value;
 			inner.Dock = (Dock)rbg.Selected.UserData;

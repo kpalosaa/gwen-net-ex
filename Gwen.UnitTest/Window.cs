@@ -8,57 +8,58 @@ namespace Gwen.UnitTest
 	public class Window : GUnit
     {
         private int m_WindowCount;
-        private readonly Random rand;
+        private readonly Random m_Rand;
 
-        public Window(Base parent)
+        public Window(ControlBase parent)
             : base(parent)
         {
-			Gwen.Control.Layout.FlowLayout layout = new Gwen.Control.Layout.FlowLayout(this);
+			m_Rand = new Random();
 
-            rand = new Random();
+			Gwen.Control.Layout.VerticalLayout layout = new Gwen.Control.Layout.VerticalLayout(this);
+			layout.HorizontalAlignment = HorizontalAlignment.Left;
 
 			Control.Button button;
 
             button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a Window";
             button.Clicked += OpenWindow;
 
 			button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a Window (with menu)";
 			button.Clicked += OpenWindowWithMenuAndStatusBar;
 
 			button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a Window (auto size)";
 			button.Clicked += OpenWindowAutoSizing;
 
 			button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a Window (modal)";
 			button.Clicked += OpenWindowModal;
 
 			button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a MessageBox";
             button.Clicked += OpenMsgbox;
 
 			button = new Control.Button(layout);
-			button.Width = 200;
+			button.Margin = Margin.Five;
 			button.Text = "Open a Long MessageBox";
 			button.Clicked += OpenLongMsgbox;
 
 			m_WindowCount = 0;
         }
 
-		private void OpenWindow(Base control, EventArgs args)
+		private void OpenWindow(ControlBase control, EventArgs args)
         {
             Control.Window window = new Control.Window(this);
             window.Title = String.Format("Window ({0})", ++m_WindowCount);
-			window.Size = new Size(rand.Next(200, 400), rand.Next(200, 400));
-			window.Left = rand.Next(700);
-			window.Top = rand.Next(400);
+			window.Size = new Size(m_Rand.Next(200, 400), m_Rand.Next(200, 400));
+			window.Left = m_Rand.Next(700);
+			window.Top = m_Rand.Next(400);
 			window.Padding = new Padding(6, 3, 6, 6);
 
 			Control.RadioButtonGroup rbg = new RadioButtonGroup(window);
@@ -76,13 +77,13 @@ namespace Gwen.UnitTest
 			dragging.CheckChanged += (c, a) => window.IsDraggingEnabled = dragging.IsChecked;
         }
 
-		private void OpenWindowWithMenuAndStatusBar(Base control, EventArgs args)
+		private void OpenWindowWithMenuAndStatusBar(ControlBase control, EventArgs args)
 		{
 			Control.Window window = new Control.Window(this);
 			window.Title = String.Format("Window ({0})", ++m_WindowCount);
-			window.Size = new Size(rand.Next(200, 400), rand.Next(200, 400));
-			window.Left = rand.Next(700);
-			window.Top = rand.Next(400);
+			window.Size = new Size(m_Rand.Next(200, 400), m_Rand.Next(200, 400));
+			window.Left = m_Rand.Next(700);
+			window.Top = m_Rand.Next(400);
 			window.Padding = new Padding(1, 0, 1, 1);
 
 			Control.Layout.DockLayout layout = new Control.Layout.DockLayout(window);
@@ -118,12 +119,12 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		private void OpenWindowAutoSizing(Base control, EventArgs args)
+		private void OpenWindowAutoSizing(ControlBase control, EventArgs args)
 		{
 			Control.Window window = new Control.Window(this);
 			window.Title = String.Format("Window ({0})", ++m_WindowCount);
-			window.Left = rand.Next(700);
-			window.Top = rand.Next(400);
+			window.Left = m_Rand.Next(700);
+			window.Top = m_Rand.Next(400);
 			window.Padding = new Padding(6, 3, 6, 6);
 			window.HorizontalAlignment = HorizontalAlignment.Left;
 			window.VerticalAlignment = VerticalAlignment.Top;
@@ -154,12 +155,12 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		private void OpenWindowModal(Base control, EventArgs args)
+		private void OpenWindowModal(ControlBase control, EventArgs args)
 		{
 			Control.Window window = new Control.Window(this);
 			window.Title = String.Format("Modal Window ({0})", ++m_WindowCount);
-			window.Left = rand.Next(700);
-			window.Top = rand.Next(400);
+			window.Left = m_Rand.Next(700);
+			window.Top = m_Rand.Next(400);
 			window.Padding = new Padding(6, 3, 6, 6);
 			window.HorizontalAlignment = HorizontalAlignment.Left;
 			window.VerticalAlignment = VerticalAlignment.Top;
@@ -184,21 +185,21 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		private void OpenMsgbox(Base control, EventArgs args)
+		private void OpenMsgbox(ControlBase control, EventArgs args)
         {
             MessageBox window = new MessageBox(this, "Message box test text.");
 			window.Dismissed += OnDismissed;
-			window.SetPosition(rand.Next(700), rand.Next(400));
+			window.SetPosition(m_Rand.Next(700), m_Rand.Next(400));
         }
 
-		private void OpenLongMsgbox(Base control, EventArgs args)
+		private void OpenLongMsgbox(ControlBase control, EventArgs args)
 		{
 			MessageBox window = new MessageBox(this, @"In olden times when wishing still helped one, there lived a king whose daughters were all beautiful, but the youngest was so beautiful that the sun itself, which has seen so much, was astonished whenever it shone in her face. Close by the king's castle lay a great dark forest, and under an old lime-tree in the forest was a well, and when the day was very warm, the king's child went out into the forest and sat down by the side of the cool fountain, and when she was bored she took a golden ball, and threw it up on high and caught it, and this ball was her favorite plaything.", "Long Text", MessageBoxButtons.AbortRetryIgnore);
 			window.Dismissed += OnDismissed;
-			window.SetPosition(rand.Next(700), rand.Next(400));
+			window.SetPosition(m_Rand.Next(700), m_Rand.Next(400));
 		}
 
-		private void OnDismissed(Base sender, MessageBoxResultEventArgs args)
+		private void OnDismissed(ControlBase sender, MessageBoxResultEventArgs args)
 		{
 			UnitTest.PrintText("Message box result: " + args.Result);
 		}

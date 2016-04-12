@@ -7,19 +7,19 @@ using Gwen.Control.Layout;
 
 namespace Gwen.UnitTest
 {
-    public class UnitTest : Base
+    public class UnitTest : ControlBase
     {
-        private Control.Base m_LastControl;
+        private Control.ControlBase m_LastControl;
         private readonly Control.StatusBar m_StatusBar;
         private readonly Control.ListBox m_TextOutput;
         private readonly Control.CollapsibleList m_List;
-        private readonly Base m_Center;
+        private readonly ControlBase m_Center;
         private readonly Control.LabeledCheckBox m_DebugCheck;
 
         public double Fps; // set this in your rendering loop
         public string Note; // additional text to display in status bar
 
-        public UnitTest(Base parent) : base(parent)
+        public UnitTest(ControlBase parent) : base(parent)
         {
             Dock = Dock.Fill;
 
@@ -100,7 +100,7 @@ namespace Gwen.UnitTest
             btn.Clicked += OnCategorySelect;
         }
 
-		private void DebugCheckChanged(Base control, EventArgs args)
+		private void DebugCheckChanged(ControlBase control, EventArgs args)
         {
             if (m_DebugCheck.IsChecked)
                 m_Center.DrawDebugOutlines = true;
@@ -109,13 +109,13 @@ namespace Gwen.UnitTest
             //Invalidate();
         }
 
-		private void OnCategorySelect(Base control, EventArgs args)
+		private void OnCategorySelect(ControlBase control, EventArgs args)
         {
             if (m_LastControl != null)
             {
                 m_LastControl.Collapse();
             }
-            Base test = control.UserData as Base;
+            ControlBase test = control.UserData as ControlBase;
             test.Show();
             m_LastControl = test;
         }
@@ -126,7 +126,7 @@ namespace Gwen.UnitTest
             m_TextOutput.ScrollToBottom();
         }
 
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             m_StatusBar.Text = String.Format("GWEN.Net Unit Test - {0:F0} fps. {1}", Fps, Note);
 

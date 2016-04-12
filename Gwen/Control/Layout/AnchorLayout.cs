@@ -11,13 +11,13 @@ namespace Gwen.Control.Layout
 	/// inform the layout process the default size of the area.
 	/// </remarks>
 	[Xml.XmlControl]
-	public class AnchorLayout : Base
+	public class AnchorLayout : ControlBase
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AnchorLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public AnchorLayout(Base parent)
+		public AnchorLayout(ControlBase parent)
 			: base(parent)
 		{
 		}
@@ -26,7 +26,7 @@ namespace Gwen.Control.Layout
 		{
 			Size size = availableSize - Padding;
 
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				child.DoMeasure(size);
 			}
@@ -40,7 +40,7 @@ namespace Gwen.Control.Layout
 
 			Size initialSize = this.AnchorBounds.Size;
 
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				Anchor anchor = child.Anchor;
 				Rectangle anchorBounds = child.AnchorBounds;

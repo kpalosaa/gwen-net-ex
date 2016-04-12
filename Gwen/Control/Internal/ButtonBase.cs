@@ -3,7 +3,7 @@ using Gwen.Input;
 
 namespace Gwen.Control.Internal
 {
-	public abstract class ButtonBase : Base
+	public abstract class ButtonBase : ControlBase
 	{
 		private bool m_Depressed;
 		private bool m_Toggle;
@@ -93,7 +93,7 @@ namespace Gwen.Control.Internal
 			}
 		}
 
-		public ButtonBase(Base parent)
+		public ButtonBase(ControlBase parent)
 			: base(parent)
 		{
 			MouseInputEnabled = true;
@@ -110,7 +110,7 @@ namespace Gwen.Control.Internal
 		/// <summary>
 		/// "Clicks" the button.
 		/// </summary>
-		public virtual void Press(Base control = null)
+		public virtual void Press(ControlBase control = null)
 		{
 			OnClicked(0, 0);
 		}

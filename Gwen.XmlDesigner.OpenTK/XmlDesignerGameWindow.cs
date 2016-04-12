@@ -22,7 +22,7 @@ namespace Gwen.XmlDesigner.OpenTK
 #else
 		private Gwen.Renderer.OpenTK.OpenTKGL21 m_Renderer;
 #endif
-		private Gwen.Skin.Base m_Skin;
+		private Gwen.Skin.SkinBase m_Skin;
 		private Gwen.Control.Canvas m_Canvas;
 		private Gwen.XmlDesigner.XmlDesigner m_XmlDesigner;
 
@@ -202,7 +202,7 @@ namespace Gwen.XmlDesigner.OpenTK
 			SwapBuffers();
 		}
 
-		private void OnExit(Base sender, ExitEventArgs args)
+		private void OnExit(ControlBase sender, ExitEventArgs args)
 		{
 			m_Restart = args.Restart;
 			Exit();

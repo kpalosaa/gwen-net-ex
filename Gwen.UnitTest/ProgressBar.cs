@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Non-Interactive", Order = 104)]
 	public class ProgressBar : GUnit
     {
-        public ProgressBar(Base parent) : base(parent)
+        public ProgressBar(ControlBase parent) : base(parent)
         {
 			HorizontalLayout hlayout = new HorizontalLayout(this);
 			hlayout.VerticalAlignment = VerticalAlignment.Top;

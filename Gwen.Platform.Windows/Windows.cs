@@ -9,7 +9,7 @@ namespace Gwen.Platform
 	/// <summary>
 	/// Windows platform specific functions.
 	/// </summary>
-	public class Windows : Base
+	public class Windows : PlatformBase
 	{
 		private DateTime m_FirstTime = DateTime.Now;
 

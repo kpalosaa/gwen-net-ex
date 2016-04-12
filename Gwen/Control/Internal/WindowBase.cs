@@ -16,7 +16,7 @@ namespace Gwen.Control.Internal
 	public abstract class WindowBase : ResizableControl
 	{
 		private bool m_DeleteOnClose;
-		private Base m_RealParent;
+		private ControlBase m_RealParent;
 		private StartPosition m_StartPosition = StartPosition.Manual;
 
 		protected Dragger m_DragBar;
@@ -57,7 +57,7 @@ namespace Gwen.Control.Internal
 		/// Initializes a new instance of the <see cref="WindowBase"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public WindowBase(Base parent)
+		public WindowBase(ControlBase parent)
 			: base(parent.GetCanvas())
 		{
 			m_RealParent = parent;
@@ -97,12 +97,12 @@ namespace Gwen.Control.Internal
 			BringToFront();
 		}
 
-		protected virtual void OnDragged(Base control, EventArgs args)
+		protected virtual void OnDragged(ControlBase control, EventArgs args)
 		{
 			m_StartPosition = StartPosition.Manual;
 		}
 
-		protected override void OnResized(Base control, EventArgs args)
+		protected override void OnResized(ControlBase control, EventArgs args)
 		{
 			m_StartPosition = StartPosition.Manual;
 
@@ -113,7 +113,7 @@ namespace Gwen.Control.Internal
 		{
 			if (m_StartPosition == StartPosition.CenterCanvas)
 			{
-				Base canvas = GetCanvas();
+				ControlBase canvas = GetCanvas();
 				x = (canvas.ActualWidth - width) / 2;
 				y = (canvas.ActualHeight - height) / 2;
 			}

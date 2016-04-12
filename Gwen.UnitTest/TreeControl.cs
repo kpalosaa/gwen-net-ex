@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Containers", Order = 302)]
 	public class TreeControl : GUnit
 	{
-		public TreeControl(Base parent)
+		public TreeControl(ControlBase parent)
 			: base(parent)
 		{
 			Control.CrossSplitter layout = new Control.CrossSplitter(this);
@@ -129,31 +129,31 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		void NodeCollapsed(Base control, EventArgs args)
+		void NodeCollapsed(ControlBase control, EventArgs args)
 		{
 			TreeNode node = control as TreeNode;
 			UnitPrint(String.Format("Node collapsed: {0}", node.Text));
 		}
 
-		void NodeExpanded(Base control, EventArgs args)
+		void NodeExpanded(ControlBase control, EventArgs args)
 		{
 			TreeNode node = control as TreeNode;
 			UnitPrint(String.Format("Node expanded: {0}", node.Text));
 		}
 
-		void NodeSelected(Base control, EventArgs args)
+		void NodeSelected(ControlBase control, EventArgs args)
 		{
 			TreeNode node = control as TreeNode;
 			UnitPrint(String.Format("Node selected: {0}", node.Text));
 		}
 
-		void NodeClicked(Base control, ClickedEventArgs args)
+		void NodeClicked(ControlBase control, ClickedEventArgs args)
 		{
 			TreeNode node = control as TreeNode;
 			UnitPrint(String.Format("Node clicked: {0} @({1}, {2})", node.Text, args.X, args.Y));
 		}
 
-		void NodeDoubleClicked(Base control, ClickedEventArgs args)
+		void NodeDoubleClicked(ControlBase control, ClickedEventArgs args)
 		{
 			TreeNode node = control as TreeNode;
 			UnitPrint(String.Format("Node double clicked: {0}", node.Text));

@@ -133,7 +133,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ListBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ListBox(Base parent)
+		public ListBox(ControlBase parent)
             : base(parent)
         {
 			Padding = Padding.One;
@@ -199,7 +199,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="control">Row to select.</param>
         /// <param name="clearOthers">Determines whether to deselect previously selected rows.</param>
-        public void SelectRow(Base control, bool clearOthers = false)
+        public void SelectRow(ControlBase control, bool clearOthers = false)
         {
             if (!AllowMultiSelect || clearOthers)
                 UnselectAll();
@@ -307,7 +307,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawListBox(this);
         }
@@ -343,7 +343,7 @@ namespace Gwen.Control
 		/// Handler for the row selection event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnRowSelected(Base control, ItemSelectedEventArgs args)
+		protected virtual void OnRowSelected(ControlBase control, ItemSelectedEventArgs args)
 		{
 			// [omeg] changed default behavior
 			bool clear = false;// !InputHandler.InputHandler.IsShiftDown;
@@ -366,7 +366,7 @@ namespace Gwen.Control
 		/// Handler for the row double click event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnRowDoubleClicked(Base control, ClickedEventArgs args)
+		protected virtual void OnRowDoubleClicked(ControlBase control, ClickedEventArgs args)
         {
 			ListBoxRow row = control as ListBoxRow;
             if (row == null)
@@ -446,7 +446,7 @@ namespace Gwen.Control
             }
         }
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			ListBox element = new ListBox(parent);
 			parser.ParseAttributes(element);

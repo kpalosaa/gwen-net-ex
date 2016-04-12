@@ -6,7 +6,7 @@ namespace Gwen.RichText.Simple
 {
 	internal class LineBreaker : RichText.LineBreaker
 	{
-		public LineBreaker(Renderer.Base renderer, Font defaultFont)
+		public LineBreaker(Renderer.RendererBase renderer, Font defaultFont)
 			: base(renderer, defaultFont)
 		{
 

@@ -8,7 +8,7 @@ namespace Gwen.Control.Internal
 	/// Multi line text.
 	/// </summary>
 	[Xml.XmlControl]
-	public class MultilineText : Base
+	public class MultilineText : ControlBase
 	{
 		private List<Text> m_TextLines = new List<Text>();
 
@@ -102,7 +102,7 @@ namespace Gwen.Control.Internal
 			}
 		}
 
-		public MultilineText(Base parent)
+		public MultilineText(ControlBase parent)
 			: base(parent)
 		{
 

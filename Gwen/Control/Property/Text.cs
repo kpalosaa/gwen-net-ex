@@ -5,7 +5,7 @@ namespace Gwen.Control.Property
     /// <summary>
     /// Text property.
     /// </summary>
-    public class Text : Base
+    public class Text : PropertyBase
     {
         protected readonly TextBox m_TextBox;
 
@@ -13,7 +13,7 @@ namespace Gwen.Control.Property
         /// Initializes a new instance of the <see cref="Text"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Text(Control.Base parent)
+        public Text(Control.ControlBase parent)
 			: base(parent)
         {
             m_TextBox = new TextBox(this);

@@ -12,7 +12,7 @@ namespace Gwen.Control
 		private bool m_Checkable;
 		private bool m_Checked;
 		private Menu m_Menu;
-		private Base m_SubmenuArrow;
+		private ControlBase m_SubmenuArrow;
 		private Label m_Accelerator;
 
 		/// <summary>
@@ -113,7 +113,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="MenuItem"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public MenuItem(Base parent)
+		public MenuItem(ControlBase parent)
 			: base(parent)
 		{
 			IsTabable = false;
@@ -125,7 +125,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			skin.DrawMenuItem(this, IsMenuOpen, m_Checkable ? m_Checked : false);
 		}
@@ -252,9 +252,9 @@ namespace Gwen.Control
 			m_Accelerator.Margin = new Margin(0, 0, 16, 0);
 		}
 
-		public override Base FindChildByName(string name, bool recursive = false)
+		public override ControlBase FindChildByName(string name, bool recursive = false)
 		{
-			Base item = base.FindChildByName(name, recursive);
+			ControlBase item = base.FindChildByName(name, recursive);
 			if (item == null && m_Menu != null)
 			{
 				item = m_Menu.FindChildByName(name, recursive);
@@ -263,13 +263,13 @@ namespace Gwen.Control
 			return item;
 		}
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			MenuItem element = new MenuItem(parent);
 			parser.ParseAttributes(element);
 			if (parser.MoveToContent())
 			{
-				Base e = parent;
+				ControlBase e = parent;
 				while (e != null && e.Component == null)
 					e = e.Parent;
 

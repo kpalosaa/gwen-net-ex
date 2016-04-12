@@ -7,7 +7,7 @@ using Android.App;
 
 namespace Gwen.Renderer.Android.OpenTK
 {
-	public class OpenTK : Base
+	public class OpenTK : RendererBase
 	{
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		public struct Vertex

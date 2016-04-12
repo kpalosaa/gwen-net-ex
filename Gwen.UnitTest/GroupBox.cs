@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Non-Interactive", Order = 103)]
 	public class GroupBox : GUnit
     {
-        public GroupBox(Base parent)
+        public GroupBox(ControlBase parent)
 			: base(parent)
         {
 			Control.Layout.GridLayout layout = new Control.Layout.GridLayout(this);
@@ -44,7 +44,7 @@ namespace Gwen.UnitTest
 				gb.HorizontalAlignment = HorizontalAlignment.Left;
 				gb.VerticalAlignment = VerticalAlignment.Top;
 				gb.Text = "Two docked Labels (autosized)";
-				Control.Base gbl = new Control.Layout.DockLayout(gb);
+				Control.ControlBase gbl = new Control.Layout.DockLayout(gb);
                 Control.Label label1 = new Control.Label(gbl);
                 label1.Text = "I'm a label";
                 label1.Dock = Dock.Top;
@@ -66,7 +66,7 @@ namespace Gwen.UnitTest
 				gb1.VerticalAlignment = VerticalAlignment.Top;
 				gb1.Padding = Padding.Five;
                 gb1.Text = "Yo dawg,";
-				Control.Base gb1l = new Control.Layout.DockLayout(gb1);
+				Control.ControlBase gb1l = new Control.Layout.DockLayout(gb1);
 
 				Control.GroupBox gb2 = new Control.GroupBox(gb1l);
                 gb2.Text = "I herd";
@@ -77,7 +77,7 @@ namespace Gwen.UnitTest
                 Control.GroupBox gb3 = new Control.GroupBox(gb1l);
                 gb3.Text = "You like";
                 gb3.Dock = Dock.Fill;
-				Control.Base gb3l = new Control.Layout.DockLayout(gb3);
+				Control.ControlBase gb3l = new Control.Layout.DockLayout(gb3);
 
 				Control.GroupBox gb4 = new Control.GroupBox(gb3l);
                 gb4.Text = "Group Boxes,";
@@ -86,7 +86,7 @@ namespace Gwen.UnitTest
                 Control.GroupBox gb5 = new Control.GroupBox(gb3l);
                 gb5.Text = "So I put Group";
                 gb5.Dock = Dock.Fill;
-				Control.Base gb5l = new Control.Layout.DockLayout(gb5);
+				Control.ControlBase gb5l = new Control.Layout.DockLayout(gb5);
 
 				Control.GroupBox gb6 = new Control.GroupBox(gb5l);
                 gb6.Text = "Boxes in yo";
@@ -95,7 +95,7 @@ namespace Gwen.UnitTest
                 Control.GroupBox gb7 = new Control.GroupBox(gb5l);
                 gb7.Text = "Boxes so you can";
                 gb7.Dock = Dock.Top;
-				Control.Base gb7l = new Control.Layout.DockLayout(gb7);
+				Control.ControlBase gb7l = new Control.Layout.DockLayout(gb7);
 
 				Control.GroupBox gb8 = new Control.GroupBox(gb7l);
                 gb8.Text = "Group Box while";

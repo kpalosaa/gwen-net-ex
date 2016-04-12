@@ -7,13 +7,13 @@ namespace Gwen.Control.Layout
 	/// but you don't need to know exact number of columns.
 	/// </summary>
 	[Xml.XmlControl]
-	public class FlowLayout : Base
+	public class FlowLayout : ControlBase
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FlowLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public FlowLayout(Base parent)
+		public FlowLayout(ControlBase parent)
 			: base(parent)
 		{
 		}
@@ -28,7 +28,7 @@ namespace Gwen.Control.Layout
 			int height = 0;
 			int y = 0;
 
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				Size size = child.DoMeasure(availableSize);
 
@@ -65,7 +65,7 @@ namespace Gwen.Control.Layout
 			int x = 0;
 			int y = 0;
 
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				if ((x + child.MeasuredSize.Width) > finalSize.Width)
 				{

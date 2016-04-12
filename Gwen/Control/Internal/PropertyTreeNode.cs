@@ -28,7 +28,7 @@ namespace Gwen.Control.Internal
 		/// Initializes a new instance of the <see cref="PropertyTreeNode"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public PropertyTreeNode(Base parent)
+		public PropertyTreeNode(ControlBase parent)
             : base(parent)
         {
 			m_PropertyTree = parent as PropertyTree;
@@ -73,7 +73,7 @@ namespace Gwen.Control.Internal
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawPropertyTreeNode(this, m_InnerPanel.ActualLeft, m_InnerPanel.ActualTop);
         }
@@ -108,7 +108,7 @@ namespace Gwen.Control.Internal
 		public void Expand()
 		{
 			Open();
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				TreeNode node = child as TreeNode;
 				if (node == null)
@@ -121,7 +121,7 @@ namespace Gwen.Control.Internal
 		/// Handler for the toggle button.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnToggleButtonPress(Base control, EventArgs args)
+		protected virtual void OnToggleButtonPress(ControlBase control, EventArgs args)
 		{
 			if (m_ToggleButton.ToggleState)
 			{
@@ -137,7 +137,7 @@ namespace Gwen.Control.Internal
 		/// Handler for label double click.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnDoubleClickName(Base control, EventArgs args)
+		protected virtual void OnDoubleClickName(ControlBase control, EventArgs args)
 		{
 			if (!m_ToggleButton.IsVisible)
 				return;

@@ -19,7 +19,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="ScrollBarButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ScrollBarButton(Base parent)
+        public ScrollBarButton(ControlBase parent)
             : base(parent)
         {
             SetDirectionUp();
@@ -49,7 +49,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawScrollButton(this, m_Direction, IsDepressed, IsHovered, IsDisabled);
         }

@@ -6,13 +6,13 @@ namespace Gwen.Control.Internal
     /// <summary>
     /// Divider menu item.
     /// </summary>
-    public class MenuDivider : Base
+    public class MenuDivider : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="MenuDivider"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public MenuDivider(Base parent)
+        public MenuDivider(ControlBase parent)
             : base(parent)
         {
         }
@@ -31,7 +31,7 @@ namespace Gwen.Control.Internal
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawMenuDivider(this);
         }

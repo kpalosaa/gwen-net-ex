@@ -12,9 +12,9 @@ namespace Gwen.XmlDesigner
 	public class XmlFiles : Component
 	{
 		[XmlEvent]
-		public event Base.GwenEventHandler<XmlFileSelectedEventArgs> XmlFileSelected;
+		public event ControlBase.GwenEventHandler<XmlFileSelectedEventArgs> XmlFileSelected;
 
-		public XmlFiles(Base parent)
+		public XmlFiles(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 			m_XmlFileSelectedEventArgs = new XmlFileSelectedEventArgs();
@@ -40,7 +40,7 @@ namespace Gwen.XmlDesigner
 				m_Items.SelectByUserData(current);
 		}
 
-		public void OnItemSelected(Base sender, ItemSelectedEventArgs args)
+		public void OnItemSelected(ControlBase sender, ItemSelectedEventArgs args)
 		{
 			ListBoxRow row = args.SelectedItem as ListBoxRow;
 			if (row != null)

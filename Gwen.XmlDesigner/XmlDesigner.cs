@@ -25,27 +25,27 @@ namespace Gwen.XmlDesigner
 
 			Parser.RegisterEventHandlerConverter(typeof(XmlChangedEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<XmlChangedEventArgs>(new XmlEventHandler<XmlChangedEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<XmlChangedEventArgs>(new XmlEventHandler<XmlChangedEventArgs>(value, attribute).OnEvent);
 			});
 			Parser.RegisterEventHandlerConverter(typeof(ExceptionEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<ExceptionEventArgs>(new XmlEventHandler<ExceptionEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<ExceptionEventArgs>(new XmlEventHandler<ExceptionEventArgs>(value, attribute).OnEvent);
 			});
 			Parser.RegisterEventHandlerConverter(typeof(ElementSelectedEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<ElementSelectedEventArgs>(new XmlEventHandler<ElementSelectedEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<ElementSelectedEventArgs>(new XmlEventHandler<ElementSelectedEventArgs>(value, attribute).OnEvent);
 			});
 			Parser.RegisterEventHandlerConverter(typeof(AttributeSelectedEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<AttributeSelectedEventArgs>(new XmlEventHandler<AttributeSelectedEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<AttributeSelectedEventArgs>(new XmlEventHandler<AttributeSelectedEventArgs>(value, attribute).OnEvent);
 			});
 			Parser.RegisterEventHandlerConverter(typeof(XmlFileSelectedEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<XmlFileSelectedEventArgs>(new XmlEventHandler<XmlFileSelectedEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<XmlFileSelectedEventArgs>(new XmlEventHandler<XmlFileSelectedEventArgs>(value, attribute).OnEvent);
 			});
 			Parser.RegisterEventHandlerConverter(typeof(ExitEventArgs), (attribute, value) =>
 			{
-				return new Control.Base.GwenEventHandler<ExitEventArgs>(new XmlEventHandler<ExitEventArgs>(value, attribute).OnEvent);
+				return new Control.ControlBase.GwenEventHandler<ExitEventArgs>(new XmlEventHandler<ExitEventArgs>(value, attribute).OnEvent);
 			});
 		}
 
@@ -64,9 +64,9 @@ namespace Gwen.XmlDesigner
 		}
 
 		[XmlEvent]
-		public event Base.GwenEventHandler<ExitEventArgs> Exit;
+		public event ControlBase.GwenEventHandler<ExitEventArgs> Exit;
 
-		public XmlDesigner(Base parent)
+		public XmlDesigner(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 			m_Timer = new Timer();
@@ -104,27 +104,27 @@ namespace Gwen.XmlDesigner
 			m_Skins.SelectByUserData(Settings.Skin);
 		}
 
-		private void OnXmlChanged(Base sender, XmlChangedEventArgs args)
+		private void OnXmlChanged(ControlBase sender, XmlChangedEventArgs args)
 		{
 			SetXml(args.Xml);
 		}
 
-		private void OnElementSelected(Base sender, ElementSelectedEventArgs args)
+		private void OnElementSelected(ControlBase sender, ElementSelectedEventArgs args)
 		{
 			m_TextEditor.AddElement(args.Element);
 		}
 
-		private void OnAttributeSelected(Base sender, AttributeSelectedEventArgs args)
+		private void OnAttributeSelected(ControlBase sender, AttributeSelectedEventArgs args)
 		{
 			m_TextEditor.AddAttribute(args.Attribute);
 		}
 
-		private void OnXmlFileSelected(Base sender, XmlFileSelectedEventArgs args)
+		private void OnXmlFileSelected(ControlBase sender, XmlFileSelectedEventArgs args)
 		{
 			SetCurrentXmlFile(args.XmlFile);
 		}
 
-		private void OnException(Base sender, ExceptionEventArgs args)
+		private void OnException(ControlBase sender, ExceptionEventArgs args)
 		{
 			if (args.Exception != null)
 			{
@@ -138,7 +138,7 @@ namespace Gwen.XmlDesigner
 			}
 		}
 
-		private void OnNewXmlFile(Base sender, EventArgs args)
+		private void OnNewXmlFile(ControlBase sender, EventArgs args)
 		{
 			if (m_InDialog)
 				return;
@@ -165,7 +165,7 @@ namespace Gwen.XmlDesigner
 			};
 		}
 
-		private void OnOpenXmlFile(Base sender, EventArgs args)
+		private void OnOpenXmlFile(ControlBase sender, EventArgs args)
 		{
 			if (m_InDialog)
 				return;
@@ -197,7 +197,7 @@ namespace Gwen.XmlDesigner
 			};
 		}
 
-		private void OnSaveAsXmlFile(Base sender, EventArgs args)
+		private void OnSaveAsXmlFile(ControlBase sender, EventArgs args)
 		{
 			if (m_InDialog)
 				return;
@@ -225,7 +225,7 @@ namespace Gwen.XmlDesigner
 			};
 		}
 
-		private void OnRemoveXmlFile(Base sender, EventArgs args)
+		private void OnRemoveXmlFile(ControlBase sender, EventArgs args)
 		{
 			if (m_InDialog)
 				return;
@@ -239,7 +239,7 @@ namespace Gwen.XmlDesigner
 			UpdateFileList();
 		}
 
-		private void OnExit(Base sender, EventArgs args)
+		private void OnExit(ControlBase sender, EventArgs args)
 		{
 			SetCurrentXmlFile(null);
 
@@ -247,12 +247,12 @@ namespace Gwen.XmlDesigner
 				Exit(View, new ExitEventArgs() { Restart = false });
 		}
 
-		private void OnAbout(Base sender, EventArgs args)
+		private void OnAbout(ControlBase sender, EventArgs args)
 		{
 			Component.Create<About>(View);
 		}
 
-		private void OnDebugOutlinesChanged(Base sender, EventArgs args)
+		private void OnDebugOutlinesChanged(ControlBase sender, EventArgs args)
 		{
 			Settings.DebugOutlines = m_DebugOutlines.IsChecked;
 			SaveSettings();
@@ -260,7 +260,7 @@ namespace Gwen.XmlDesigner
 			m_Viewer.DebugOutlines = Settings.DebugOutlines;
 		}
 
-		private void OnSkinSelected(Base sender, ItemSelectedEventArgs args)
+		private void OnSkinSelected(ControlBase sender, ItemSelectedEventArgs args)
 		{
 			if (args.SelectedItem != null)
 			{

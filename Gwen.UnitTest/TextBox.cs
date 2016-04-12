@@ -11,12 +11,18 @@ namespace Gwen.UnitTest
         private readonly Font m_Font2;
         private readonly Font m_Font3;
 
-        public TextBox(Base parent)
+        public TextBox(ControlBase parent)
             : base(parent)
 		{
-			m_Font1 = new Font(Skin.Renderer, "Courier New", 15); // fixed width font!
-			m_Font2 = new Font(Skin.Renderer, "Times New Roman", 50);
-			m_Font3 = new Font(Skin.Renderer, "Arial", 15);
+			m_Font1 = Skin.DefaultFont.Copy();
+			m_Font1.FaceName = "Courier New"; // fixed width font!
+
+			m_Font2 = Skin.DefaultFont.Copy();
+			m_Font2.FaceName = "Times New Roman";
+			m_Font2.Size *= 3;
+
+			m_Font3 = Skin.DefaultFont.Copy();
+			m_Font3.Size += 5;
 
 			VerticalLayout vlayout = new VerticalLayout(this);
 			{
@@ -107,8 +113,8 @@ namespace Gwen.UnitTest
 					Control.TextBox textbox = new Control.TextBox(vlayout);
 					textbox.Margin = Margin.Five;
 					textbox.HorizontalAlignment = HorizontalAlignment.Left;
-					textbox.Width = 150;
-					textbox.SetText("Width = 150");
+					textbox.Width = 200;
+					textbox.SetText("Width = 200");
 					textbox.TextColor = Color.Black;
 					textbox.Font = m_Font3;
 				}
@@ -130,13 +136,13 @@ namespace Gwen.UnitTest
             base.Dispose();
         }
 
-		void OnEdit(Base control, EventArgs args)
+		void OnEdit(ControlBase control, EventArgs args)
         {
             Control.TextBox box = control as Control.TextBox;
             UnitPrint(String.Format("TextBox: OnEdit: {0}", box.Text));
         }
 
-		void OnSubmit(Base control, EventArgs args)
+		void OnSubmit(ControlBase control, EventArgs args)
         {
             Control.TextBox box = control as Control.TextBox;
             UnitPrint(String.Format("TextBox: OnSubmit: {0}", box.Text));

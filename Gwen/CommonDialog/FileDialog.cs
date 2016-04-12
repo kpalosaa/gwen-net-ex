@@ -89,7 +89,7 @@ namespace Gwen.CommonDialog
 		/// Constructor for the base class. Implementing classes must call this.
 		/// </summary>
 		/// <param name="parent">Parent.</param>
-		protected FileDialog(Base parent)
+		protected FileDialog(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 		}
@@ -241,7 +241,7 @@ namespace Gwen.CommonDialog
 				m_Callback(path);
 		}
 
-		private void OnPathSubmitted(Base sender, EventArgs args)
+		private void OnPathSubmitted(ControlBase sender, EventArgs args)
 		{
 			if (!SetPath(m_Path.Text))
 			{
@@ -249,7 +249,7 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnUpClicked(Base sender, ClickedEventArgs args)
+		private void OnUpClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			string newPath = Path.GetDirectoryName(m_CurrentFolder);
 			if (newPath != null)
@@ -258,7 +258,7 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnNewFolderClicked(Base sender, ClickedEventArgs args)
+		private void OnNewFolderClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			string path = m_Path.Text;
 			if (Directory.Exists(path))
@@ -279,7 +279,7 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnFolderSelected(Base sender, EventArgs args)
+		private void OnFolderSelected(ControlBase sender, EventArgs args)
 		{
 			TreeNode node = sender as TreeNode;
 			if (node != null && node.UserData != null)
@@ -288,7 +288,7 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnItemSelected(Base sender, ItemSelectedEventArgs args)
+		private void OnItemSelected(ControlBase sender, ItemSelectedEventArgs args)
 		{
 			string path = args.SelectedItem.UserData as string;
 			if (path != null)
@@ -297,7 +297,7 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnItemDoubleClicked(Base sender, ItemSelectedEventArgs args)
+		private void OnItemDoubleClicked(ControlBase sender, ItemSelectedEventArgs args)
 		{
 			string path = args.SelectedItem.UserData as string;
 			if (path != null)
@@ -313,20 +313,20 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnNameSubmitted(Base sender, EventArgs args)
+		private void OnNameSubmitted(ControlBase sender, EventArgs args)
 		{
 			string path = Path.Combine(m_CurrentFolder, m_SelectedName.Text);
 			if (IsSubmittedNameOk(path))
 				OnOkClicked(null, null);
 		}
 
-		private void OnFilterSelected(Base sender, ItemSelectedEventArgs args)
+		private void OnFilterSelected(ControlBase sender, ItemSelectedEventArgs args)
 		{
 			m_CurrentFilter = m_Filters.SelectedItem.UserData as string;
 			UpdateItemList();
 		}
 
-		private void OnOkClicked(Base sender, ClickedEventArgs args)
+		private void OnOkClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			string path = Path.Combine(m_CurrentFolder, m_SelectedName.Text);
 			if (ValidateFileName(path))
@@ -335,12 +335,12 @@ namespace Gwen.CommonDialog
 			}
 		}
 
-		private void OnCancelClicked(Base sender, ClickedEventArgs args)
+		private void OnCancelClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			OnClosing(null, true);
 		}
 
-		private void OnWindowClosed(Base sender, EventArgs args)
+		private void OnWindowClosed(ControlBase sender, EventArgs args)
 		{
 			OnClosing(null, false);
 		}
@@ -417,7 +417,7 @@ namespace Gwen.CommonDialog
 		}
 
 		private static readonly string Xml = @"<?xml version='1.0' encoding='UTF-8'?>
-			<Window Size='400,300' Closed='OnWindowClosed'>
+			<Window Size='400,300' StartPosition='CenterCanvas' Closed='OnWindowClosed'>
 				<DockLayout Margin='2' >
 					<DockLayout Dock='Top'>
 						<Label Dock='Left' Margin='2' Alignment='CenterV,Left' Text='Path:' />

@@ -42,7 +42,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="RadioButtonGroup"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public RadioButtonGroup(Base parent) : base(parent)
+		public RadioButtonGroup(ControlBase parent) : base(parent)
 		{
 			IsTabable = false;
 			KeyboardInputEnabled = true;
@@ -85,7 +85,7 @@ namespace Gwen.Control
 		/// Handler for the option change.
 		/// </summary>
 		/// <param name="fromPanel">Event source.</param>
-		protected virtual void OnRadioClicked(Base fromPanel, EventArgs args)
+		protected virtual void OnRadioClicked(ControlBase fromPanel, EventArgs args)
 		{
 			RadioButton @checked = fromPanel as RadioButton;
 			foreach (LabeledRadioButton rb in Children.OfType<LabeledRadioButton>()) // todo: optimize
@@ -99,7 +99,7 @@ namespace Gwen.Control
 			OnChanged(m_Selected);
 		}
 
-		protected virtual void OnChanged(Base NewTarget)
+		protected virtual void OnChanged(ControlBase NewTarget)
 		{
 			if (SelectionChanged != null)
 				SelectionChanged.Invoke(this, new ItemSelectedEventArgs(NewTarget));
@@ -123,7 +123,7 @@ namespace Gwen.Control
 		/// <param name="name">Option name to select.</param>
 		public void SetSelectionByName(string name)
 		{
-			Base child = FindChildByName(name, false);
+			ControlBase child = FindChildByName(name, false);
 			if (child != null)
 				(child as LabeledRadioButton).RadioButton.Press();
 		}
@@ -135,12 +135,12 @@ namespace Gwen.Control
 		/// If null is passed in, it will look for null/unset UserData.</param>
 		public void SelectByUserData(object userdata)
 		{
-			Base option = this.Children.Find(x => x.UserData.Equals(userdata));
+			ControlBase option = this.Children.Find(x => x.UserData.Equals(userdata));
 			if (option != null)
 				(option as LabeledRadioButton).RadioButton.Press();
 		}
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			RadioButtonGroup element = new RadioButtonGroup(parent);
 			parser.ParseAttributes(element);

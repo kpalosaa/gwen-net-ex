@@ -8,7 +8,7 @@ namespace Gwen.Control.Internal
 	/// <summary>
 	/// Displays text. Always sized to contents.
 	/// </summary>
-	public class Text : Base
+	public class Text : ControlBase
 	{
 		private string m_String;
 		private Font m_Font;
@@ -74,7 +74,7 @@ namespace Gwen.Control.Internal
 		/// Initializes a new instance of the <see cref="Text"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Text(Base parent)
+		public Text(ControlBase parent)
 			: base(parent)
 		{
 			AutoSizeToContents = true;
@@ -90,7 +90,7 @@ namespace Gwen.Control.Internal
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			if (Length == 0 || Font == null) return;
 

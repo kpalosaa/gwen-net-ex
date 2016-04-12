@@ -5,10 +5,11 @@ namespace Gwen.Skin
 	/// <summary>
 	/// Base skin.
 	/// </summary>
-	public class Base : IDisposable
+	public class SkinBase : IDisposable
 	{
 		protected Font m_DefaultFont;
-		protected readonly Renderer.Base m_Renderer;
+		protected readonly Renderer.RendererBase m_Renderer;
+		protected int m_BaseUnit;
 
 		/// <summary>
 		/// Colors of various UI elements.
@@ -25,19 +26,26 @@ namespace Gwen.Skin
 			{
 				m_DefaultFont.Dispose();
 				m_DefaultFont = value;
+
+				m_BaseUnit = Util.Ceil(m_DefaultFont.FontMetrics.EmHeightPixels) + 1;
 			}
 		}
 
 		/// <summary>
-		/// Renderer used.
+		/// Base measurement unit based on default font size used in various controls where absolute scale is necessary.
 		/// </summary>
-		public Renderer.Base Renderer { get { return m_Renderer; } }
+		public int BaseUnit { get { return m_BaseUnit; } }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Base"/> class.
+		/// Renderer used.
+		/// </summary>
+		public Renderer.RendererBase Renderer { get { return m_Renderer; } }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="SkinBase"/> class.
 		/// </summary>
 		/// <param name="renderer">Renderer to use.</param>
-		protected Base(Renderer.Base renderer)
+		protected SkinBase(Renderer.RendererBase renderer)
 		{
 			m_DefaultFont = new Font(renderer);
 			m_Renderer = renderer;
@@ -53,7 +61,7 @@ namespace Gwen.Skin
 		}
 
 #if DEBUG
-		~Base()
+		~SkinBase()
 		{
 			throw new InvalidOperationException(String.Format("IDisposable object finalized: {0}", GetType()));
 			//Debug.Print(String.Format("IDisposable object finalized: {0}", GetType()));
@@ -85,42 +93,42 @@ namespace Gwen.Skin
 		}
 
 		#region UI elements
-		public virtual void DrawButton(Control.Base control, bool depressed, bool hovered, bool disabled) { }
-		public virtual void DrawTabButton(Control.Base control, bool active, Dock dir) { }
-		public virtual void DrawTabControl(Control.Base control) { }
-		public virtual void DrawTabTitleBar(Control.Base control) { }
-		public virtual void DrawMenuItem(Control.Base control, bool submenuOpen, bool isChecked) { }
-		public virtual void DrawMenuRightArrow(Control.Base control) { }
-		public virtual void DrawMenuStrip(Control.Base control) { }
-		public virtual void DrawMenu(Control.Base control, bool paddingDisabled) { }
-		public virtual void DrawRadioButton(Control.Base control, bool selected, bool depressed) { }
-		public virtual void DrawCheckBox(Control.Base control, bool selected, bool depressed) { }
-		public virtual void DrawGroupBox(Control.Base control, int textStart, int textHeight, int textWidth) { }
-		public virtual void DrawTextBox(Control.Base control) { }
-		public virtual void DrawWindow(Control.Base control, int topHeight, bool inFocus) { }
-		public virtual void DrawWindowCloseButton(Control.Base control, bool depressed, bool hovered, bool disabled) { }
-		public virtual void DrawToolWindow(Control.Base control, bool vertical) { }
-		public virtual void DrawHighlight(Control.Base control) { }
-		public virtual void DrawStatusBar(Control.Base control) { }
-		public virtual void DrawShadow(Control.Base control) { }
-		public virtual void DrawScrollBarBar(Control.Base control, bool depressed, bool hovered, bool horizontal) { }
-		public virtual void DrawScrollBar(Control.Base control, bool horizontal, bool depressed) { }
-		public virtual void DrawScrollButton(Control.Base control, Control.Internal.ScrollBarButtonDirection direction, bool depressed, bool hovered, bool disabled) { }
-		public virtual void DrawProgressBar(Control.Base control, bool horizontal, float progress) { }
-		public virtual void DrawListBox(Control.Base control) { }
-		public virtual void DrawListBoxLine(Control.Base control, bool selected, bool even) { }
-		public virtual void DrawSlider(Control.Base control, bool horizontal, int numNotches, int barSize) { }
-		public virtual void DrawSliderButton(Control.Base control, bool depressed, bool horizontal) { }
-		public virtual void DrawComboBox(Control.Base control, bool down, bool isMenuOpen) { }
-		public virtual void DrawComboBoxArrow(Control.Base control, bool hovered, bool depressed, bool open, bool disabled) { }
-		public virtual void DrawKeyboardHighlight(Control.Base control, Rectangle rect, int offset) { }
-		public virtual void DrawToolTip(Control.Base control) { }
-		public virtual void DrawNumericUpDownButton(Control.Base control, bool depressed, bool up) { }
-		public virtual void DrawTreeButton(Control.Base control, bool open) { }
-		public virtual void DrawTreeControl(Control.Base control) { }
-		public virtual void DrawBorder(Control.Base control, Control.BorderType borderType) { }
+		public virtual void DrawButton(Control.ControlBase control, bool depressed, bool hovered, bool disabled) { }
+		public virtual void DrawTabButton(Control.ControlBase control, bool active, Dock dir) { }
+		public virtual void DrawTabControl(Control.ControlBase control) { }
+		public virtual void DrawTabTitleBar(Control.ControlBase control) { }
+		public virtual void DrawMenuItem(Control.ControlBase control, bool submenuOpen, bool isChecked) { }
+		public virtual void DrawMenuRightArrow(Control.ControlBase control) { }
+		public virtual void DrawMenuStrip(Control.ControlBase control) { }
+		public virtual void DrawMenu(Control.ControlBase control, bool paddingDisabled) { }
+		public virtual void DrawRadioButton(Control.ControlBase control, bool selected, bool depressed) { }
+		public virtual void DrawCheckBox(Control.ControlBase control, bool selected, bool depressed) { }
+		public virtual void DrawGroupBox(Control.ControlBase control, int textStart, int textHeight, int textWidth) { }
+		public virtual void DrawTextBox(Control.ControlBase control) { }
+		public virtual void DrawWindow(Control.ControlBase control, int topHeight, bool inFocus) { }
+		public virtual void DrawWindowCloseButton(Control.ControlBase control, bool depressed, bool hovered, bool disabled) { }
+		public virtual void DrawToolWindow(Control.ControlBase control, bool vertical, int dragSize) { }
+		public virtual void DrawHighlight(Control.ControlBase control) { }
+		public virtual void DrawStatusBar(Control.ControlBase control) { }
+		public virtual void DrawShadow(Control.ControlBase control) { }
+		public virtual void DrawScrollBarBar(Control.ControlBase control, bool depressed, bool hovered, bool horizontal) { }
+		public virtual void DrawScrollBar(Control.ControlBase control, bool horizontal, bool depressed) { }
+		public virtual void DrawScrollButton(Control.ControlBase control, Control.Internal.ScrollBarButtonDirection direction, bool depressed, bool hovered, bool disabled) { }
+		public virtual void DrawProgressBar(Control.ControlBase control, bool horizontal, float progress) { }
+		public virtual void DrawListBox(Control.ControlBase control) { }
+		public virtual void DrawListBoxLine(Control.ControlBase control, bool selected, bool even) { }
+		public virtual void DrawSlider(Control.ControlBase control, bool horizontal, int numNotches, int barSize) { }
+		public virtual void DrawSliderButton(Control.ControlBase control, bool depressed, bool horizontal) { }
+		public virtual void DrawComboBox(Control.ControlBase control, bool down, bool isMenuOpen) { }
+		public virtual void DrawComboBoxArrow(Control.ControlBase control, bool hovered, bool depressed, bool open, bool disabled) { }
+		public virtual void DrawKeyboardHighlight(Control.ControlBase control, Rectangle rect, int offset) { }
+		public virtual void DrawToolTip(Control.ControlBase control) { }
+		public virtual void DrawNumericUpDownButton(Control.ControlBase control, bool depressed, bool up) { }
+		public virtual void DrawTreeButton(Control.ControlBase control, bool open) { }
+		public virtual void DrawTreeControl(Control.ControlBase control) { }
+		public virtual void DrawBorder(Control.ControlBase control, Control.BorderType borderType) { }
 
-		public virtual void DrawDebugOutlines(Control.Base control)
+		public virtual void DrawDebugOutlines(Control.ControlBase control)
 		{
 			m_Renderer.DrawColor = control.PaddingOutlineColor;
 			Rectangle inner = control.Bounds;
@@ -136,19 +144,19 @@ namespace Gwen.Skin
 			m_Renderer.DrawLinedRect(control.Bounds);
 		}
 
-		public virtual void DrawTreeNode(Control.Base ctrl, bool open, bool selected, int labelHeight, int labelWidth, int halfWay, int lastBranch, bool isRoot)
+		public virtual void DrawTreeNode(Control.ControlBase ctrl, bool open, bool selected, int labelHeight, int labelWidth, int halfWay, int lastBranch, bool isRoot, int indent)
 		{
 			Renderer.DrawColor = Colors.Tree.Lines;
 
 			if (!isRoot)
-				Renderer.DrawFilledRect(new Rectangle(8, halfWay, 16 - 9, 1));
+				Renderer.DrawFilledRect(new Rectangle(indent / 2, halfWay, indent / 2, 1));
 
 			if (!open) return;
 
-			Renderer.DrawFilledRect(new Rectangle(14 + 7, labelHeight + 1, 1, lastBranch + halfWay - labelHeight));
+			Renderer.DrawFilledRect(new Rectangle(indent + indent / 2, labelHeight + 1, 1, lastBranch + halfWay - labelHeight));
 		}
 
-		public virtual void DrawPropertyRow(Control.Base control, int iWidth, bool bBeingEdited, bool hovered)
+		public virtual void DrawPropertyRow(Control.ControlBase control, int iWidth, bool bBeingEdited, bool hovered)
 		{
 			Rectangle rect = control.RenderBounds;
 
@@ -176,13 +184,13 @@ namespace Gwen.Skin
 			m_Renderer.DrawFilledRect(rect);
 		}
 
-		public virtual void DrawColorDisplay(Control.Base control, Color color) { }
-		public virtual void DrawModalControl(Control.Base control, Color? backgroundColor) { }
-		public virtual void DrawMenuDivider(Control.Base control) { }
-		public virtual void DrawCategoryHolder(Control.Base control) { }
-		public virtual void DrawCategoryInner(Control.Base control, bool collapsed) { }
+		public virtual void DrawColorDisplay(Control.ControlBase control, Color color) { }
+		public virtual void DrawModalControl(Control.ControlBase control, Color? backgroundColor) { }
+		public virtual void DrawMenuDivider(Control.ControlBase control) { }
+		public virtual void DrawCategoryHolder(Control.ControlBase control) { }
+		public virtual void DrawCategoryInner(Control.ControlBase control, int headerHeight, bool collapsed) { }
 
-		public virtual void DrawPropertyTreeNode(Control.Base control, int BorderLeft, int BorderTop)
+		public virtual void DrawPropertyTreeNode(Control.ControlBase control, int BorderLeft, int BorderTop)
 		{
 			Rectangle rect = control.RenderBounds;
 
@@ -191,7 +199,7 @@ namespace Gwen.Skin
 			m_Renderer.DrawFilledRect(new Rectangle(rect.X, rect.Y, BorderLeft, rect.Height));
 			m_Renderer.DrawFilledRect(new Rectangle(rect.X + BorderLeft, rect.Y, rect.Width - BorderLeft, BorderTop));
 		}
-#endregion
+		#endregion
 
 		#region Symbols for Simple skin
 		/*

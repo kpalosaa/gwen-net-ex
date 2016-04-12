@@ -20,7 +20,7 @@ namespace Gwen.Platform
 	/// <summary>
 	/// Platform specific functions.
 	/// </summary>
-	public abstract class Base
+	public abstract class PlatformBase
 	{
 		/// <summary>
 		/// Gets text from clipboard.

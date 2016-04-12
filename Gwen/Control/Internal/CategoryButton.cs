@@ -14,7 +14,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="CategoryButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public CategoryButton(Base parent) : base(parent)
+        public CategoryButton(ControlBase parent) : base(parent)
         {
             Alignment = Alignment.Left | Alignment.CenterV;
             m_Alt = false;
@@ -26,7 +26,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             if (m_Alt)
             {

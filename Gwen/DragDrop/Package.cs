@@ -8,7 +8,7 @@ namespace Gwen.DragDrop
         public string Name;
         public object UserData;
         public bool IsDraggable;
-        public Base DrawControl;
+        public ControlBase DrawControl;
         public Point HoldOffset;
     }
 }

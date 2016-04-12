@@ -19,7 +19,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="Resizer"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Resizer(Base parent)
+        public Resizer(ControlBase parent)
             : base(parent)
         {
             m_ResizeDir = Dock.Left;
@@ -53,6 +53,12 @@ namespace Gwen.Control.Internal
                 bounds.X -= delta.X;
                 bounds.Width += delta.X;
 
+				if (bounds.X < 0)
+				{
+					bounds.Width += bounds.X;
+					bounds.X = 0;
+				}
+
                 // Conform to minimum size here so we don't
                 // go all weird when we snap it in the base conrt
 
@@ -72,10 +78,16 @@ namespace Gwen.Control.Internal
                 bounds.Y -= delta.Y;
                 bounds.Height += delta.Y;
 
-                // Conform to minimum size here so we don't
-                // go all weird when we snap it in the base conrt
+				if (bounds.Y < 0)
+				{
+					bounds.Height += bounds.Y;
+					bounds.Y = 0;
+				}
 
-                if (bounds.Height < min.Height)
+				// Conform to minimum size here so we don't
+				// go all weird when we snap it in the base conrt
+
+				if (bounds.Height < min.Height)
                 {
                     int diff = min.Height - bounds.Height;
                     bounds.Height += diff;
@@ -112,7 +124,10 @@ namespace Gwen.Control.Internal
 
 			// Lets set quickly new bounds and let the layout measure and arrange child controls later
 			m_Target.SetBounds(bounds);
-			m_Target.Size = m_Target.Bounds.Size;
+			// Set bounds that are checked by SetBounds() implementations
+			if (!Util.IsIgnore(m_Target.Width)) m_Target.Width = m_Target.Bounds.Width;
+			if (!Util.IsIgnore(m_Target.Height)) m_Target.Height = m_Target.Bounds.Height;
+
 			m_Target.Invalidate();
 
             if (Resized != null)

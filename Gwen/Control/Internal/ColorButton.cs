@@ -19,7 +19,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="ColorButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ColorButton(Base parent) : base(parent)
+        public ColorButton(ControlBase parent) : base(parent)
         {
             m_Color = Color.Black;
         }
@@ -28,7 +28,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.Renderer.DrawColor = m_Color;
             skin.Renderer.DrawFilledRect(RenderBounds);

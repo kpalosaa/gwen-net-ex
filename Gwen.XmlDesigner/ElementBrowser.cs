@@ -19,12 +19,12 @@ namespace Gwen.XmlDesigner
 	public class ElementBrowser : Component
 	{
 		[XmlEvent]
-		public event Base.GwenEventHandler<ElementSelectedEventArgs> ElementSelected;
+		public event ControlBase.GwenEventHandler<ElementSelectedEventArgs> ElementSelected;
 
 		[XmlEvent]
-		public event Base.GwenEventHandler<AttributeSelectedEventArgs> AttributeSelected;
+		public event ControlBase.GwenEventHandler<AttributeSelectedEventArgs> AttributeSelected;
 
-		public ElementBrowser(Base parent)
+		public ElementBrowser(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 			m_ElementSelectedEventArgs = new ElementSelectedEventArgs();
@@ -78,7 +78,7 @@ namespace Gwen.XmlDesigner
 			}
 		}
 
-		public void OnElementSelected(Base sender, EventArgs args)
+		public void OnElementSelected(ControlBase sender, EventArgs args)
 		{
 			TreeNode node = sender as TreeNode;
 			if (node != null)
@@ -116,7 +116,7 @@ namespace Gwen.XmlDesigner
 			}
 		}
 
-		public void OnElementDoubleClicked(Base sender, EventArgs args)
+		public void OnElementDoubleClicked(ControlBase sender, EventArgs args)
 		{
 			TreeNode node = sender as TreeNode;
 			if (node != null)
@@ -129,7 +129,7 @@ namespace Gwen.XmlDesigner
 			}
 		}
 
-		public void OnAttributeSelected(Base sender, EventArgs args)
+		public void OnAttributeSelected(ControlBase sender, EventArgs args)
 		{
 			TreeNode node = sender as TreeNode;
 			if (node != null)
@@ -137,7 +137,7 @@ namespace Gwen.XmlDesigner
 			}
 		}
 
-		public void OnAttributeDoubleClicked(Base sender, EventArgs args)
+		public void OnAttributeDoubleClicked(ControlBase sender, EventArgs args)
 		{
 			TreeNode node = sender as TreeNode;
 			if (node != null)

@@ -9,7 +9,7 @@ namespace Gwen.UnitTest
     {
 		private Control.Menu m_ContextMenu;
 
-		public Menu(Base parent)
+		public Menu(ControlBase parent)
 			: base(parent)
 		{
 			/* Menu Strip */
@@ -122,7 +122,7 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		void MenuItemSelect(Base control, EventArgs args)
+		void MenuItemSelect(ControlBase control, EventArgs args)
         {
             MenuItem item = control as MenuItem;
             UnitPrint(String.Format("Menu item selected: {0}", item.Text));

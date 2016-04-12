@@ -29,7 +29,7 @@ namespace Gwen.RichText.KnuthPlass
 
 		private Formatter m_Formatter;
 
-		public LineBreaker(Renderer.Base renderer, Font defaultFont)
+		public LineBreaker(Renderer.RendererBase renderer, Font defaultFont)
 			: base(renderer, defaultFont)
 		{
 			m_Formatter = new LeftFormatter(renderer, defaultFont);

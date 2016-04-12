@@ -5,10 +5,10 @@ namespace Gwen.RichText.KnuthPlass
 {
 	internal abstract class Formatter
 	{
-		protected Renderer.Base m_Renderer;
+		protected Renderer.RendererBase m_Renderer;
 		protected Font m_DefaultFont;
 
-		public Formatter(Renderer.Base renderer, Font defaultFont)
+		public Formatter(Renderer.RendererBase renderer, Font defaultFont)
 		{
 			m_Renderer = renderer;
 			m_DefaultFont = defaultFont;

@@ -24,7 +24,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="ScrollBarBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ScrollBarBar(Base parent)
+        public ScrollBarBar(ControlBase parent)
             : base(parent)
         {
             RestrictToParent = true;
@@ -35,7 +35,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawScrollBarBar(this, m_Held, IsHovered, m_Horizontal);
             base.Render(skin);

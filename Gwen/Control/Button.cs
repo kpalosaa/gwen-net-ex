@@ -102,7 +102,7 @@ namespace Gwen.Control
         /// Control constructor.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Button(Base parent)
+        public Button(ControlBase parent)
             : base(parent)
         {
             Alignment = Alignment.Center;
@@ -121,7 +121,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             base.Render(skin);
 

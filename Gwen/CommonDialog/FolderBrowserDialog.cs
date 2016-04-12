@@ -9,7 +9,7 @@ namespace Gwen.CommonDialog
 	/// </summary>
 	public class FolderBrowserDialog : FileDialog
 	{
-		public FolderBrowserDialog(Base parent)
+		public FolderBrowserDialog(ControlBase parent)
 			: base(parent)
 		{
 		}

@@ -19,7 +19,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="DockedTabControl"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public DockedTabControl(Base parent)
+        public DockedTabControl(ControlBase parent)
             : base(parent)
         {
             Dock = Dock.Fill;
@@ -68,7 +68,7 @@ namespace Gwen.Control
         public void MoveTabsTo(DockedTabControl target)
         {
             var children = TabStrip.Children.ToArray(); // copy because collection will be modified
-            foreach (Base child in children)
+            foreach (ControlBase child in children)
             {
                 TabButton button = child as TabButton;
                 if (button == null)

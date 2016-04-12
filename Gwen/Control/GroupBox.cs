@@ -24,7 +24,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="GroupBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public GroupBox(Base parent)
+		public GroupBox(ControlBase parent)
 			: base(parent)
         {
 			m_Text = new Text(this);
@@ -59,7 +59,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawGroupBox(this, 10, m_Text.ActualHeight, m_Text.ActualWidth);
         }

@@ -118,7 +118,7 @@
     <Compile Include="Control\Internal\PropertyRowLabel.cs" />
     <Compile Include="Control\PropertyTree.cs" />
     <Compile Include="Control\Internal\PropertyTreeNode.cs" />
-    <Compile Include="Control\Property\Base.cs" />
+    <Compile Include="Control\Property\PropertyBase.cs" />
     <Compile Include="Control\Property\Check.cs" />
     <Compile Include="Control\Property\Color.cs" />
     <Compile Include="Control\Property\Text.cs" />
@@ -133,7 +133,7 @@
     <Compile Include="Control\Internal\ScrollBarBar.cs" />
     <Compile Include="Control\Internal\ScrollBarButton.cs" />
     <Compile Include="Control\Internal\Text.cs" />
-    <Compile Include="Control\Base.cs" />
+    <Compile Include="Control\ControlBase.cs" />
     <Compile Include="Control\Internal\ScrollBar.cs" />
     <Compile Include="Control\Button.cs" />
     <Compile Include="Control\Canvas.cs" />
@@ -183,7 +183,7 @@
     <Compile Include="Margin.cs" />
     <Compile Include="Padding.cs" />
     <Compile Include="Key.cs" />
-    <Compile Include="Platform\Base.cs" />
+    <Compile Include="Platform\PlatformBase.cs" />
     <Compile Include="Platform\Platform.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Point.cs" />
@@ -211,9 +211,9 @@
     <Compile Include="DragDrop\DragAndDrop.cs" />
     <Compile Include="DragDrop\Package.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Renderer\Base.cs" />
+    <Compile Include="Renderer\RendererBase.cs" />
     <Compile Include="Renderer\ICacheToTexture.cs" />
-    <Compile Include="Skin\Base.cs" />
+    <Compile Include="Skin\SkinBase.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Xml\Attributes.cs" />
     <Compile Include="Xml\Component.cs" />

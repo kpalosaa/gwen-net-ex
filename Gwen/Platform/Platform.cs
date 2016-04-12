@@ -5,7 +5,7 @@ namespace Gwen.Platform
 {
 	public class Platform
 	{
-		private static Base m_Platform = null;
+		private static PlatformBase m_Platform = null;
 
 		/// <summary>
 		/// Gets text from clipboard.
@@ -68,7 +68,7 @@ namespace Gwen.Platform
 		/// Set the current platform.
 		/// </summary>
 		/// <param name="platform">Platform.</param>
-		public static void Init(Base platform)
+		public static void Init(PlatformBase platform)
 		{
 			m_Platform = platform;
 		}

@@ -5,15 +5,14 @@ namespace Gwen.Control.Property
     /// <summary>
     /// Base control for property entry.
     /// </summary>
-    public class Base : Control.Base
+    public class PropertyBase : Control.ControlBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Base"/> class.
+        /// Initializes a new instance of the <see cref="PropertyBase"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Base(Control.Base parent) : base(parent)
+        public PropertyBase(Control.ControlBase parent) : base(parent)
         {
-            Height = 17;
         }
 
         /// <summary>
@@ -37,7 +36,7 @@ namespace Gwen.Control.Property
                 ValueChanged.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnValueChanged(Control.Base control, EventArgs args)
+        protected virtual void OnValueChanged(Control.ControlBase control, EventArgs args)
         {
             DoChanged();
         }

@@ -18,7 +18,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ListBoxRow"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ListBoxRow(Base parent)
+        public ListBoxRow(ControlBase parent)
             : base(parent)
         {
 			m_ListBox = parent as ListBox;
@@ -47,7 +47,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawListBoxLine(this, IsSelected, EvenRow);
         }
@@ -68,7 +68,7 @@ namespace Gwen.Control
             }
         }
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			ListBoxRow element = new ListBoxRow(parent);
 			parser.ParseAttributes(element);
@@ -81,7 +81,7 @@ namespace Gwen.Control
 					{
 						if (parser.MoveToContent())
 						{
-							Base column = parser.ParseElement(element);
+							ControlBase column = parser.ParseElement(element);
 							element.SetCellContents(colIndex++, column, true);
 						}
 						else

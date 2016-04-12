@@ -17,7 +17,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Popup"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Popup(Base parent)
+		public Popup(ControlBase parent)
             : base(parent)
         {
 			Padding = Padding.Two;
@@ -34,7 +34,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			skin.DrawMenu(this, true);
 		}
@@ -43,7 +43,7 @@ namespace Gwen.Control
 		/// Renders under the actual control (shadows etc).
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderUnder(Skin.Base skin)
+		protected override void RenderUnder(Skin.SkinBase skin)
 		{
 			base.RenderUnder(skin);
 			skin.DrawShadow(this);

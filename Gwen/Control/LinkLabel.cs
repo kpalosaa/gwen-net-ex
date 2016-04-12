@@ -30,9 +30,9 @@ namespace Gwen.Control
 		public Font HoverFont { get; set; }
 
 		[Xml.XmlEvent]
-		public event Base.GwenEventHandler<LinkClickedEventArgs> LinkClicked;
+		public event ControlBase.GwenEventHandler<LinkClickedEventArgs> LinkClicked;
 
-		public LinkLabel(Base parent)
+		public LinkLabel(ControlBase parent)
 			: base(parent)
 		{
 			m_hoverColor = null;
@@ -43,7 +43,7 @@ namespace Gwen.Control
 			base.Clicked += OnClicked;
 		}
 
-		private void OnHoverEnter(Base control, EventArgs args)
+		private void OnHoverEnter(ControlBase control, EventArgs args)
 		{
 			Cursor = Cursor.Finger;
 
@@ -57,7 +57,7 @@ namespace Gwen.Control
 			}
 		}
 
-		private void OnHoverLeave(Base control, EventArgs args)
+		private void OnHoverLeave(ControlBase control, EventArgs args)
 		{
 			m_Text.TextColor = m_normalColor;
 
@@ -67,7 +67,7 @@ namespace Gwen.Control
 			}
 		}
 
-		private void OnClicked(Base control, ClickedEventArgs args)
+		private void OnClicked(ControlBase control, ClickedEventArgs args)
 		{
 			if (LinkClicked != null)
 				LinkClicked(this, new LinkClickedEventArgs(this.Link));

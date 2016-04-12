@@ -8,7 +8,7 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace Gwen.Renderer.OpenTK
 {
-	public abstract class OpenTKBase : Base
+	public abstract class OpenTKBase : RendererBase
 	{
 		protected Color m_Color;
 

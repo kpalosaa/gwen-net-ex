@@ -13,7 +13,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="MenuStrip"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public MenuStrip(Base parent)
+        public MenuStrip(ControlBase parent)
             : base(parent)
         {
 			Collapse(false, false);
@@ -42,7 +42,7 @@ namespace Gwen.Control
         /// Renders under the actual control (shadows etc).
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderUnder(Skin.Base skin)
+        protected override void RenderUnder(Skin.SkinBase skin)
         {
         }
 
@@ -50,7 +50,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawMenuStrip(this);
         }
@@ -74,7 +74,7 @@ namespace Gwen.Control
             item.HoverEnter += OnHoverItem;
         }
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			MenuStrip element = new MenuStrip(parent);
 			parser.ParseAttributes(element);

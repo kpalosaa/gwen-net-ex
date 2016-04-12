@@ -1,6 +1,4 @@
-﻿// #define USE_GL42_RENDERER
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -18,12 +16,8 @@ namespace Gwen.UnitTest.OpenTK
 	public class UnitTestGameWindow : GameWindow
 	{
 		private Gwen.Renderer.OpenTK.Input.OpenTK m_Input;
-#if USE_GL42_RENDERER
-		private Gwen.Renderer.OpenTK.OpenTKGL42 m_Renderer;
-#else
-		private Gwen.Renderer.OpenTK.OpenTKGL20 m_Renderer;
-#endif
-		private Gwen.Skin.Base m_Skin;
+		private Gwen.Renderer.OpenTK.OpenTKBase m_Renderer;
+		private Gwen.Skin.SkinBase m_Skin;
 		private Gwen.Control.Canvas m_Canvas;
 		private Gwen.UnitTest.UnitTest m_UnitTest;
 
@@ -130,13 +124,12 @@ namespace Gwen.UnitTest.OpenTK
 
 			Platform.Platform.Init(new Platform.Windows());
 
-#if USE_GL42_RENDERER
-			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
-#else
+			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL10();
 			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();
-#endif
+			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
+
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
-			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
+			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", Configuration.RunningOnMacOS ? 18 : 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
 			m_Input.Initialize(m_Canvas);

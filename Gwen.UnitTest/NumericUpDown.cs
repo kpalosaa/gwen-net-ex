@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Standard", Order = 206)]
 	public class NumericUpDown : GUnit
     {
-        public NumericUpDown(Base parent)
+        public NumericUpDown(ControlBase parent)
             : base(parent)
         {
 			VerticalLayout layout = new VerticalLayout(this);
@@ -47,7 +47,7 @@ namespace Gwen.UnitTest
 			ctrl.ValueChanged += OnValueChanged;
 		}
 
-		void OnValueChanged(Base control, EventArgs args)
+		void OnValueChanged(ControlBase control, EventArgs args)
         {
             UnitPrint(String.Format("NumericUpDown: ValueChanged: {0}", ((Control.NumericUpDown)control).Value));
         }

@@ -7,7 +7,7 @@ namespace Gwen.Control
 	/// RadioButton with label.
 	/// </summary>
 	[Xml.XmlControl]
-	public class LabeledRadioButton : Base
+	public class LabeledRadioButton : ControlBase
 	{
 		private readonly RadioButton m_RadioButton;
 		private readonly Label m_Label;
@@ -38,7 +38,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="LabeledRadioButton"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public LabeledRadioButton(Base parent)
+		public LabeledRadioButton(ControlBase parent)
 			: base(parent)
 		{
 			MouseInputEnabled = true;
@@ -50,7 +50,7 @@ namespace Gwen.Control
 			m_Label = new Label(this);
 			m_Label.Alignment = Alignment.CenterV | Alignment.Left;
 			m_Label.Text = "Radio Button";
-			m_Label.Clicked += delegate(Base control, ClickedEventArgs args) { m_RadioButton.Press(control); };
+			m_Label.Clicked += delegate(ControlBase control, ClickedEventArgs args) { m_RadioButton.Press(control); };
 			m_Label.IsTabable = false;
 			m_Label.KeyboardInputEnabled = false;
 		}
@@ -83,7 +83,7 @@ namespace Gwen.Control
 		/// Renders the focus overlay.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderFocus(Skin.Base skin)
+		protected override void RenderFocus(Skin.SkinBase skin)
 		{
 			if (InputHandler.KeyboardFocus != this) return;
 			if (!IsTabable) return;

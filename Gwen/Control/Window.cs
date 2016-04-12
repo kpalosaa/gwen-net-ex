@@ -41,11 +41,11 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Window"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Window(Base parent)
+		public Window(ControlBase parent)
 			: base(parent)
 		{
 			m_TitleBar = new WindowTitleBar(this);
-			m_TitleBar.Height = 24;
+			m_TitleBar.Height = Skin.BaseUnit + 9;
 			m_TitleBar.Title.TextColor = Skin.Colors.Window.TitleInactive;
 			m_TitleBar.CloseButton.Clicked += CloseButtonPressed;
 			m_TitleBar.SendToBack();
@@ -68,7 +68,7 @@ namespace Gwen.Control
 			base.Close();
 		}
 
-		protected virtual void CloseButtonPressed(Base control, EventArgs args)
+		protected virtual void CloseButtonPressed(ControlBase control, EventArgs args)
 		{
 			Close();
 		}
@@ -102,7 +102,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			bool hasFocus = IsOnTop;
 
@@ -111,14 +111,14 @@ namespace Gwen.Control
 			else
 				m_TitleBar.Title.TextColor = Skin.Colors.Window.TitleInactive;
 
-			skin.DrawWindow(this, m_TitleBar.ActualBottom, hasFocus);
+			skin.DrawWindow(this, m_TitleBar.ActualHeight, hasFocus);
 		}
 
 		/// <summary>
 		/// Renders under the actual control (shadows etc).
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderUnder(Skin.Base skin)
+		protected override void RenderUnder(Skin.SkinBase skin)
 		{
 			base.RenderUnder(skin);
 			skin.DrawShadow(this);
@@ -128,7 +128,7 @@ namespace Gwen.Control
 		/// Renders the focus overlay.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderFocus(Skin.Base skin)
+		protected override void RenderFocus(Skin.SkinBase skin)
 		{
 			
 		}

@@ -6,7 +6,7 @@ namespace Gwen.Control
 	/// CheckBox with label.
 	/// </summary>
 	[Xml.XmlControl]
-	public class LabeledCheckBox : Base
+	public class LabeledCheckBox : ControlBase
     {
         private readonly CheckBox m_CheckBox;
         private readonly Label m_Label;
@@ -45,7 +45,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="LabeledCheckBox"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public LabeledCheckBox(Base parent)
+        public LabeledCheckBox(ControlBase parent)
             : base(parent)
         {
             m_CheckBox = new CheckBox(this);
@@ -53,7 +53,7 @@ namespace Gwen.Control
             m_CheckBox.CheckChanged += OnCheckChanged;
 
             m_Label = new Label(this);
-			m_Label.Clicked += delegate(Base Control, ClickedEventArgs args) { m_CheckBox.Press(Control); };
+			m_Label.Clicked += delegate(ControlBase Control, ClickedEventArgs args) { m_CheckBox.Press(Control); };
             m_Label.IsTabable = false;
 
             IsTabable = false;
@@ -86,7 +86,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Handler for CheckChanged event.
 		/// </summary>
-		protected virtual void OnCheckChanged(Base control, EventArgs Args)
+		protected virtual void OnCheckChanged(ControlBase control, EventArgs Args)
         {
             if (m_CheckBox.IsChecked)
             {

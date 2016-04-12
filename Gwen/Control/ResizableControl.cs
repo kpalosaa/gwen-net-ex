@@ -79,7 +79,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ResizableControl"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ResizableControl(Base parent)
+		public ResizableControl(ControlBase parent)
 			: base(parent)
 		{
 			m_Resizer = new Resizer[8];
@@ -133,7 +133,7 @@ namespace Gwen.Control
 		/// Handler for the resized event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnResized(Base control, EventArgs args)
+		protected virtual void OnResized(ControlBase control, EventArgs args)
 		{
 			if (Resized != null)
 				Resized.Invoke(this, EventArgs.Empty);
@@ -193,7 +193,7 @@ namespace Gwen.Control
 			height = Util.Clamp(height, MinimumSize.Height, MaximumSize.Height);
 
 			// Clamp to parent's window
-			Base parent = Parent;
+			ControlBase parent = Parent;
 			if (parent != null && m_ClampMovement)
 			{
 				if (x + width > parent.ActualWidth) x = parent.ActualWidth - width;

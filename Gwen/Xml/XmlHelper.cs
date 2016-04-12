@@ -38,22 +38,22 @@ namespace Gwen.Xml
 		{
 			{ typeof(EventArgs), (attribute, value) =>
 				{
-					return new Control.Base.GwenEventHandler<EventArgs>(new XmlEventHandler<EventArgs>(value, attribute).OnEvent);
+					return new Control.ControlBase.GwenEventHandler<EventArgs>(new XmlEventHandler<EventArgs>(value, attribute).OnEvent);
 				}
 			},
 			{ typeof(Control.ClickedEventArgs), (attribute, value) =>
 				{
-					return new Control.Base.GwenEventHandler<Control.ClickedEventArgs>(new XmlEventHandler<Control.ClickedEventArgs>(value, attribute).OnEvent);
+					return new Control.ControlBase.GwenEventHandler<Control.ClickedEventArgs>(new XmlEventHandler<Control.ClickedEventArgs>(value, attribute).OnEvent);
 				}
 			},
 			{ typeof(Control.ItemSelectedEventArgs), (attribute, value) =>
 				{
-					return new Control.Base.GwenEventHandler<Control.ItemSelectedEventArgs>(new XmlEventHandler<Control.ItemSelectedEventArgs>(value, attribute).OnEvent);
+					return new Control.ControlBase.GwenEventHandler<Control.ItemSelectedEventArgs>(new XmlEventHandler<Control.ItemSelectedEventArgs>(value, attribute).OnEvent);
 				}
 			},
 			{ typeof(Control.LinkClickedEventArgs), (attribute, value) =>
 				{
-					return new Control.Base.GwenEventHandler<Control.LinkClickedEventArgs>(new XmlEventHandler<Control.LinkClickedEventArgs>(value, attribute).OnEvent);
+					return new Control.ControlBase.GwenEventHandler<Control.LinkClickedEventArgs>(new XmlEventHandler<Control.LinkClickedEventArgs>(value, attribute).OnEvent);
 				}
 			},
 		};
@@ -348,8 +348,8 @@ namespace Gwen.Xml
 						}
 					}
 
-					if (element is Gwen.Control.Base)
-						return Font.Create(((Gwen.Control.Base)element).Skin.Renderer, name, size, style);
+					if (element is Gwen.Control.ControlBase)
+						return Font.Create(((Gwen.Control.ControlBase)element).Skin.Renderer, name, size, style);
 					else if (element is Gwen.Xml.Component)
 						return Font.Create(((Gwen.Xml.Component)element).View.Skin.Renderer, name, size, style);
 					else

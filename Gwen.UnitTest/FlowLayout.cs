@@ -6,10 +6,10 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Layout", Order = 401)]
 	public class FlowLayout : GUnit
 	{
-		public FlowLayout(Base parent)
+		public FlowLayout(ControlBase parent)
 			: base(parent)
 		{
-			Base layout = new Control.Layout.DockLayout(this);
+			ControlBase layout = new Control.Layout.DockLayout(this);
 
 			Control.Layout.FlowLayout flowLayout = new Control.Layout.FlowLayout(layout);
 			flowLayout.Width = 200;

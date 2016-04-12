@@ -35,7 +35,7 @@ namespace Gwen.Control.Layout
 	/// Add every column of the first row, then every column of the second row etc.
 	/// </summary>
 	[Xml.XmlControl]
-	public class GridLayout : Base
+	public class GridLayout : ControlBase
 	{
 		private int m_ColumnCount;
 
@@ -73,7 +73,7 @@ namespace Gwen.Control.Layout
 		/// Initializes a new instance of the <see cref="GridLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public GridLayout(Base parent)
+		public GridLayout(ControlBase parent)
 			: base(parent)
 		{
 			m_ColumnCount = 1;
@@ -152,7 +152,7 @@ namespace Gwen.Control.Layout
 			Size cellAvailableSize = availableSize;
 			columnIndex = 0;
 			rowIndex = 0;
-			foreach (Base child in this.Children)
+			foreach (ControlBase child in this.Children)
 			{
 				Size size;
 				if (child.IsCollapsed)
@@ -264,7 +264,7 @@ namespace Gwen.Control.Layout
 			int columnIndex = 0;
 			int rowIndex = 0;
 
-			foreach (Base child in this.Children)
+			foreach (ControlBase child in this.Children)
 			{
 				int width = m_ColumnWidths[columnIndex];
 				int height = m_RowHeights[rowIndex];

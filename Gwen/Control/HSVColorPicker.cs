@@ -8,7 +8,7 @@ namespace Gwen.Control
 	/// HSV color picker with "before" and "after" color boxes.
 	/// </summary>
 	[Xml.XmlControl(ElementName = "ColorPicker")]
-	public class HSVColorPicker : Base, IColorPicker
+	public class HSVColorPicker : ControlBase, IColorPicker
 	{
 		private readonly ColorLerpBox m_LerpBox;
 		private readonly ColorSlider m_ColorSlider;
@@ -46,25 +46,27 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="HSVColorPicker"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public HSVColorPicker(Base parent)
+		public HSVColorPicker(ControlBase parent)
 			: base(parent)
 		{
 			MouseInputEnabled = true;
+
+			int baseSize = Skin.BaseUnit;
 
 			m_LerpBox = new ColorLerpBox(this);
 			m_LerpBox.Margin = Margin.Two;
 			m_LerpBox.ColorChanged += ColorBoxChanged;
 			m_LerpBox.Dock = Dock.Fill;
 
-			Base values = new VerticalLayout(this);
+			ControlBase values = new VerticalLayout(this);
 			values.Dock = Dock.Right;
 			{
 				m_After = new ColorDisplay(values);
-				m_After.Size = new Size(56, 24);
+				m_After.Size = new Size(baseSize * 5, baseSize * 2);
 
 				m_Before = new ColorDisplay(values);
 				m_Before.Margin = new Margin(2, 0, 2, 2);
-				m_Before.Size = new Size(56, 24);
+				m_Before.Size = new Size(baseSize * 5, baseSize * 2);
 
 				GridLayout grid = new GridLayout(values);
 				grid.Margin = new Margin(2, 0, 2, 2);
@@ -118,7 +120,7 @@ namespace Gwen.Control
 			SetColor(DefaultColor);
 		}
 
-		private void NumericTyped(Base control, EventArgs args)
+		private void NumericTyped(ControlBase control, EventArgs args)
 		{
 			NumericUpDown box = control as NumericUpDown;
 			if (box == null) return;
@@ -175,7 +177,7 @@ namespace Gwen.Control
 				ColorChanged.Invoke(this, EventArgs.Empty);
 		}
 
-		private void ColorBoxChanged(Base control, EventArgs args)
+		private void ColorBoxChanged(ControlBase control, EventArgs args)
 		{
 			UpdateControls(SelectedColor);
 			//Invalidate();
@@ -184,7 +186,7 @@ namespace Gwen.Control
 				ColorChanged.Invoke(this, EventArgs.Empty);
 		}
 
-		private void ColorSliderChanged(Base control, EventArgs args)
+		private void ColorSliderChanged(ControlBase control, EventArgs args)
 		{
 			m_LerpBox.SetColor(m_ColorSlider.SelectedColor, true, false);
 			UpdateControls(SelectedColor);
@@ -200,14 +202,14 @@ namespace Gwen.Control
 			{
 				m_After.Margin = new Margin(2, 2, 2, 0);
 				m_Before.Margin = new Margin(2, 0, 2, 2);
-				m_After.Height = 24;
+				m_After.Height = Skin.BaseUnit * 2;
 				m_Before.Show();
 			}
 			else
 			{
 				m_After.Margin = Margin.Two;
 				m_Before.Collapse();
-				m_After.Height = 48;
+				m_After.Height = Skin.BaseUnit * 4;
 			}
 		}
 	}

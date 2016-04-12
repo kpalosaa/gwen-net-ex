@@ -6,7 +6,7 @@ namespace Gwen.Renderer
     /// <summary>
     /// Base renderer.
     /// </summary>
-    public class Base : IDisposable
+    public class RendererBase : IDisposable
     {
         //public Random rnd;
         private Point m_RenderOffset;
@@ -16,9 +16,9 @@ namespace Gwen.Renderer
         public float Scale { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Base"/> class.
+        /// Initializes a new instance of the <see cref="RendererBase"/> class.
         /// </summary>
-        protected Base()
+        protected RendererBase()
         {
             //rnd = new Random();
             m_RenderOffset = Point.Zero;
@@ -39,7 +39,7 @@ namespace Gwen.Renderer
         }
 
 #if DEBUG
-        ~Base()
+        ~RendererBase()
         {
             throw new InvalidOperationException(String.Format("IDisposable object finalized: {0}", GetType()));
             //Debug.Print(String.Format("IDisposable object finalized: {0}", GetType()));
@@ -433,12 +433,12 @@ namespace Gwen.Renderer
 
             if (rect.Right > m_ClipRegion.Right)
             {
-                r.Width = m_ClipRegion.Right - r.X;
+                r.Width = m_ClipRegion.Right - r.X + 1;
             }
 
             if (rect.Bottom > m_ClipRegion.Bottom)
             {
-                r.Height = m_ClipRegion.Bottom - r.Y;
+                r.Height = m_ClipRegion.Bottom - r.Y + 1;
             }
 
             m_ClipRegion = r;
@@ -468,12 +468,12 @@ namespace Gwen.Renderer
 
 			if (rect.Right > m_ClipRegion.Right)
 			{
-				r.Width = m_ClipRegion.Right - r.X;
+				r.Width = m_ClipRegion.Right - r.X + 1;
 			}
 
 			if (rect.Bottom > m_ClipRegion.Bottom)
 			{
-				r.Height = m_ClipRegion.Bottom - r.Y;
+				r.Height = m_ClipRegion.Bottom - r.Y + 1;
 			}
 
 			m_ClipRegion = r;

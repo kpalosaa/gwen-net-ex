@@ -20,7 +20,7 @@ namespace Gwen.UnitTest.Android
 	{
 		private Gwen.Renderer.Android.OpenTK.Input.OpenTK m_Input;
 		private Gwen.Renderer.Android.OpenTK.OpenTK m_Renderer;
-		private Gwen.Skin.Base m_Skin;
+		private Gwen.Skin.SkinBase m_Skin;
 		private Gwen.Control.Canvas m_Canvas;
 		private Gwen.UnitTest.UnitTest m_UnitTest;
 

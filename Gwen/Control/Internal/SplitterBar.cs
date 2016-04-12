@@ -12,7 +12,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="SplitterBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public SplitterBar(Base parent)
+        public SplitterBar(ControlBase parent)
             : base(parent)
         {
             Target = this;
@@ -23,7 +23,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             if (ShouldDrawBackground)
                 skin.DrawButton(this, true, false, IsDisabled);

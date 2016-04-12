@@ -18,20 +18,20 @@ namespace Gwen.Control
 	}
 
 	[Xml.XmlControl]
-	public class Border : Base
+	public class Border : ControlBase
 	{
 		private BorderType m_BorderType;
 
 		[Xml.XmlProperty]
 		public BorderType BorderType { get { return m_BorderType; } set { if (m_BorderType == value) return; m_BorderType = value; } }
 
-		public Border(Base parent)
+		public Border(ControlBase parent)
 			: base(parent)
 		{
 			m_BorderType = BorderType.PanelNormal;
 		}
 
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			skin.DrawBorder(this, m_BorderType);
 		}

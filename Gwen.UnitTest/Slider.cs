@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Standard", Order = 207)]
 	public class Slider : GUnit
     {
-        public Slider(Base parent)
+        public Slider(ControlBase parent)
             : base(parent)
         {
 			HorizontalLayout hlayout = new HorizontalLayout(this);
@@ -55,7 +55,7 @@ namespace Gwen.UnitTest
             }
         }
 
-		void SliderMoved(Base control, EventArgs args)
+		void SliderMoved(ControlBase control, EventArgs args)
         {
             Control.Internal.Slider slider = control as Control.Internal.Slider;
             UnitPrint(String.Format("Slider moved: ValueChanged: {0}", slider.Value));

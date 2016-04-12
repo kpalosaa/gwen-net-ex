@@ -11,7 +11,7 @@ namespace Gwen.XmlDesigner
 		private Window m_Window;
 		private RichLabel m_AboutText;
 
-		public About(Base parent)
+		public About(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 		}
@@ -43,7 +43,7 @@ namespace Gwen.XmlDesigner
 			m_AboutText.Document = document;
 		}
 
-		private void OnOkClicked(Base sender, ClickedEventArgs args)
+		private void OnOkClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			m_Window.Close();
 		}

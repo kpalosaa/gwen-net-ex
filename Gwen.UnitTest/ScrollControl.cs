@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Containers", Order = 305)]
 	public class ScrollControl : GUnit
 	{
-		public ScrollControl(Base parent)
+		public ScrollControl(ControlBase parent)
 			: base(parent)
 		{
 			Control.Layout.GridLayout layout = new Control.Layout.GridLayout(this);

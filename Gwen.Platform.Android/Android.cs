@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Gwen.Platform
 {
-	public class Android : Base
+	public class Android : PlatformBase
 	{
 		private DateTime m_FirstTime = DateTime.Now;
 

@@ -12,14 +12,14 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="CategoryHeaderButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public CategoryHeaderButton(Base parent)
+        public CategoryHeaderButton(ControlBase parent)
             : base(parent)
         {
             ShouldDrawBackground = false;
             IsToggle = true;
             Alignment = Alignment.Center;
             TextPadding = new Padding(3, 0, 3, 0);
-			Height = 20;
+			Height = Skin.BaseUnit + 5;
         }
 
         /// <summary>

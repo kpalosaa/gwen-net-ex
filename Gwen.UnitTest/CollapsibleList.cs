@@ -6,7 +6,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Non-standard", Order = 500)]
 	public class CollapsibleList : GUnit
     {
-        public CollapsibleList(Base parent)
+        public CollapsibleList(ControlBase parent)
             : base(parent)
         {
             Control.CollapsibleList control = new Control.CollapsibleList(this);
@@ -51,13 +51,13 @@ namespace Gwen.UnitTest
             }
         }
 
-		void OnSelection(Base control, EventArgs args)
+		void OnSelection(ControlBase control, EventArgs args)
         {
             Control.CollapsibleList list = control as Control.CollapsibleList;
             UnitPrint(String.Format("CollapsibleList: Selected: {0}", list.GetSelectedButton().Text));
         }
 
-		void OnCollapsed(Base control, EventArgs args)
+		void OnCollapsed(ControlBase control, EventArgs args)
         {
             Control.CollapsibleCategory cat = control as Control.CollapsibleCategory;
             UnitPrint(String.Format("CollapsibleCategory: CategoryCollapsed: {0} {1}", cat.Text, cat.IsCollapsed));

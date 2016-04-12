@@ -11,7 +11,7 @@ namespace Gwen.Control.Internal
 		public Label Title { get { return m_Title; } }
 		public CloseButton CloseButton { get { return m_CloseButton; } }
 
-		public WindowTitleBar(Base parent)
+		public WindowTitleBar(ControlBase parent)
 			: base(parent)
 		{
 			m_Title = new Label(this);
@@ -39,7 +39,10 @@ namespace Gwen.Control.Internal
 			m_Title.DoArrange(new Rectangle(8, 0, m_Title.MeasuredSize.Width, finalSize.Height));
 
 			if (!m_CloseButton.IsCollapsed)
-				m_CloseButton.DoArrange(new Rectangle(finalSize.Width - 6 - m_CloseButton.MeasuredSize.Width, 0, m_CloseButton.MeasuredSize.Width, m_CloseButton.MeasuredSize.Height));
+			{
+				int closeButtonSize = finalSize.Height;
+				m_CloseButton.DoArrange(new Rectangle(finalSize.Width - 6 - closeButtonSize, 0, closeButtonSize, closeButtonSize));
+			}
 
 			return finalSize;
 		}

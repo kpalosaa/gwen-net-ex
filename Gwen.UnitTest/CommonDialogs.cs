@@ -9,7 +9,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Xml", Order = 602)]
 	public class CommonDialogs : GUnit
 	{
-		public CommonDialogs(Base parent)
+		public CommonDialogs(ControlBase parent)
 			: base(parent)
 		{
 			Control.Layout.GridLayout grid = new Control.Layout.GridLayout(this);
@@ -22,8 +22,7 @@ namespace Gwen.UnitTest
 				Control.Label openFile = null;
 
 				button = new Control.Button(grid);
-				button.Dock = Dock.Top;
-				button.Width = 200;
+				button.Margin = Margin.Five;
 				button.Text = "OpenFileDialog";
 				button.Clicked += (sender, args) =>
 				{
@@ -43,8 +42,7 @@ namespace Gwen.UnitTest
 				Control.Label saveFile = null;
 
 				button = new Control.Button(grid);
-				button.Dock = Dock.Top;
-				button.Width = 200;
+				button.Margin = Margin.Five;
 				button.Text = "SaveFileDialog";
 				button.Clicked += (sender, args) =>
 				{
@@ -62,8 +60,7 @@ namespace Gwen.UnitTest
 				Control.Label createFile = null;
 
 				button = new Control.Button(grid);
-				button.Dock = Dock.Top;
-				button.Width = 200;
+				button.Margin = Margin.Five;
 				button.Text = "SaveFileDialog (create)";
 				button.Clicked += (sender, args) =>
 				{
@@ -83,8 +80,7 @@ namespace Gwen.UnitTest
 				Control.Label selectFolder = null;
 
 				button = new Control.Button(grid);
-				button.Dock = Dock.Top;
-				button.Width = 200;
+				button.Margin = Margin.Five;
 				button.Text = "FolderBrowserDialog";
 				button.Clicked += (sender, args) =>
 				{

@@ -5,7 +5,7 @@ namespace Gwen
 {
 	public class FontCache : IDisposable
 	{
-		public static Font GetFont(Renderer.Base renderer, string faceName, int size = 10, FontStyle style = 0)
+		public static Font GetFont(Renderer.RendererBase renderer, string faceName, int size = 10, FontStyle style = 0)
 		{
 			if (m_Instance == null)
 				m_Instance = new FontCache();
@@ -19,7 +19,7 @@ namespace Gwen
 				m_Instance.Dispose();
 		}
 
-        private Font InternalGetFont(Renderer.Base renderer, string faceName, int size, FontStyle style)
+        private Font InternalGetFont(Renderer.RendererBase renderer, string faceName, int size, FontStyle style)
 		{
 			string id = String.Format("{0};{1};{2}", faceName, size, (int)style);
 			Font font;

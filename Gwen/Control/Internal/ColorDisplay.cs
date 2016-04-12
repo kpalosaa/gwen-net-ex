@@ -6,7 +6,7 @@ namespace Gwen.Control.Internal
     /// <summary>
     /// Color square.
     /// </summary>
-    public class ColorDisplay : Base
+    public class ColorDisplay : ControlBase
     {
         private Color m_Color;
         //private bool m_DrawCheckers;
@@ -15,9 +15,9 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="ColorDisplay"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ColorDisplay(Base parent) : base(parent)
+        public ColorDisplay(ControlBase parent) : base(parent)
         {
-			Size = new Size(32, 32);
+			Size = new Size(Skin.BaseUnit * 2);
 			m_Color = new Color(255, 255, 0, 0);
             //m_DrawCheckers = true;
         }
@@ -26,7 +26,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawColorDisplay(this, m_Color);
         }

@@ -11,7 +11,7 @@ namespace Gwen.Control
 	/// Multiline label with text chunks having different color/font.
 	/// </summary>
 	[Xml.XmlControl]
-	public class RichLabel : Base
+	public class RichLabel : ControlBase
 	{
 		private Document m_Document;
 		private bool m_NeedsRebuild;
@@ -22,13 +22,13 @@ namespace Gwen.Control
 		public Document Document { get { return m_Document; } set { m_Document = value; m_NeedsRebuild = true; Invalidate(); } }
 
 		[Xml.XmlEvent]
-		public event Base.GwenEventHandler<LinkClickedEventArgs> LinkClicked;
+		public event ControlBase.GwenEventHandler<LinkClickedEventArgs> LinkClicked;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="RichLabel"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public RichLabel(Base parent)
+		public RichLabel(ControlBase parent)
 			: base(parent)
 		{
 			m_BuildWidth = 0;
@@ -148,7 +148,7 @@ namespace Gwen.Control
 			return m_TextSize;
 		}
 
-		private void OnLinkClicked(Base control, LinkClickedEventArgs args)
+		private void OnLinkClicked(ControlBase control, LinkClickedEventArgs args)
 		{
 			if (LinkClicked != null)
 				LinkClicked(this, args);

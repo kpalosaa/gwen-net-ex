@@ -7,28 +7,32 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Containers", Order = 301)]
 	public class ToolWindow : GUnit
 	{
-		public ToolWindow(Base parent)
+		public ToolWindow(ControlBase parent)
             : base(parent)
         {
-			Control.Button button1 = new Control.Button(this);
-			button1.Dock = Dock.Top;
-			button1.Width = 200;
-            button1.Text = "Open a ToolBar";
-			button1.Clicked += OpenToolBar;
+			Gwen.Control.Layout.VerticalLayout layout = new Gwen.Control.Layout.VerticalLayout(this);
+			layout.HorizontalAlignment = HorizontalAlignment.Left;
 
-			Control.Button button2 = new Control.Button(this);
-			button2.Dock = Dock.Top;
-			button2.Width = 200;
-			button2.Text = "Open a tool window";
-			button2.Clicked += OpenToolWindow;
+			Control.Button button;
+
+			button = new Control.Button(layout);
+			button.Margin = Margin.Five;
+			button.Text = "Open a ToolBar";
+			button.Clicked += OpenToolBar;
+
+			button = new Control.Button(layout);
+			button.Margin = Margin.Five;
+			button.Text = "Open a tool window";
+			button.Clicked += OpenToolWindow;
 		}
 
-		void OpenToolBar(Base control, EventArgs args)
+		void OpenToolBar(ControlBase control, EventArgs args)
         {
-			Control.ToolWindow window = new Control.ToolWindow(GetCanvas());
+			Control.ToolWindow window = new Control.ToolWindow(this);
 			window.Padding = Padding.Five;
 			window.HorizontalAlignment = HorizontalAlignment.Left;
 			window.VerticalAlignment = VerticalAlignment.Top;
+			window.StartPosition = StartPosition.CenterCanvas;
 
 			HorizontalLayout layout = new HorizontalLayout(window);
 
@@ -41,12 +45,13 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		void OpenToolWindow(Base control, EventArgs args)
+		void OpenToolWindow(ControlBase control, EventArgs args)
 		{
-			Control.ToolWindow window = new Control.ToolWindow(GetCanvas());
+			Control.ToolWindow window = new Control.ToolWindow(this);
 			window.Padding = Padding.Five;
 			window.HorizontalAlignment = HorizontalAlignment.Left;
 			window.VerticalAlignment = VerticalAlignment.Top;
+			window.StartPosition = StartPosition.CenterParent;
 			window.Vertical = true;
 
 			Control.Layout.GridLayout layout = new Control.Layout.GridLayout(window);
@@ -73,7 +78,7 @@ namespace Gwen.UnitTest
 			button.Clicked += Close;
 		}
 
-		void Close(Base control, EventArgs args)
+		void Close(ControlBase control, EventArgs args)
 		{
 			Control.ToolWindow window = control.UserData as Control.ToolWindow;
 			window.Close();

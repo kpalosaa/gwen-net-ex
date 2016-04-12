@@ -7,14 +7,14 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Layout", Order = 404)]
 	public class GridLayout : GUnit
 	{
-		public GridLayout(Base parent)
+		public GridLayout(ControlBase parent)
 			: base(parent)
 		{
 			Control.Layout.GridLayout grid = CreateGrid(this);
 			grid.Dock = Dock.Fill;
 		}
 
-		private Control.Layout.GridLayout CreateGrid(Base parent)
+		private Control.Layout.GridLayout CreateGrid(ControlBase parent)
 		{
 			Control.Layout.GridLayout grid = new Control.Layout.GridLayout(parent);
 
@@ -44,7 +44,7 @@ namespace Gwen.UnitTest
 			return grid;
 		}
 
-		private void CreateControl(Base parent, string text)
+		private void CreateControl(ControlBase parent, string text)
 		{
 			Control.Button button = new Control.Button(parent);
 			button.Text = text;

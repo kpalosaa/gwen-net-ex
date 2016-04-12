@@ -6,10 +6,10 @@ namespace Gwen.Control
     /// <summary>
     /// Single property row.
     /// </summary>
-    public class PropertyRow : Base
+    public class PropertyRow : ControlBase
     {
         private readonly Label m_Label;
-        private readonly Property.Base m_Property;
+        private readonly Property.PropertyBase m_Property;
         private bool m_LastEditing;
         private bool m_LastHover;
 
@@ -49,7 +49,7 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="parent">Parent control.</param>
         /// <param name="prop">Property control associated with this row.</param>
-        public PropertyRow(Base parent, Property.Base prop)
+        public PropertyRow(ControlBase parent, Property.PropertyBase prop)
             : base(parent)
         {
 			Padding = new Padding(2, 2, 2, 2);
@@ -66,7 +66,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             /* SORRY */
             if (IsEditing != m_LastEditing)
@@ -113,7 +113,7 @@ namespace Gwen.Control
 			return Size.Zero;
 		}
 
-		protected virtual void OnValueChanged(Base control, EventArgs args)
+		protected virtual void OnValueChanged(ControlBase control, EventArgs args)
         {
             if (ValueChanged != null)
 				ValueChanged.Invoke(this, EventArgs.Empty);

@@ -4,10 +4,10 @@ using Gwen.Control.Internal;
 namespace Gwen.Control
 {
 	[Xml.XmlControl]
-	public class HorizontalSplitter : Base
+	public class HorizontalSplitter : ControlBase
 	{
 		private readonly SplitterBar m_VSplitter;
-		private readonly Base[] m_Sections;
+		private readonly ControlBase[] m_Sections;
 
 		private float m_VVal; // 0-1
 		private int m_BarSize; // pixels
@@ -62,10 +62,10 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="CrossSplitter"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public HorizontalSplitter(Base parent)
+		public HorizontalSplitter(ControlBase parent)
 			: base(parent)
 		{
-			m_Sections = new Base[2];
+			m_Sections = new ControlBase[2];
 			
 			m_VSplitter = new SplitterBar(this);
 			m_VSplitter.Dragged += OnVerticalMoved;
@@ -99,7 +99,7 @@ namespace Gwen.Control
 			Invalidate();
 		}
 
-		protected void OnVerticalMoved(Base control, EventArgs args)
+		protected void OnVerticalMoved(ControlBase control, EventArgs args)
 		{
 			m_VVal = CalculateValueVertical();
 			Invalidate();
@@ -170,7 +170,7 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="index">Section index (0-3).</param>
 		/// <param name="panel">Control to assign.</param>
-		public void SetPanel(int index, Base panel)
+		public void SetPanel(int index, ControlBase panel)
 		{
 			m_Sections[index] = panel;
 			
@@ -187,12 +187,12 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="index">Section index (0-3).</param>
 		/// <returns>Specified section.</returns>
-		public Base GetPanel(int index)
+		public ControlBase GetPanel(int index)
 		{
 			return m_Sections[index];
 		}
 
-		protected override void OnChildAdded(Base child)
+		protected override void OnChildAdded(ControlBase child)
 		{
 			if (!(child is SplitterBar))
 			{

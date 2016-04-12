@@ -8,7 +8,7 @@ namespace Gwen.Control.Internal
 		private bool m_CanScrollH;
 		private bool m_CanScrollV;
 
-		public ScrollArea(Base parent)
+		public ScrollArea(ControlBase parent)
 			: base(parent)
 		{
 			m_CanScrollV = true;

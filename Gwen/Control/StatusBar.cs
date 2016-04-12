@@ -6,7 +6,7 @@ namespace Gwen.Control
 	/// Status bar.
 	/// </summary>
 	[Xml.XmlControl]
-	public class StatusBar : Base
+	public class StatusBar : ControlBase
     {
 		private Label m_Label;
 
@@ -20,11 +20,11 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public StatusBar(Base parent) : base(parent)
+        public StatusBar(ControlBase parent) : base(parent)
         {
-			Height = 26;
+			Height = Skin.BaseUnit + 11;
 			Dock = Dock.Bottom;
-            Padding = new Padding(6, 1, 6, 1);
+            Padding = new Padding(6, 2, 6, 1);
 
 			this.HorizontalAlignment = HorizontalAlignment.Stretch;
 			this.VerticalAlignment = VerticalAlignment.Bottom;
@@ -40,14 +40,14 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="control">Control to add.</param>
 		/// <param name="right">Determines whether the control should be added to the right side of the bar.</param>
-		public void AddControl(Base control, bool right)
+		public void AddControl(ControlBase control, bool right)
         {
             control.Parent = this;
             control.Dock = right ? Dock.Right : Dock.Left;
 			control.VerticalAlignment = VerticalAlignment.Center;
         }
 
-		protected override void OnChildAdded(Base child)
+		protected override void OnChildAdded(ControlBase child)
 		{
 			child.VerticalAlignment = VerticalAlignment.Center;
 			if (child.Dock != Dock.Left)
@@ -60,7 +60,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawStatusBar(this);
         }

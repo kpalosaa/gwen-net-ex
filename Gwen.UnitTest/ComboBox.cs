@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Standard", Order = 204)]
 	public class ComboBox : GUnit
 	{
-		public ComboBox(Base parent)
+		public ComboBox(ControlBase parent)
 			: base(parent)
 		{
 			VerticalLayout layout = new VerticalLayout(this);
@@ -83,7 +83,7 @@ namespace Gwen.UnitTest
 						Control.Button TriangleButton = new Control.Button(hlayout);
 						TriangleButton.Text = "Triangle";
 						TriangleButton.Width = 100;
-						TriangleButton.Clicked += delegate (Base sender, ClickedEventArgs args)
+						TriangleButton.Clicked += delegate (ControlBase sender, ClickedEventArgs args)
 						{
 							combo.SelectedItem = Triangle;
 						};
@@ -94,7 +94,7 @@ namespace Gwen.UnitTest
 						Control.Button TestBtn = new Control.Button(hlayout);
 						TestBtn.Text = "Red";
 						TestBtn.Width = 100;
-						TestBtn.Clicked += delegate (Base sender, ClickedEventArgs args)
+						TestBtn.Clicked += delegate (ControlBase sender, ClickedEventArgs args)
 						{
 							combo.SelectByText("Red");
 						};
@@ -105,7 +105,7 @@ namespace Gwen.UnitTest
 						Control.Button TestBtn = new Control.Button(hlayout);
 						TestBtn.Text = "Apple";
 						TestBtn.Width = 100;
-						TestBtn.Clicked += delegate (Base sender, ClickedEventArgs args)
+						TestBtn.Clicked += delegate (ControlBase sender, ClickedEventArgs args)
 						{
 							combo.SelectByName("fruit");
 						};
@@ -116,7 +116,7 @@ namespace Gwen.UnitTest
 						Control.Button TestBtn = new Control.Button(hlayout);
 						TestBtn.Text = "Green";
 						TestBtn.Width = 100;
-						TestBtn.Clicked += delegate (Base sender, ClickedEventArgs args)
+						TestBtn.Clicked += delegate (ControlBase sender, ClickedEventArgs args)
 						{
 							combo.SelectByUserData(12);
 						};
@@ -125,7 +125,7 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		void OnComboSelect(Base control, EventArgs args)
+		void OnComboSelect(ControlBase control, EventArgs args)
 		{
 			Control.ComboBox combo = control as Control.ComboBox;
 			UnitPrint(String.Format("ComboBox: OnComboSelect: {0}", combo.SelectedItem.Text));

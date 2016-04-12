@@ -6,13 +6,13 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Containers", Order = 303)]
 	public class Properties : GUnit
     {
-        public Properties(Base parent)
+        public Properties(ControlBase parent)
             : base(parent)
         {
             {
                 Control.Properties props = new Control.Properties(this);
 				props.Dock = Dock.Top;
-				props.Width = 200;
+				props.Width = 300;
                 props.ValueChanged += OnChanged;
 
                 {
@@ -28,7 +28,7 @@ namespace Gwen.UnitTest
 			{
                 Control.PropertyTree ptree = new Control.PropertyTree(this);
 				ptree.Dock = Dock.Top;
-				ptree.Width = 200;
+				ptree.Width = 300;
 				ptree.AutoSizeToContent = true;
 
 				{
@@ -55,7 +55,7 @@ namespace Gwen.UnitTest
             }
         }
 
-        void OnChanged(Base control, EventArgs args)
+        void OnChanged(ControlBase control, EventArgs args)
         {
             PropertyRow row = control as PropertyRow;
             UnitPrint(String.Format("Property changed: {0}", row.Value));

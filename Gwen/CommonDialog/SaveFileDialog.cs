@@ -9,7 +9,7 @@ namespace Gwen.CommonDialog
 	/// </summary>
 	public class SaveFileDialog : FileDialog
 	{
-		public SaveFileDialog(Base parent)
+		public SaveFileDialog(ControlBase parent)
 			: base(parent)
 		{
 		}
@@ -60,7 +60,7 @@ namespace Gwen.CommonDialog
 			return true;
 		}
 
-		private void OnMessageBoxDismissed(Base sender, MessageBoxResultEventArgs args)
+		private void OnMessageBoxDismissed(ControlBase sender, MessageBoxResultEventArgs args)
 		{
 			if (args.Result == MessageBoxResult.Yes)
 				Close(sender.UserData as string);

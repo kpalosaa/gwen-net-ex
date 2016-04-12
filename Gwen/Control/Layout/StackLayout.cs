@@ -6,7 +6,7 @@ namespace Gwen.Control.Layout
 	/// Arrange child controls into a row or a column.
 	/// </summary>
 	[Xml.XmlControl]
-	public class StackLayout : Base
+	public class StackLayout : ControlBase
 	{
 		private bool m_Horizontal;
 
@@ -16,7 +16,7 @@ namespace Gwen.Control.Layout
 		[Xml.XmlProperty]
 		public bool Horizontal { get { return m_Horizontal; } set { if (m_Horizontal == value) return; m_Horizontal = value; Invalidate(); } }
 
-		public StackLayout(Base parent)
+		public StackLayout(ControlBase parent)
 			: base(parent)
 		{
 		}
@@ -30,7 +30,7 @@ namespace Gwen.Control.Layout
 
 			if (m_Horizontal)
 			{
-				foreach (Base child in this.Children)
+				foreach (ControlBase child in this.Children)
 				{
 					if (child.IsCollapsed)
 						continue;
@@ -44,7 +44,7 @@ namespace Gwen.Control.Layout
 			}
 			else
 			{
-				foreach (Base child in this.Children)
+				foreach (ControlBase child in this.Children)
 				{
 					if (child.IsCollapsed)
 						continue;
@@ -69,7 +69,7 @@ namespace Gwen.Control.Layout
 				int height = finalSize.Height;
 				int x = Padding.Left;
 
-				foreach (Base child in this.Children)
+				foreach (ControlBase child in this.Children)
 				{
 					if (child.IsCollapsed)
 						continue;
@@ -87,7 +87,7 @@ namespace Gwen.Control.Layout
 				int width = finalSize.Width;
 				int y = Padding.Top;
 
-				foreach (Base child in this.Children)
+				foreach (ControlBase child in this.Children)
 				{
 					if (child.IsCollapsed)
 						continue;

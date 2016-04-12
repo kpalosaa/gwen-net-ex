@@ -5,14 +5,14 @@ namespace Gwen.Control.Internal
 {
 	public class InnerContentControl : ContentControl
 	{
-		public InnerContentControl(Base parent)
+		public InnerContentControl(ControlBase parent)
 			: base(parent)
 		{
 			MouseInputEnabled = false;
 			KeyboardInputEnabled = false;
 		}
 
-		protected override void OnChildAdded(Base child)
+		protected override void OnChildAdded(ControlBase child)
 		{
 			if (m_InnerPanel == null)
 				m_InnerPanel = Children[0];
@@ -38,7 +38,7 @@ namespace Gwen.Control.Internal
 			return finalSize;
 		}
 
-		public override Base FindChildByName(string name, bool recursive = false)
+		public override ControlBase FindChildByName(string name, bool recursive = false)
 		{
 			if (m_InnerPanel != null && m_InnerPanel.Name == name)
 				return m_InnerPanel;

@@ -21,12 +21,12 @@ namespace Gwen.Control
 				m_vertical = value;
 				if (m_vertical)
 				{
-					m_DragBar.Height = 16;
+					m_DragBar.Height = Skin.BaseUnit + 2;
 					m_DragBar.Width = Util.Ignore;
 				}
 				else
 				{
-					m_DragBar.Width = 16;
+					m_DragBar.Width = Skin.BaseUnit + 2;
 					m_DragBar.Height = Util.Ignore;
 				}
 				EnableResizing();
@@ -38,8 +38,8 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ToolWindow"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ToolWindow(Base parent)
-			: base(parent.GetCanvas())
+		public ToolWindow(ControlBase parent)
+			: base(parent)
 		{
 			m_DragBar = new Dragger(this);
 			m_DragBar.Target = this;
@@ -55,18 +55,18 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			bool hasFocus = IsOnTop;
 
-			skin.DrawToolWindow(this, m_vertical);
+			skin.DrawToolWindow(this, m_vertical, m_vertical ? m_DragBar.ActualHeight : m_DragBar.ActualWidth);
 		}
 
 		/// <summary>
 		/// Renders under the actual control (shadows etc).
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderUnder(Skin.Base skin)
+		protected override void RenderUnder(Skin.SkinBase skin)
 		{
 			base.RenderUnder(skin);
 			skin.DrawShadow(this);
@@ -76,7 +76,7 @@ namespace Gwen.Control
 		/// Renders the focus overlay.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderFocus(Skin.Base skin)
+		protected override void RenderFocus(Skin.SkinBase skin)
 		{
 
 		}

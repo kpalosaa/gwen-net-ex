@@ -12,7 +12,7 @@ namespace Gwen.Control.Layout
 		/// Initializes a new instance of the <see cref="HorizontalLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public HorizontalLayout(Base parent)
+		public HorizontalLayout(ControlBase parent)
 			: base(parent)
 		{
 			this.Horizontal = true;

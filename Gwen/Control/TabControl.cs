@@ -66,7 +66,7 @@ namespace Gwen.Control
 			{
 				m_ActualPadding = value;
 
-				foreach (Base tab in m_TabStrip.Children)
+				foreach (ControlBase tab in m_TabStrip.Children)
 				{
 					tab.Margin = (Margin)value;
 				}
@@ -77,7 +77,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="TabControl"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public TabControl(Base parent)
+		public TabControl(ControlBase parent)
 			: base(parent)
 		{
 			m_TabStrip = new TabStrip(this);
@@ -91,12 +91,12 @@ namespace Gwen.Control
 			m_Scroll[0] = new ScrollBarButton(this);
 			m_Scroll[0].SetDirectionLeft();
 			m_Scroll[0].Clicked += ScrollPressedLeft;
-			m_Scroll[0].Size = new Size(15, 15);
+			m_Scroll[0].Size = new Size(Skin.BaseUnit);
 
 			m_Scroll[1] = new ScrollBarButton(this);
 			m_Scroll[1].SetDirectionRight();
 			m_Scroll[1].Clicked += ScrollPressedRight;
-			m_Scroll[1].Size = new Size(15, 15);
+			m_Scroll[1].Size = new Size(Skin.BaseUnit);
 
 			m_InnerPanel = new TabControlInner(this);
 			m_InnerPanel.Dock = Dock.Fill;
@@ -113,7 +113,7 @@ namespace Gwen.Control
 		/// <param name="label">Tab label.</param>
 		/// <param name="page">Page contents.</param>
 		/// <returns>Newly created control.</returns>
-		public TabButton AddPage(string label, Base page = null)
+		public TabButton AddPage(string label, ControlBase page = null)
 		{
 			if (null == page)
 			{
@@ -139,7 +139,7 @@ namespace Gwen.Control
 		/// <param name="button">Page to add. (well, it's a TabButton which is a parent to the page).</param>
 		internal void AddPage(TabButton button)
 		{
-			Base page = button.Page;
+			ControlBase page = button.Page;
 			page.Parent = this;
 			page.IsHidden = true;
 			page.Dock = Dock.Fill;
@@ -171,12 +171,12 @@ namespace Gwen.Control
 		/// Handler for tab selection.
 		/// </summary>
 		/// <param name="control">Event source (TabButton).</param>
-		internal virtual void OnTabPressed(Base control, EventArgs args)
+		internal virtual void OnTabPressed(ControlBase control, EventArgs args)
 		{
 			TabButton button = control as TabButton;
 			if (null == button) return;
 
-			Base page = button.Page;
+			ControlBase page = button.Page;
 			if (null == page) return;
 
 			if (m_CurrentButton == button)
@@ -184,7 +184,7 @@ namespace Gwen.Control
 
 			if (null != m_CurrentButton)
 			{
-				Base page2 = m_CurrentButton.Page;
+				ControlBase page2 = m_CurrentButton.Page;
 				if (page2 != null)
 				{
 					page2.IsHidden = true;
@@ -203,29 +203,30 @@ namespace Gwen.Control
 			Size size = base.Arrange(finalSize);
 
 			// At this point we know TabStrip location so lets move ScrollButtons
-			switch(m_TabStrip.StripPosition)
+			int buttonSize = m_Scroll[0].Size.Width;
+			switch (m_TabStrip.StripPosition)
 			{
 				case Dock.Top:
-					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - 15 - 15, m_TabStrip.ActualTop + 5);
-					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - 15, m_TabStrip.ActualTop + 5);
+					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize - buttonSize, m_TabStrip.ActualTop + 5);
+					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize, m_TabStrip.ActualTop + 5);
 					m_Scroll[0].SetDirectionLeft();
 					m_Scroll[1].SetDirectionRight();
 					break;
 				case Dock.Bottom:
-					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - 15 - 15, m_TabStrip.ActualBottom - 5 - 15);
-					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - 15, m_TabStrip.ActualBottom - 5 - 15);
+					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize - buttonSize, m_TabStrip.ActualBottom - 5 - buttonSize);
+					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize, m_TabStrip.ActualBottom - 5 - buttonSize);
 					m_Scroll[0].SetDirectionLeft();
 					m_Scroll[1].SetDirectionRight();
 					break;
 				case Dock.Left:
-					m_Scroll[0].SetPosition(m_TabStrip.ActualLeft + 5, m_TabStrip.ActualBottom - 5 - 15 - 15);
-					m_Scroll[1].SetPosition(m_TabStrip.ActualLeft + 5, m_TabStrip.ActualBottom - 5 - 15);
+					m_Scroll[0].SetPosition(m_TabStrip.ActualLeft + 5, m_TabStrip.ActualBottom - 5 - buttonSize - buttonSize);
+					m_Scroll[1].SetPosition(m_TabStrip.ActualLeft + 5, m_TabStrip.ActualBottom - 5 - buttonSize);
 					m_Scroll[0].SetDirectionUp();
 					m_Scroll[1].SetDirectionDown();
 					break;
 				case Dock.Right:
-					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - 15, m_TabStrip.ActualBottom - 5 - 15 - 15);
-					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - 15, m_TabStrip.ActualBottom - 5 - 15);
+					m_Scroll[0].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize, m_TabStrip.ActualBottom - 5 - buttonSize - buttonSize);
+					m_Scroll[1].SetPosition(m_TabStrip.ActualRight - 5 - buttonSize, m_TabStrip.ActualBottom - 5 - buttonSize);
 					m_Scroll[0].SetDirectionUp();
 					m_Scroll[1].SetDirectionDown();
 					break;
@@ -273,17 +274,17 @@ namespace Gwen.Control
 			base.OnBoundsChanged(oldBounds);
 		}
 
-		protected virtual void ScrollPressedLeft(Base control, EventArgs args)
+		protected virtual void ScrollPressedLeft(ControlBase control, EventArgs args)
 		{
 			m_TabStrip.ScrollOffset--;
 		}
 
-		protected virtual void ScrollPressedRight(Base control, EventArgs args)
+		protected virtual void ScrollPressedRight(ControlBase control, EventArgs args)
 		{
 			m_TabStrip.ScrollOffset++;
 		}
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			TabControl element = new TabControl(parent);
 			parser.ParseAttributes(element);
@@ -304,7 +305,7 @@ namespace Gwen.Control
 						TabButton button = element.AddPage(pageLabel);
 						button.Name = pageName;
 
-						Base page = button.Page;
+						ControlBase page = button.Page;
 						parser.ParseContainerContent(page);
 					}
 				}

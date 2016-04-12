@@ -148,7 +148,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="TextBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public MultilineTextBox(Base parent) : base(parent)
+		public MultilineTextBox(ControlBase parent) : base(parent)
 		{
 			Padding = Padding.Three;
 
@@ -320,7 +320,7 @@ namespace Gwen.Control
 		/// Handler for Paste event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnPaste(Base from, EventArgs args)
+		protected override void OnPaste(ControlBase from, EventArgs args)
 		{
 			base.OnPaste(from, args);
 			InsertText(Platform.Platform.GetClipboardText());
@@ -330,7 +330,7 @@ namespace Gwen.Control
 		/// Handler for Copy event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnCopy(Base from, EventArgs args)
+		protected override void OnCopy(ControlBase from, EventArgs args)
 		{
 			if (!HasSelection) return;
 			base.OnCopy(from, args);
@@ -342,7 +342,7 @@ namespace Gwen.Control
 		/// Handler for Cut event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnCut(Base from, EventArgs args)
+		protected override void OnCut(ControlBase from, EventArgs args)
 		{
 			if (!HasSelection) return;
 			base.OnCut(from, args);
@@ -356,7 +356,7 @@ namespace Gwen.Control
 		/// Handler for Select All event.
 		/// </summary>
 		/// <param name="from">Source control.</param>
-		protected override void OnSelectAll(Base from, EventArgs args)
+		protected override void OnSelectAll(ControlBase from, EventArgs args)
 		{
 			//base.OnSelectAll(from);
 			m_CursorEnd = new Point(0, 0);
@@ -764,7 +764,7 @@ namespace Gwen.Control
 		/// Refreshes the cursor location and selected area when the inner panel scrolls
 		/// </summary>
 		/// <param name="control">The inner panel the text is embedded in</param>
-		private void ScrollChanged(Base control, EventArgs args)
+		private void ScrollChanged(ControlBase control, EventArgs args)
 		{
 			RefreshCursorBounds(false);
 		}
@@ -793,7 +793,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			base.Render(skin);
 

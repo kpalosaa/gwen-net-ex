@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Gwen.Xml
 {
-	public delegate Gwen.Control.Base ElementHandler(Parser parser, Type type, Gwen.Control.Base parent);
+	public delegate Gwen.Control.ControlBase ElementHandler(Parser parser, Type type, Gwen.Control.ControlBase parent);
 	public delegate object AttributeValueConverter(object element, string value);
 	public delegate Delegate EventHandlerConverter(string attribute, string value);
 
@@ -35,7 +35,7 @@ namespace Gwen.Xml
 		{
 			XmlHelper.RegisterDefaultHandlers();
 
-			Assembly assembly = typeof(Gwen.Control.Base).Assembly;
+			Assembly assembly = typeof(Gwen.Control.ControlBase).Assembly;
 			if (assembly != null)
 				ScanControls(assembly);
 		}
@@ -120,9 +120,9 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
 		/// <returns>XML root control.</returns>
-		public Gwen.Control.Base Parse(Gwen.Control.Base parent)
+		public Gwen.Control.ControlBase Parse(Gwen.Control.ControlBase parent)
 		{
-			Gwen.Control.Base container = null;
+			Gwen.Control.ControlBase container = null;
 
 			while (m_Reader.Read())
 			{
@@ -142,7 +142,7 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
 		/// <returns>Control.</returns>
-		public Gwen.Control.Base ParseElement(Gwen.Control.Base parent)
+		public Gwen.Control.ControlBase ParseElement(Gwen.Control.ControlBase parent)
 		{
 			ElementDef elementDef;
 			if (m_ElementHandlers.TryGetValue(m_Reader.Name, out elementDef))
@@ -161,7 +161,7 @@ namespace Gwen.Xml
 		/// <typeparam name="T">Control type to be created.</typeparam>
 		/// <param name="parent">Parent control.</param>
 		/// <returns>Control.</returns>
-		public T ParseElement<T>(Gwen.Control.Base parent) where T: Gwen.Control.Base
+		public T ParseElement<T>(Gwen.Control.ControlBase parent) where T: Gwen.Control.ControlBase
 		{
 			Type type = typeof(T);
 			XmlControlAttribute attrib = null;
@@ -186,7 +186,7 @@ namespace Gwen.Xml
 		/// Parse attributes.
 		/// </summary>
 		/// <param name="element">Control.</param>
-		public void ParseAttributes(Gwen.Control.Base element)
+		public void ParseAttributes(Gwen.Control.ControlBase element)
 		{
 			if (m_Reader.HasAttributes)
 			{
@@ -292,7 +292,7 @@ namespace Gwen.Xml
 		/// Parse content of the container element.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public void ParseContainerContent(Gwen.Control.Base parent)
+		public void ParseContainerContent(Gwen.Control.ControlBase parent)
 		{
 			foreach (string elementName in NextElement())
 			{
@@ -401,9 +401,9 @@ namespace Gwen.Xml
 			}
 		}
 
-		private static Gwen.Control.Base DefaultElementHandler(Parser parser, Type type, Gwen.Control.Base parent)
+		private static Gwen.Control.ControlBase DefaultElementHandler(Parser parser, Type type, Gwen.Control.ControlBase parent)
 		{
-			Gwen.Control.Base element = Activator.CreateInstance(type, parent) as Gwen.Control.Base;
+			Gwen.Control.ControlBase element = Activator.CreateInstance(type, parent) as Gwen.Control.ControlBase;
 
 			parser.ParseAttributes(element);
 			if (parser.MoveToContent())

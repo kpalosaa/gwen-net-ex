@@ -67,12 +67,12 @@ namespace Gwen
 			}
 		}
 
-		private readonly Renderer.Base m_Renderer;
+		private readonly Renderer.RendererBase m_Renderer;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Font"/> class.
 		/// </summary>
-		public Font(Renderer.Base renderer)
+		public Font(Renderer.RendererBase renderer)
 			: this(renderer, "Arial", 10)
 		{
 		}
@@ -83,7 +83,7 @@ namespace Gwen
 		/// <param name="renderer">Renderer to use.</param>
 		/// <param name="faceName">Face name.</param>
 		/// <param name="size">Font size.</param>
-		public Font(Renderer.Base renderer, string faceName, int size = 10)
+		public Font(Renderer.RendererBase renderer, string faceName, int size = 10)
 		{
 			m_Renderer = renderer;
 			m_FontMetrics = null;
@@ -142,7 +142,7 @@ namespace Gwen
 		/// <param name="size">Font size.</param>
 		/// <param name="style">Font style.</param>
 		/// <returns>Font.</returns>
-		public static Font Create(Renderer.Base renderer, string faceName, int size = 10, FontStyle style = 0)
+		public static Font Create(Renderer.RendererBase renderer, string faceName, int size = 10, FontStyle style = 0)
 		{
 			return FontCache.GetFont(renderer, faceName, size, style);
 		}

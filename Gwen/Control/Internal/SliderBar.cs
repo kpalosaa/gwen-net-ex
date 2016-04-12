@@ -19,10 +19,10 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="SliderBar"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public SliderBar(Base parent)
+        public SliderBar(ControlBase parent)
             : base(parent)
         {
-			this.Size = new Size(15, 15);
+			Size = new Size(Skin.BaseUnit);
 
             Target = this;
             RestrictToParent = true;
@@ -32,7 +32,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawSliderButton(this, IsHeld, IsHorizontal);
         }

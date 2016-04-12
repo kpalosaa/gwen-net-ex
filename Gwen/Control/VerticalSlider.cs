@@ -13,10 +13,10 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="VerticalSlider"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public VerticalSlider(Base parent)
+        public VerticalSlider(ControlBase parent)
             : base(parent)
         {
-			this.Width = 15;
+			Width = Skin.BaseUnit;
 
             m_SliderBar.IsHorizontal = false;
         }
@@ -49,7 +49,7 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawSlider(this, false, m_SnapToNotches ? m_NotchCount : 0, m_SliderBar.ActualHeight);
         }

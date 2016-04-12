@@ -6,7 +6,7 @@ namespace Gwen.Control
     /// <summary>
     /// CollapsibleCategory control. Used in CollapsibleList.
     /// </summary>
-    public class CollapsibleCategory : Base
+    public class CollapsibleCategory : ControlBase
     {
         private readonly CategoryHeaderButton m_HeaderButton;
         private readonly CollapsibleList m_List;
@@ -51,7 +51,7 @@ namespace Gwen.Control
 		/// </summary>
 		public Button GetSelectedButton()
         {
-            foreach (Base child in Children)
+            foreach (ControlBase child in Children)
             {
                 CategoryButton button = child as CategoryButton;
                 if (button == null)
@@ -68,7 +68,7 @@ namespace Gwen.Control
         /// Handler for header button toggle event.
         /// </summary>
         /// <param name="control">Source control.</param>
-		protected virtual void OnHeaderToggle(Base control, EventArgs args)
+		protected virtual void OnHeaderToggle(ControlBase control, EventArgs args)
         {
 			Invalidate();
 
@@ -80,7 +80,7 @@ namespace Gwen.Control
         /// Handler for Selected event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnSelected(Base control, EventArgs args)
+		protected virtual void OnSelected(ControlBase control, EventArgs args)
         {
             CategoryButton child = control as CategoryButton;
             if (child == null) return;
@@ -121,9 +121,9 @@ namespace Gwen.Control
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
-            skin.DrawCategoryInner(this, m_HeaderButton.ToggleState);
+            skin.DrawCategoryInner(this, m_HeaderButton.ActualHeight, m_HeaderButton.ToggleState);
             base.Render(skin);
         }
 
@@ -132,7 +132,7 @@ namespace Gwen.Control
         /// </summary>
         public void UnselectAll()
         {
-            foreach (Base child in Children)
+            foreach (ControlBase child in Children)
             {
                 CategoryButton button = child as CategoryButton;
                 if (button == null)
@@ -155,7 +155,7 @@ namespace Gwen.Control
 				int width = headerSize.Width;
 				int height = headerSize.Height + Padding.Top + Padding.Bottom;
 
-				foreach (Base child in Children)
+				foreach (ControlBase child in Children)
 				{
 					CategoryButton button = child as CategoryButton;
 					if (button == null)
@@ -187,7 +187,7 @@ namespace Gwen.Control
 				int width = finalSize.Width - Padding.Left - Padding.Right;
 				bool b = true;
 
-				foreach (Base child in Children)
+				foreach (ControlBase child in Children)
 				{
 					CategoryButton button = child as CategoryButton;
 					if (button == null)

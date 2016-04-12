@@ -15,7 +15,7 @@ namespace Gwen.Control
 		{
 			get
 			{
-				foreach (Base child in Children)
+				foreach (ControlBase child in Children)
 				{
 					PropertyTreeNode node = child as PropertyTreeNode;
 					if (node != null)
@@ -25,7 +25,7 @@ namespace Gwen.Control
 			}
 			set
 			{
-				foreach (Base child in Children)
+				foreach (ControlBase child in Children)
 				{
 					PropertyTreeNode node = child as PropertyTreeNode;
 					if (node != null)
@@ -40,7 +40,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="PropertyTree"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public PropertyTree(Base parent)
+		public PropertyTree(ControlBase parent)
 			: base(parent)
 		{
 			Padding = Padding.One;
@@ -70,7 +70,7 @@ namespace Gwen.Control
 		/// </summary>
 		public void ExpandAll()
 		{
-			foreach (Base child in Children)
+			foreach (ControlBase child in Children)
 			{
 				PropertyTreeNode node = child as PropertyTreeNode;
 				if (node == null)
@@ -83,7 +83,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			skin.DrawCategoryHolder(this);
 		}

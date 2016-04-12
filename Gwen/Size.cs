@@ -13,6 +13,12 @@ namespace Gwen
 			Height = height;
 		}
 
+		public Size(int size)
+		{
+			Width = size;
+			Height = size;
+		}
+
 		public static Size Min(Size sz1, Size sz2)
 		{
 			return new Size(Math.Min(sz1.Width, sz2.Width), Math.Min(sz1.Height, sz2.Height));

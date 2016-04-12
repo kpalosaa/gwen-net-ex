@@ -27,7 +27,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="Properties"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Properties(Base parent)
+        public Properties(ControlBase parent)
             : base(parent)
         {
             m_SplitterBar = new SplitterBar(this);
@@ -67,7 +67,7 @@ namespace Gwen.Control
 		/// Handles the splitter moved event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnSplitterMoved(Base control, EventArgs args)
+		protected virtual void OnSplitterMoved(ControlBase control, EventArgs args)
         {
 			LabelWidth = m_SplitterBar.ActualLeft - Padding.Left;
 
@@ -96,7 +96,7 @@ namespace Gwen.Control
         /// <param name="prop">Property control.</param>
         /// <param name="value">Initial value.</param>
         /// <returns>Newly created row.</returns>
-        public PropertyRow Add(string label, Property.Base prop, string value = "")
+        public PropertyRow Add(string label, Property.PropertyBase prop, string value = "")
         {
             PropertyRow row = new PropertyRow(this, prop);
             row.Label = label;
@@ -108,7 +108,7 @@ namespace Gwen.Control
             return row;
         }
 
-		private void OnRowValueChanged(Base control, EventArgs args)
+		private void OnRowValueChanged(ControlBase control, EventArgs args)
         {
             if (ValueChanged != null)
 				ValueChanged.Invoke(control, EventArgs.Empty);

@@ -9,7 +9,7 @@ namespace Gwen.Control.Internal
 	/// </summary>
 	public class TabStrip : Layout.StackLayout
 	{
-		private Base m_TabDragControl;
+		private ControlBase m_TabDragControl;
 		private bool m_AllowReorder;
 		private int m_ScrollOffset;
 		private Size m_TotalSize;
@@ -39,7 +39,7 @@ namespace Gwen.Control.Internal
 		/// Initializes a new instance of the <see cref="TabStrip"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public TabStrip(Base parent)
+		public TabStrip(ControlBase parent)
 			: base(parent)
 		{
 			m_AllowReorder = false;
@@ -154,7 +154,7 @@ namespace Gwen.Control.Internal
 		{
 			Point localPos = CanvasPosToLocal(new Point(x, y));
 
-			Base droppedOn = GetControlAt(localPos.X, localPos.Y);
+			ControlBase droppedOn = GetControlAt(localPos.X, localPos.Y);
 			if (droppedOn != null && droppedOn != this)
 			{
 				Point dropPos = droppedOn.CanvasPosToLocal(new Point(x, y));
@@ -188,7 +188,7 @@ namespace Gwen.Control.Internal
 				}
 			}
 
-			Base droppedOn = GetControlAt(LocalPos.X, LocalPos.Y);
+			ControlBase droppedOn = GetControlAt(LocalPos.X, LocalPos.Y);
 			if (droppedOn != null && droppedOn != this)
 			{
 				Point dropPos = droppedOn.CanvasPosToLocal(new Point(x, y));

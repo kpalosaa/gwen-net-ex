@@ -9,7 +9,7 @@ namespace Gwen.UnitTest
 	{
 		private Font f1, f2, f3, f4;
 
-		public RichLabel(Base parent) : base(parent)
+		public RichLabel(ControlBase parent) : base(parent)
 		{
 			f1 = new Font(Skin.Renderer, "Arial", 15);
 
@@ -41,7 +41,7 @@ namespace Gwen.UnitTest
 			base.Dispose();
 		}
 
-		private Control.RichLabel CreateLabel(Base parent)
+		private Control.RichLabel CreateLabel(ControlBase parent)
 		{
 			Control.RichLabel label = new Control.RichLabel(parent);
 			label.Dock = Dock.Fill;
@@ -70,7 +70,7 @@ namespace Gwen.UnitTest
 			return label;
 		}
 
-		private void OpenWindow(Base control, EventArgs args)
+		private void OpenWindow(ControlBase control, EventArgs args)
 		{
 			Control.Window window = new Control.Window(GetCanvas());
 			window.Padding = Padding.Three;
@@ -89,7 +89,7 @@ namespace Gwen.UnitTest
 			label.Document = LongDocument();
 		}
 
-		private void OnLinkClicked(Base control, LinkClickedEventArgs args)
+		private void OnLinkClicked(ControlBase control, LinkClickedEventArgs args)
 		{
 			UnitPrint("Link Clicked: " + args.Link);
 		}

@@ -14,7 +14,7 @@ namespace Gwen.UnitTest
             HallC
         }
 
-        public RadioButton(Base parent)
+        public RadioButton(ControlBase parent)
             : base(parent)
         {
 			VerticalLayout layout = new VerticalLayout(this);
@@ -40,7 +40,7 @@ namespace Gwen.UnitTest
 			}
         }
 
-        void OnChange(Base control, EventArgs args)
+        void OnChange(ControlBase control, EventArgs args)
         {
             RadioButtonGroup rbc = control as RadioButtonGroup;
             LabeledRadioButton rb = rbc.Selected;

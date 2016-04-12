@@ -33,13 +33,13 @@ namespace Gwen
         /// </summary>
         public int Height { get; set; }
 
-        private readonly Renderer.Base m_Renderer;
+        private readonly Renderer.RendererBase m_Renderer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Texture"/> class.
         /// </summary>
         /// <param name="renderer">Renderer to use.</param>
-        public Texture(Renderer.Base renderer)
+        public Texture(Renderer.RendererBase renderer)
         {
             m_Renderer = renderer;
             Width = 4;

@@ -17,7 +17,7 @@ namespace Gwen.XmlDesigner
 			Component.Unregister<UserComponent>(Path.GetFileNameWithoutExtension(fileName));
 		}
 
-		public UserComponent(Base parent, object fileName)
+		public UserComponent(ControlBase parent, object fileName)
 			: base(parent, new XmlFileSource((string)fileName))
 		{
 		}

@@ -50,7 +50,7 @@ namespace Gwen.Control
 		/// <param name="caption">Window caption.</param>
 		/// <param name="buttons">Message box buttons.</param>
 		/// <returns>Message box.</returns>
-		public static MessageBox Show(Base parent, string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK)
+		public static MessageBox Show(ControlBase parent, string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK)
 		{
 			MessageBox messageBox = new MessageBox(parent, text, caption, buttons);
 
@@ -64,7 +64,7 @@ namespace Gwen.Control
 		/// <param name="text">Message to display.</param>
 		/// <param name="caption">Window caption.</param>
 		/// <param name="buttons">Message box buttons.</param>
-		public MessageBox(Base parent, string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK) 
+		public MessageBox(ControlBase parent, string text, string caption = "", MessageBoxButtons buttons = MessageBoxButtons.OK) 
             : base(parent)
         {
 			HorizontalAlignment = HorizontalAlignment.Left;
@@ -118,7 +118,7 @@ namespace Gwen.Control
 			}
 		}
 
-		private void CreateButton(Base parent, string text, MessageBoxResult result)
+		private void CreateButton(ControlBase parent, string text, MessageBoxResult result)
 		{
 			Button button = new Button(parent);
 			button.Width = 70;
@@ -129,7 +129,7 @@ namespace Gwen.Control
 			button.Clicked += DismissedHandler;
 		}
 
-		private void DismissedHandler(Base control, EventArgs args)
+		private void DismissedHandler(ControlBase control, EventArgs args)
         {
             if (Dismissed != null)
                 Dismissed.Invoke(this, new MessageBoxResultEventArgs() { Result = (MessageBoxResult)control.UserData } );

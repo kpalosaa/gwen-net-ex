@@ -37,7 +37,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public NumericUpDown(Base parent)
+        public NumericUpDown(ControlBase parent)
             : base(parent)
         {
             m_Splitter = new Splitter(this);
@@ -98,7 +98,7 @@ namespace Gwen.Control
         /// Handler for the button up event.
         /// </summary>
         /// <param name="control">Event source.</param>
-		protected virtual void OnButtonUp(Base control, EventArgs args)
+		protected virtual void OnButtonUp(ControlBase control, EventArgs args)
         {
             Value = m_Value + m_Step;
         }
@@ -107,7 +107,7 @@ namespace Gwen.Control
         /// Handler for the button down event.
         /// </summary>
         /// <param name="control">Event source.</param>
-        protected virtual void OnButtonDown(Base control, ClickedEventArgs args)
+        protected virtual void OnButtonDown(ControlBase control, ClickedEventArgs args)
         {
 			Value = m_Value - m_Step;
         }

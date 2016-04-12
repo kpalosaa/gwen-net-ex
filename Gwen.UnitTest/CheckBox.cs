@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Standard", Order = 202)]
 	public class CheckBox : GUnit
     {
-        public CheckBox(Base parent)
+        public CheckBox(ControlBase parent)
             : base(parent)
         {
 			VerticalLayout layout = new VerticalLayout(this);
@@ -34,17 +34,17 @@ namespace Gwen.UnitTest
 			check.IsDisabled = true;
         }
 
-		void OnChecked(Base control, EventArgs args)
+		void OnChecked(ControlBase control, EventArgs args)
         {
             UnitPrint("CheckBox: Checked");
         }
 
-		void OnCheckChanged(Base control, EventArgs args)
+		void OnCheckChanged(ControlBase control, EventArgs args)
         {
             UnitPrint("CheckBox: CheckChanged");
         }
 
-		void OnUnchecked(Base control, EventArgs args)
+		void OnUnchecked(ControlBase control, EventArgs args)
         {
             UnitPrint("CheckBox: UnChecked");
         }

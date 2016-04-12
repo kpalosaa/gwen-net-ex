@@ -6,7 +6,7 @@ namespace Gwen.Control
 	/// <summary>
 	/// Linear-interpolated HSV color box.
 	/// </summary>
-	public class ColorLerpBox : Base
+	public class ColorLerpBox : ControlBase
 	{
 		private Point m_CursorPos;
 		private bool m_Depressed;
@@ -22,7 +22,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ColorLerpBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ColorLerpBox(Base parent) : base(parent)
+		public ColorLerpBox(ControlBase parent) : base(parent)
 		{
 			SetColor(new Color(255, 255, 128, 0));
 			MouseInputEnabled = true;
@@ -158,7 +158,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			if (m_Texture == null)
 			{

@@ -7,13 +7,13 @@ namespace Gwen.Control.Layout
 	/// the Dock property of the child control.
 	/// </summary>
 	[Xml.XmlControl]
-	public class DockLayout : Base
+	public class DockLayout : ControlBase
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="DockLayout"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public DockLayout(Base parent)
+		public DockLayout(ControlBase parent)
 			: base(parent)
 		{
 		}

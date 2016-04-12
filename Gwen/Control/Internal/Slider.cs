@@ -7,7 +7,7 @@ namespace Gwen.Control.Internal
     /// <summary>
     /// Base slider.
     /// </summary>
-    public class Slider : Base
+    public class Slider : ControlBase
     {
         protected readonly SliderBar m_SliderBar;
         protected bool m_SnapToNotches;
@@ -68,7 +68,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="Slider"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        protected Slider(Base parent)
+        protected Slider(ControlBase parent)
             : base(parent)
         {
             m_SliderBar = new SliderBar(this);
@@ -180,7 +180,7 @@ namespace Gwen.Control.Internal
             
         }
 
-		protected virtual void OnMoved(Base control, EventArgs args)
+		protected virtual void OnMoved(ControlBase control, EventArgs args)
         {
             SetValueInternal(CalculateValue());
         }
@@ -228,7 +228,7 @@ namespace Gwen.Control.Internal
         /// Renders the focus overlay.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void RenderFocus(Skin.Base skin)
+        protected override void RenderFocus(Skin.SkinBase skin)
         {
 			if (InputHandler.KeyboardFocus != this) return;
             if (!IsTabable) return;
@@ -257,7 +257,7 @@ namespace Gwen.Control.Internal
 			base.OnBoundsChanged(oldBounds);
 
 			// We need to know if bounds are changed to update the bar.
-			// In arrange we don't know yet new bounds.
+			// In Arrange() we don't know yet new bounds.
 			UpdateBarFromValue();
 		}
 	}

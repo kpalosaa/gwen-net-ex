@@ -17,7 +17,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="TextBoxNumeric"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public TextBoxNumeric(Base parent) : base(parent)
+        public TextBoxNumeric(ControlBase parent) : base(parent)
         {
             SetText("0", false);
         }

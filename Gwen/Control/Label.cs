@@ -7,7 +7,7 @@ namespace Gwen.Control
 	/// Static text label.
 	/// </summary>
 	[Xml.XmlControl]
-	public class Label : Base
+	public class Label : ControlBase
 	{
 		protected readonly Text m_Text;
 		private Alignment m_Align;
@@ -63,7 +63,7 @@ namespace Gwen.Control
 		public Padding TextPadding { get { return m_TextPadding; } set { m_TextPadding = value; Invalidate(); } }
 
 		[Xml.XmlEvent]
-		public override event Base.GwenEventHandler<ClickedEventArgs> Clicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> Clicked {
 			add {
 				base.Clicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -75,7 +75,7 @@ namespace Gwen.Control
 		}
 
 		[Xml.XmlEvent]
-		public override event Base.GwenEventHandler<ClickedEventArgs> DoubleClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> DoubleClicked {
 			add {
 				base.DoubleClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -87,7 +87,7 @@ namespace Gwen.Control
 		}
 
 		[Xml.XmlEvent]
-		public override event Base.GwenEventHandler<ClickedEventArgs> RightClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> RightClicked {
 			add {
 				base.RightClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -99,7 +99,7 @@ namespace Gwen.Control
 		}
 
 		[Xml.XmlEvent]
-		public override event Base.GwenEventHandler<ClickedEventArgs> DoubleRightClicked {
+		public override event ControlBase.GwenEventHandler<ClickedEventArgs> DoubleRightClicked {
 			add {
 				base.DoubleRightClicked += value;
 				MouseInputEnabled = ClickEventAssigned;
@@ -115,7 +115,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Label"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Label(Base parent) : base(parent)
+		public Label(ControlBase parent) : base(parent)
 		{
 			m_Text = new Text(this);
 			//m_Text.Font = Skin.DefaultFont;
@@ -184,7 +184,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 		}
 	}

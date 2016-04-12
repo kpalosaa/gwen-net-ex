@@ -2,7 +2,7 @@
 
 namespace Gwen.Control.Internal
 {
-	public abstract class ComboBoxBase : Base
+	public abstract class ComboBoxBase : ControlBase
 	{
 		private readonly Menu m_Menu;
 		private MenuItem m_SelectedItem;
@@ -49,7 +49,7 @@ namespace Gwen.Control.Internal
 		/// Initializes a new instance of the <see cref="ComboBoxBase"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ComboBoxBase(Base parent)
+		public ComboBoxBase(ControlBase parent)
             : base(parent)
         {
 			m_Menu = new Menu(GetCanvas());
@@ -116,7 +116,7 @@ namespace Gwen.Control.Internal
 		/// Internal handler for item selected event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnItemSelected(Base control, ItemSelectedEventArgs args)
+		protected virtual void OnItemSelected(ControlBase control, ItemSelectedEventArgs args)
 		{
 			if (!IsDisabled)
 			{

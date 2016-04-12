@@ -6,13 +6,13 @@ namespace Gwen.Control.Internal
     /// <summary>
     /// Drag and drop highlight.
     /// </summary>
-    public class Highlight : Base
+    public class Highlight : ControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Highlight"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Highlight(Base parent) : base(parent)
+        public Highlight(ControlBase parent) : base(parent)
         {
             
         }
@@ -21,7 +21,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawHighlight(this);
         }

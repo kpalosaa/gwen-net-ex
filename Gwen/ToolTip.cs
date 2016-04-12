@@ -7,18 +7,18 @@ namespace Gwen
 	/// </summary>
 	public static class ToolTip
 	{
-		private static Base g_ToolTip;
+		private static ControlBase g_ToolTip;
 
 		/// <summary>
 		/// Enables tooltip display for the specified control.
 		/// </summary>
 		/// <param name="control">Target control.</param>
-		public static void Enable(Base control)
+		public static void Enable(ControlBase control)
 		{
 			if (null == control.ToolTip)
 				return;
 
-			Base toolTip = control.ToolTip;
+			ControlBase toolTip = control.ToolTip;
 			g_ToolTip = control;
 			toolTip.DoMeasure(Size.Infinity);
 			toolTip.DoArrange(new Rectangle(Point.Zero, toolTip.MeasuredSize));
@@ -28,7 +28,7 @@ namespace Gwen
 		/// Disables tooltip display for the specified control.
 		/// </summary>
 		/// <param name="control">Target control.</param>
-		public static void Disable(Base control)
+		public static void Disable(ControlBase control)
 		{
 			if (g_ToolTip == control)
 			{
@@ -40,7 +40,7 @@ namespace Gwen
 		/// Disables tooltip display for the specified control.
 		/// </summary>
 		/// <param name="control">Target control.</param>
-		public static void ControlDeleted(Base control)
+		public static void ControlDeleted(ControlBase control)
 		{
 			Disable(control);
 		}
@@ -49,11 +49,11 @@ namespace Gwen
 		/// Renders the currently visible tooltip.
 		/// </summary>
 		/// <param name="skin"></param>
-		public static void RenderToolTip(Skin.Base skin)
+		public static void RenderToolTip(Skin.SkinBase skin)
 		{
 			if (null == g_ToolTip) return;
 
-			Renderer.Base render = skin.Renderer;
+			Renderer.RendererBase render = skin.Renderer;
 
 			Point oldRenderOffset = render.RenderOffset;
 			Point mousePos = Input.InputHandler.MousePosition;

@@ -11,7 +11,7 @@ namespace Gwen.Xml
 	{
 		private string m_eventName;
 		private string m_handlerName;
-		private Type[] m_paramsType = new Type[] { typeof(Gwen.Control.Base), typeof(T) };
+		private Type[] m_paramsType = new Type[] { typeof(Gwen.Control.ControlBase), typeof(T) };
 
 		public XmlEventHandler(string handlerName, string eventName)
 		{
@@ -19,9 +19,9 @@ namespace Gwen.Xml
 			m_handlerName = handlerName;
 		}
 
-		public void OnEvent(Gwen.Control.Base sender, T args)
+		public void OnEvent(Gwen.Control.ControlBase sender, T args)
 		{
-			Gwen.Control.Base handlerElement = sender.Parent;
+			Gwen.Control.ControlBase handlerElement = sender.Parent;
 
 			if (sender is Gwen.Control.Window)
 				handlerElement = sender;

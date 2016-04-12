@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Xml", Order = 601)]
 	public class XmlComponent : GUnit
 	{
-		public XmlComponent(Base parent)
+		public XmlComponent(ControlBase parent)
 			: base(parent)
 		{
 			Component.Register<ValueControl>();
@@ -23,7 +23,7 @@ namespace Gwen.UnitTest
 				m_unit = unit;
 			}
 
-			public void OnValueChanged(Gwen.Control.Base sender, ValueChangedEventArgs args)
+			public void OnValueChanged(Gwen.Control.ControlBase sender, ValueChangedEventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": ValueChanged " + args.Value);
 			}
@@ -31,11 +31,11 @@ namespace Gwen.UnitTest
 			private GUnit m_unit;
 
 			private static readonly string m_Xml = @"<?xml version='1.0' encoding='UTF-8'?>
-			<GridLayout ColumnCount='2'>
-				<Label Size='60, 20' AutoSizeToContents='False' Alignment='CenterV' Text='Value 1' />
-				<ValueControl Name='Value1' Size='120, 20' Step='2.0' ValueChanged='OnValueChanged' />
-				<Label Size='60, 20' AutoSizeToContents='False' Alignment='CenterV' Text='Value 2' />
-				<ValueControl Name='Value2' Size='120, 20' Step='5.0' ValueChanged='OnValueChanged' />
+			<GridLayout Width='400' ColumnWidths='Auto, 100%'>
+				<Label AutoSizeToContents='False' Alignment='CenterV' Text='Value 1:' />
+				<ValueControl Name='Value1' Step='2.0' ValueChanged='OnValueChanged' />
+				<Label AutoSizeToContents='False' Alignment='CenterV' Text='Value 2:' />
+				<ValueControl Name='Value2' Step='5.0' ValueChanged='OnValueChanged' />
 			</GridLayout>
 			";
 		}
@@ -51,20 +51,20 @@ namespace Gwen.UnitTest
 			{
 				Parser.RegisterEventHandlerConverter(typeof(ValueChangedEventArgs), (attribute, value) =>
 				{
-					return new Control.Base.GwenEventHandler<ValueChangedEventArgs>(new XmlEventHandler<ValueChangedEventArgs>(value, attribute).OnEvent);
+					return new Control.ControlBase.GwenEventHandler<ValueChangedEventArgs>(new XmlEventHandler<ValueChangedEventArgs>(value, attribute).OnEvent);
 				});
 			}
 
 			[Xml.XmlEvent]
 			public event GwenEventHandler<ValueChangedEventArgs> ValueChanged;
 
-			public ValueControl(Control.Base parent)
+			public ValueControl(Control.ControlBase parent)
 				: base(parent, new XmlStringSource(m_Xml))
 			{
 
 			}
 
-			public void OnButtonClicked(Base sender, ClickedEventArgs args)
+			public void OnButtonClicked(ControlBase sender, ClickedEventArgs args)
 			{
 				TextBoxNumeric value = GetControl("Value") as TextBoxNumeric;
 
@@ -78,7 +78,7 @@ namespace Gwen.UnitTest
 					ValueChanged(this.View, new ValueChangedEventArgs() { Value = (int)value.Value });
 			}
 
-			public void OnSubmitPressed(Base sender, EventArgs args)
+			public void OnSubmitPressed(ControlBase sender, EventArgs args)
 			{
 				TextBoxNumeric value = GetControl("Value") as TextBoxNumeric;
 
@@ -90,11 +90,11 @@ namespace Gwen.UnitTest
 			public float Step { get; set; }
 
 			private static readonly string m_Xml = @"<?xml version='1.0' encoding='UTF-8'?>
-				<DockLayout>
-					<Button Name='DecButton' Size='30, 20' Dock='Left' Text='Dec' UserData='1' Clicked='OnButtonClicked' />
+				<GridLayout ColumnWidths='25%, 50%, 25%'>
+					<Button Name='DecButton' Text='Dec' UserData='1' Clicked='OnButtonClicked' />
 					<TextBoxNumeric Name='Value' Dock='Fill' SubmitPressed='OnSubmitPressed' />
-					<Button Name='IndButton' Size='30, 20' Dock='Right' Text='Inc' UserData='2' Clicked='OnButtonClicked' />
-				</DockLayout>
+					<Button Name='IndButton' Text='Inc' UserData='2' Clicked='OnButtonClicked' />
+				</GridLayout>
 				";
         }
 	}

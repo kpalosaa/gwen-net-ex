@@ -7,7 +7,7 @@ namespace Gwen.Control
 {
     public class EnumRadioButtonGroup<T> : RadioButtonGroup where T : struct, IConvertible
     {
-        public EnumRadioButtonGroup(Base parent) : base(parent)
+        public EnumRadioButtonGroup(ControlBase parent) : base(parent)
         {
             if (!typeof(T).IsEnum) throw new Exception("T must be an enumerated type!");
             for (int i = 0; i < Enum.GetValues(typeof(T)).Length; i++) {
@@ -25,7 +25,7 @@ namespace Gwen.Control
             }
             set
             {
-                foreach (Base child in Children) {
+                foreach (ControlBase child in Children) {
                     if (child is LabeledRadioButton && child.UserData.Equals(value)) {
                         (child as LabeledRadioButton).RadioButton.Press();
                     }

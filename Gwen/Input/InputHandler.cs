@@ -18,17 +18,17 @@ namespace Gwen.Input
         /// <summary>
         /// Control currently hovered by mouse.
         /// </summary>
-        public static Base HoveredControl;
+        public static ControlBase HoveredControl;
 
         /// <summary>
         /// Control that corrently has keyboard focus.
         /// </summary>
-        public static Base KeyboardFocus;
+        public static ControlBase KeyboardFocus;
 
         /// <summary>
         /// Control that currently has mouse focus.
         /// </summary>
-        public static Base MouseFocus;
+        public static ControlBase MouseFocus;
 
         /// <summary>
         /// Maximum number of mouse buttons supported.
@@ -91,7 +91,7 @@ namespace Gwen.Input
         /// <param name="canvas">Canvas.</param>
         /// <param name="chr">Input character.</param>
         /// <returns>True if the key was handled.</returns>
-        public static bool DoSpecialKeys(Base canvas, char chr)
+        public static bool DoSpecialKeys(ControlBase canvas, char chr)
         {
             if (null == KeyboardFocus) return false;
             if (KeyboardFocus.GetCanvas() != canvas) return false;
@@ -131,7 +131,7 @@ namespace Gwen.Input
         /// <param name="canvas">Canvas.</param>
         /// <param name="chr">Input character.</param>
         /// <returns>True if the key was handled.</returns>
-        public static bool HandleAccelerator(Base canvas, char chr)
+        public static bool HandleAccelerator(ControlBase canvas, char chr)
         {
             //Build the accelerator search string
             StringBuilder accelString = new StringBuilder();
@@ -162,7 +162,7 @@ namespace Gwen.Input
 		/// Handles focus updating and key autorepeats.
 		/// </summary>
 		/// <param name="control">Unused.</param>
-		public static void OnCanvasThink(Base control)
+		public static void OnCanvasThink(ControlBase control)
         {
             if (MouseFocus != null && !MouseFocus.IsVisible)
                 MouseFocus = null;
@@ -207,7 +207,7 @@ namespace Gwen.Input
 		/// <param name="dx"></param>
 		/// <param name="dy"></param>
 		/// <returns>True if handled.</returns>
-		public static bool OnMouseMoved(Base canvas, int x, int y, int dx, int dy)
+		public static bool OnMouseMoved(ControlBase canvas, int x, int y, int dx, int dy)
 		{
 			// Send input to canvas for study
 			MousePosition.X = x;
@@ -234,7 +234,7 @@ namespace Gwen.Input
 		/// <param name="mouseButton">Mouse button number.</param>
 		/// <param name="down">Specifies if the button is down.</param>
 		/// <returns>True if handled.</returns>
-		public static bool OnMouseClicked(Base canvas, int mouseButton, bool down)
+		public static bool OnMouseClicked(ControlBase canvas, int mouseButton, bool down)
         {
             // If we click on a control that isn't a menu we want to close
             // all the open menus. Menus are children of the canvas.
@@ -331,7 +331,7 @@ namespace Gwen.Input
         /// <param name="key">Key.</param>
         /// <param name="down">True if the key is down.</param>
         /// <returns>True if handled.</returns>
-        public static bool OnKeyEvent(Base canvas, Key key, bool down)
+        public static bool OnKeyEvent(ControlBase canvas, Key key, bool down)
         {
             if (null == KeyboardFocus) return false;
             if (KeyboardFocus.GetCanvas() != canvas) return false;
@@ -366,9 +366,9 @@ namespace Gwen.Input
             return false;
         }
 
-        private static void UpdateHoveredControl(Base inCanvas)
+        private static void UpdateHoveredControl(ControlBase inCanvas)
         {
-            Base hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
+            ControlBase hovered = inCanvas.GetControlAt(MousePosition.X, MousePosition.Y);
 
             if (hovered != HoveredControl)
             {
@@ -399,7 +399,7 @@ namespace Gwen.Input
             }
         }
 
-        private static void FindKeyboardFocus(Base control)
+        private static void FindKeyboardFocus(ControlBase control)
         {
             if (null == control) return;
             if (control.KeyboardInputEnabled)

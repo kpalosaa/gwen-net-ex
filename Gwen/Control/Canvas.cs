@@ -9,7 +9,7 @@ namespace Gwen.Control
 	/// <summary>
 	/// Canvas control. It should be the root parent for all other controls.
 	/// </summary>
-	public class Canvas : Base
+	public class Canvas : ControlBase
 	{
 		private bool m_NeedsRedraw;
 		private float m_Scale;
@@ -17,12 +17,12 @@ namespace Gwen.Control
 		private Color m_BackgroundColor;
 
 		// [omeg] these are not created by us, so no disposing
-		internal Base FirstTab;
-		internal Base NextTab;
+		internal ControlBase FirstTab;
+		internal ControlBase NextTab;
 
 		private readonly List<IDisposable> m_DisposeQueue; // dictionary for faster access?
 
-		private readonly HashSet<Base> m_MeasureQueue = new HashSet<Base>();
+		private readonly HashSet<ControlBase> m_MeasureQueue = new HashSet<ControlBase>();
 
 		/// <summary>
 		/// Scale for rendering.
@@ -61,7 +61,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Canvas"/> class.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		public Canvas(Skin.Base skin)
+		public Canvas(Skin.SkinBase skin)
 		{
 			Dock = Dock.Fill;
 			SetBounds(0, 0, 10000, 10000);
@@ -106,7 +106,7 @@ namespace Gwen.Control
 		{
 			DoThink();
 
-			Renderer.Base render = Skin.Renderer;
+			Renderer.RendererBase render = Skin.Renderer;
 
 			render.Begin();
 
@@ -135,7 +135,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			base.Render(skin);
 			m_NeedsRedraw = false;
@@ -188,7 +188,7 @@ namespace Gwen.Control
 			// Check if individual controls need layout
 			if (m_MeasureQueue.Count > 0)
 			{
-				foreach (Base element in m_MeasureQueue)
+				foreach (ControlBase element in m_MeasureQueue)
 				{
 					element.DoLayout();
 				}
@@ -201,7 +201,7 @@ namespace Gwen.Control
 		/// Adds given control to the delete queue and detaches it from canvas. Don't call from Dispose, it modifies child list.
 		/// </summary>
 		/// <param name="control">Control to delete.</param>
-		public void AddDelayedDelete(Base control)
+		public void AddDelayedDelete(ControlBase control)
 		{
 			if (!m_DisposeQueue.Contains(control))
 			{
@@ -225,7 +225,7 @@ namespace Gwen.Control
 			m_DisposeQueue.Clear();
 		}
 
-		public void AddToMeasure(Base element)
+		public void AddToMeasure(ControlBase element)
 		{
 			m_MeasureQueue.Add(element);
 		}

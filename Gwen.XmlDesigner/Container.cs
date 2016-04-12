@@ -6,7 +6,7 @@ namespace Gwen.XmlDesigner
 {
 	public class Container : Component
 	{
-		public Container(Base parent)
+		public Container(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 		}
@@ -20,7 +20,7 @@ namespace Gwen.XmlDesigner
 			m_Title = GetControl<Label>("Title");
 		}
 
-		protected override void OnChildAdded(Base child)
+		protected override void OnChildAdded(ControlBase child)
 		{
 			child.Dock = Dock.Fill;
 			child.Margin = Margin.Two;

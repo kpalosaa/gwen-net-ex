@@ -12,12 +12,12 @@ namespace Gwen.XmlDesigner
 	public class TextEditor : Component
 	{
 		[XmlEvent]
-		public event Base.GwenEventHandler<XmlChangedEventArgs> XmlChanged;
+		public event ControlBase.GwenEventHandler<XmlChangedEventArgs> XmlChanged;
 
 		[XmlProperty]
 		public bool IsEditingDisabled { get { return m_TextBox.IsHidden; } set { m_TextBox.IsHidden = value; } }
 
-		public TextEditor(Base parent)
+		public TextEditor(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 			m_XmlChangedEventArgs = new XmlChangedEventArgs();
@@ -81,7 +81,7 @@ namespace Gwen.XmlDesigner
 			m_TextBox.Focus();
 		}
 
-		public void OnTextChanged(Base sender, EventArgs args)
+		public void OnTextChanged(ControlBase sender, EventArgs args)
 		{
 			m_Timer.Start();
 		}

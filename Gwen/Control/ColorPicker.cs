@@ -8,7 +8,7 @@ namespace Gwen.Control
     /// <summary>
     /// RGBA color picker.
     /// </summary>
-    public class ColorPicker : Base, IColorPicker
+    public class ColorPicker : ControlBase, IColorPicker
     {
         private Color m_Color;
 
@@ -46,7 +46,7 @@ namespace Gwen.Control
         /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public ColorPicker(Base parent)
+        public ColorPicker(ControlBase parent)
             : base(parent)
         {
             MouseInputEnabled = true;
@@ -79,7 +79,7 @@ namespace Gwen.Control
 			disp.Height = Util.Ignore;
 		}
 
-		private void CreateColorControl(Base parent, string name)
+		private void CreateColorControl(ControlBase parent, string name)
         {
             GroupBox colorGroup = new GroupBox(parent);
             colorGroup.Text = name;
@@ -107,7 +107,7 @@ namespace Gwen.Control
             slider.ValueChanged += SlidersMoved;
         }
 
-		private void NumericTyped(Base control, EventArgs args)
+		private void NumericTyped(ControlBase control, EventArgs args)
         {
             TextBoxNumeric box = control as TextBoxNumeric;
             if (null == box)
@@ -161,7 +161,7 @@ namespace Gwen.Control
                 ColorChanged.Invoke(this, EventArgs.Empty);
         }
 
-        private void SlidersMoved(Base control, EventArgs args)
+        private void SlidersMoved(ControlBase control, EventArgs args)
         {
             /*
             HorizontalSlider* redSlider		= gwen_cast<HorizontalSlider>(	FindChildByName( "RedSlider",   true ) );

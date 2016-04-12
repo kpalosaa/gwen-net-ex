@@ -10,7 +10,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Xml", Order = 600)]
 	public class XmlWindow : GUnit
 	{
-		public XmlWindow(Base parent)
+		public XmlWindow(ControlBase parent)
             : base(parent)
         {
 			HorizontalLayout layout = new HorizontalLayout(this);
@@ -33,22 +33,22 @@ namespace Gwen.UnitTest
 				m_unit = unit;
 			}
 
-            public void OnButtonClicked(Base sender, ClickedEventArgs args)
+            public void OnButtonClicked(ControlBase sender, ClickedEventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": Clicked");
 			}
 
-			public void OnItemSelected(Base sender, ItemSelectedEventArgs args)
+			public void OnItemSelected(ControlBase sender, ItemSelectedEventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": ItemSelected " + ((MenuItem)args.SelectedItem).Text);
 			}
 
-			public void OnSelectionChanged(Base sender, ItemSelectedEventArgs args)
+			public void OnSelectionChanged(ControlBase sender, ItemSelectedEventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": SelectionChanged " + ((LabeledRadioButton)args.SelectedItem).Text);
 			}
 
-			public void OnValueChanged(Base sender, EventArgs args)
+			public void OnValueChanged(ControlBase sender, EventArgs args)
 			{
 				float value = 0.0f;
 				if (sender is Gwen.Control.NumericUpDown)
@@ -61,7 +61,7 @@ namespace Gwen.UnitTest
 				m_unit.UnitPrint(sender.Name + ": ValueChanged " + value);
 			}
 
-			public void OnTextChanged(Base sender, EventArgs args)
+			public void OnTextChanged(ControlBase sender, EventArgs args)
 			{
 				if (sender is Gwen.Control.MultilineTextBox)
 					m_unit.UnitPrint(sender.Name + ": TextChanged " + ((Gwen.Control.MultilineTextBox)sender).Text);
@@ -69,13 +69,13 @@ namespace Gwen.UnitTest
 					m_unit.UnitPrint(sender.Name + ": TextChanged " + ((Gwen.Control.TextBox)sender).Text);
 			}
 
-			public void OnSubmitPressed(Base sender, EventArgs args)
+			public void OnSubmitPressed(ControlBase sender, EventArgs args)
 			{
 				if (sender is Gwen.Control.TextBox)
 					m_unit.UnitPrint(sender.Name + ": SubmitPressed " + ((Gwen.Control.TextBox)sender).Text);
 			}
 
-			public void OnCheckChanged(Base sender, EventArgs args)
+			public void OnCheckChanged(ControlBase sender, EventArgs args)
 			{
 				if (sender is Gwen.Control.CheckBox)
 					m_unit.UnitPrint(sender.Name + ": CheckChanged " + ((Gwen.Control.CheckBox)sender).IsChecked);
@@ -83,17 +83,17 @@ namespace Gwen.UnitTest
 					m_unit.UnitPrint(sender.Name + ": CheckChanged " + ((Gwen.Control.LabeledCheckBox)sender).IsChecked);
 			}
 
-			public void OnRowSelected(Base sender, ItemSelectedEventArgs args)
+			public void OnRowSelected(ControlBase sender, ItemSelectedEventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": RowSelected " + ((ListBoxRow)((ItemSelectedEventArgs)args).SelectedItem).Text);
 			}
 
-			public void OnSelected(Base sender, EventArgs args)
+			public void OnSelected(ControlBase sender, EventArgs args)
 			{
 				m_unit.UnitPrint(((Gwen.Control.TreeNode)sender).TreeControl.Name + ": Selected " + ((Gwen.Control.TreeNode)sender).Text);
 			}
 
-			public void OnClosed(Base sender, EventArgs args)
+			public void OnClosed(ControlBase sender, EventArgs args)
 			{
 				m_unit.UnitPrint(sender.Name + ": Closed ");
 			}
@@ -109,7 +109,7 @@ namespace Gwen.UnitTest
 				m_unit = unit;
 			}
 
-			public override bool HandleEvent(string eventName, string handlerName, Gwen.Control.Base sender, System.EventArgs args)
+			public override bool HandleEvent(string eventName, string handlerName, Gwen.Control.ControlBase sender, System.EventArgs args)
 			{
 				if (handlerName == "OnButtonClicked")
 				{
@@ -184,12 +184,12 @@ namespace Gwen.UnitTest
 			private GUnit m_unit;
 		}
 
-		void OpenMethodWindow(Base control, EventArgs args)
+		void OpenMethodWindow(ControlBase control, EventArgs args)
 		{
 			new MethodTestComponent(this, m_xml);
 		}
 
-		void OpenInterfaceWindow(Base control, EventArgs args)
+		void OpenInterfaceWindow(ControlBase control, EventArgs args)
 		{
 			new InterfaceTestComponent(this, m_xml);
 		}

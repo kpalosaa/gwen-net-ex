@@ -5,7 +5,7 @@ namespace Gwen.RichText.KnuthPlass
 {
 	internal class LeftFormatter : Formatter
 	{
-		public LeftFormatter(Renderer.Base renderer, Font defaultFont)
+		public LeftFormatter(Renderer.RendererBase renderer, Font defaultFont)
 			: base(renderer, defaultFont)
 		{
 

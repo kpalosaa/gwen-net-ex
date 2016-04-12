@@ -7,13 +7,13 @@ namespace Gwen.Control.Internal
     /// <summary>
     /// Base for controls that can be dragged by mouse.
     /// </summary>
-    public class Dragger : Base
+    public class Dragger : ControlBase
     {
         protected bool m_Held;
         protected Point m_HoldPos;
-        protected Base m_Target;
+        protected ControlBase m_Target;
 
-        internal Base Target { get { return m_Target; } set { m_Target = value; } }
+        internal ControlBase Target { get { return m_Target; } set { m_Target = value; } }
 
         /// <summary>
         /// Indicates if the control is being dragged.
@@ -29,7 +29,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="Dragger"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public Dragger(Base parent) : base(parent)
+        public Dragger(ControlBase parent) : base(parent)
         {
             MouseInputEnabled = true;
             m_Held = false;
@@ -97,7 +97,7 @@ namespace Gwen.Control.Internal
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
         {
             
         }

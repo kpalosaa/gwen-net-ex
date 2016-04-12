@@ -8,7 +8,7 @@ namespace Gwen.Control.Internal
     /// </summary>
     public class TabButton : Button
     {
-        private Base m_Page;
+        private ControlBase m_Page;
         private TabControl m_Control;
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace Gwen.Control.Internal
         /// <summary>
         /// Interior of the tab.
         /// </summary>
-        public Base Page { get { return m_Page; } set { m_Page = value; } }
+        public ControlBase Page { get { return m_Page; } set { m_Page = value; } }
 
         /// <summary>
         /// Determines whether the control should be clipped to its bounds while rendering.
@@ -46,7 +46,7 @@ namespace Gwen.Control.Internal
         /// Initializes a new instance of the <see cref="TabButton"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public TabButton(Base parent)
+        public TabButton(ControlBase parent)
             : base(parent)
         {
             DragAndDrop_SetPackage(true, "TabButtonMove");
@@ -76,7 +76,7 @@ namespace Gwen.Control.Internal
         /// Renders the control using specified skin.
         /// </summary>
         /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.Base skin)
+        protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawTabButton(this, IsActive, m_Control.TabStrip.Dock);
         }

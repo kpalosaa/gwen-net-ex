@@ -6,7 +6,7 @@ namespace Gwen.Control
 	/// <summary>
 	/// Base class for multi-column tables.
 	/// </summary>
-	public class Table : Base
+	public class Table : ControlBase
 	{
 		private bool m_AutoSizeToContent;
 		private bool m_SizeToContents;
@@ -42,7 +42,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Table(Base parent) : base(parent)
+		public Table(ControlBase parent) : base(parent)
 		{
 			m_ColumnCount = 1;
 
@@ -237,7 +237,7 @@ namespace Gwen.Control
 
 				for (int i = 0; i < ColumnCount; i++)
 				{
-					Base cell = row.GetColumn(i);
+					ControlBase cell = row.GetColumn(i);
 					if (null != cell)
 					{
 						m_ColumnWidth[i] = Math.Max(m_ColumnWidth[i], cell.MeasuredSize.Width);

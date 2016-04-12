@@ -21,7 +21,7 @@ namespace Gwen.Control
 			{
 				List<TreeNode> selectedNodes = new List<TreeNode>();
 
-				foreach (Base child in m_RootNode.Children)
+				foreach (ControlBase child in m_RootNode.Children)
 				{
 					TreeNode node = child as TreeNode;
 					if (node == null)
@@ -160,7 +160,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="TreeControl"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public TreeControl(Base parent)
+		public TreeControl(ControlBase parent)
 			: base(parent)
 		{
 			Padding = Padding.One;
@@ -178,7 +178,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			if (ShouldDrawBackground)
 				skin.DrawTreeControl(this);
@@ -273,13 +273,13 @@ namespace Gwen.Control
 		/// Handler for node selected event.
 		/// </summary>
 		/// <param name="Control">Node selected.</param>
-		protected virtual void OnNodeSelected(Base Control, EventArgs args)
+		protected virtual void OnNodeSelected(ControlBase Control, EventArgs args)
 		{
 			if (!m_MultiSelect /*|| InputHandler.InputHandler.IsKeyDown(Key.Control)*/)
 				UnselectAll();
 		}
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			TreeControl element = new TreeControl(parent);
 			parser.ParseAttributes(element);

@@ -68,7 +68,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="EditableComboBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public EditableComboBox(Base parent)
+		public EditableComboBox(ControlBase parent)
 			: base(parent)
 		{
 			m_TextBox = new TextBox(this);
@@ -84,7 +84,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Internal Pressed implementation.
 		/// </summary>
-		private void OnClicked(Base sender, ClickedEventArgs args)
+		private void OnClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			if (IsOpen)
 			{
@@ -100,7 +100,7 @@ namespace Gwen.Control
 		/// Internal handler for item selected event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected override void OnItemSelected(Base control, ItemSelectedEventArgs args)
+		protected override void OnItemSelected(ControlBase control, ItemSelectedEventArgs args)
 		{
 			if (!IsDisabled)
 			{
@@ -129,7 +129,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 			skin.DrawComboBox(this, m_Button.IsDepressed, IsOpen);
 		}
@@ -138,12 +138,12 @@ namespace Gwen.Control
 		/// Renders the focus overlay.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void RenderFocus(Skin.Base skin)
+		protected override void RenderFocus(Skin.SkinBase skin)
 		{
 
 		}
 
-		internal static Base XmlElementHandler(Xml.Parser parser, Type type, Base parent)
+		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			EditableComboBox element = new EditableComboBox(parent);
 			parser.ParseAttributes(element);

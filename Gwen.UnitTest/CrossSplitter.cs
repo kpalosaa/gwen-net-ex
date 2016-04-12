@@ -9,7 +9,7 @@ namespace Gwen.UnitTest
         private int m_CurZoom;
         private readonly Control.CrossSplitter m_Splitter;
 
-        public CrossSplitter(Base parent)
+        public CrossSplitter(ControlBase parent)
             : base(parent)
         {
             m_CurZoom = 0;
@@ -94,7 +94,7 @@ namespace Gwen.UnitTest
             }
         }
 
-		void ZoomTest(Base control, EventArgs args)
+		void ZoomTest(ControlBase control, EventArgs args)
         {
             m_Splitter.Zoom(m_CurZoom);
             m_CurZoom++;
@@ -102,18 +102,18 @@ namespace Gwen.UnitTest
                 m_CurZoom = 0;
         }
 
-		void UnZoomTest(Base control, EventArgs args)
+		void UnZoomTest(ControlBase control, EventArgs args)
         {
             m_Splitter.UnZoom();
         }
 
-		void CenterPanels(Base control, EventArgs args)
+		void CenterPanels(ControlBase control, EventArgs args)
         {
             m_Splitter.CenterPanels();
             m_Splitter.UnZoom();
         }
 
-		void ToggleSplitters(Base control, EventArgs args)
+		void ToggleSplitters(ControlBase control, EventArgs args)
         {
             m_Splitter.SplittersVisible = !m_Splitter.SplittersVisible;
         }

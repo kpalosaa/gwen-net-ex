@@ -4,11 +4,11 @@ using Gwen.Control.Layout;
 
 namespace Gwen.UnitTest
 {
-    public class GUnit : Base
+    public class GUnit : ControlBase
     {
         public UnitTest UnitTest;
 
-        public GUnit(Base parent) : base(parent)
+        public GUnit(ControlBase parent) : base(parent)
         {
 			this.IsVirtualControl = true;
         }

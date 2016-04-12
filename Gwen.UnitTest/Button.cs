@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Standard", Order = 200)]
 	public class Button : GUnit
     {
-        public Button(Base parent)
+        public Button(ControlBase parent)
             : base(parent)
         {
 			HorizontalLayout hlayout = new HorizontalLayout(this);
@@ -83,14 +83,12 @@ namespace Gwen.UnitTest
 					button.Margin = Margin.Five;
 					button.Padding = Padding.Three;
 					button.Text = "Disabled";
-					button.Height = 28;
 					button.IsDisabled = true;
 
 					button = new Control.Button(vlayout);
 					button.Margin = Margin.Five;
 					button.Padding = Padding.Three;
 					button.Text = "With Tooltip";
-					button.Height = 28;
 					button.SetToolTipText("This is tooltip");
 
 					button = new Control.Button(vlayout);
@@ -113,32 +111,32 @@ namespace Gwen.UnitTest
 			}
 		}
 
-		private void onButtonAc(Base control, EventArgs args)
+		private void onButtonAc(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: Clicked");
         }
 
-		private void onButtonAp(Base control, EventArgs args)
+		private void onButtonAp(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: Pressed");
         }
 
-		private void onButtonAr(Base control, EventArgs args)
+		private void onButtonAr(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: Released");
         }
 
-		private void onToggle(Base control, EventArgs args)
+		private void onToggle(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: Toggled");
         }
 
-		private void onToggleOn(Base control, EventArgs args)
+		private void onToggleOn(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: ToggleOn");
         }
 
-		private void onToggleOff(Base control, EventArgs args)
+		private void onToggleOff(ControlBase control, EventArgs args)
         {
             UnitPrint("Button: ToggledOff");
         }

@@ -12,12 +12,12 @@ namespace Gwen.XmlDesigner
 	public class Viewer : Component
 	{
 		[XmlEvent]
-		public event Base.GwenEventHandler<ExceptionEventArgs> Exception;
+		public event ControlBase.GwenEventHandler<ExceptionEventArgs> Exception;
 
 		[XmlProperty]
 		public bool DebugOutlines { get { return m_DebugOutlines; } set { m_DebugOutlines = value; if (m_CurrentElement != null) m_CurrentElement.DrawDebugOutlines = value; } }
 
-		public Viewer(Base parent)
+		public Viewer(ControlBase parent)
 			: base(parent, new XmlStringSource(Xml))
 		{
 			m_ExceptionEventArgs = new ExceptionEventArgs();
@@ -83,7 +83,7 @@ namespace Gwen.XmlDesigner
 			m_CurrentElement = null;
 		}
 
-		private Base m_CurrentElement;
+		private ControlBase m_CurrentElement;
 
 		private bool m_DebugOutlines;
 

@@ -9,7 +9,7 @@ namespace Gwen.UnitTest
 		private readonly Font font1;
 		private readonly Font fontHover1;
 
-		public LinkLabel(Base parent)
+		public LinkLabel(ControlBase parent)
 			: base(parent)
         {
             {
@@ -44,7 +44,7 @@ namespace Gwen.UnitTest
 			base.Dispose();
 		}
 
-		private void OnLinkClicked(Base control, LinkClickedEventArgs args)
+		private void OnLinkClicked(ControlBase control, LinkClickedEventArgs args)
 		{
 			UnitPrint("Link Clicked: " + args.Link);
 		}

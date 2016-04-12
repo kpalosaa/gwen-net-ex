@@ -43,12 +43,12 @@ namespace Gwen.Control
 			}
 		}
 
-		public override Base Content
+		public override ControlBase Content
 		{
 			get { return m_ScrollArea.Content; }
 		}
 
-		protected Base Container { get { return m_ScrollArea; } }
+		protected ControlBase Container { get { return m_ScrollArea; } }
 
 		/// <summary>
 		/// Indicates whether the control can be scrolled horizontally.
@@ -82,7 +82,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ScrollControl"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ScrollControl(Base parent)
+		public ScrollControl(ControlBase parent)
 			: base(parent)
 		{
 			MouseInputEnabled = true;
@@ -126,12 +126,12 @@ namespace Gwen.Control
 			Invalidate();
 		}
 
-		protected virtual void VBarMoved(Base control, EventArgs args)
+		protected virtual void VBarMoved(ControlBase control, EventArgs args)
 		{
 			UpdateScrollArea();
 		}
 
-		protected virtual void HBarMoved(Base control, EventArgs args)
+		protected virtual void HBarMoved(ControlBase control, EventArgs args)
 		{
 			UpdateScrollArea();
 		}
@@ -312,7 +312,7 @@ namespace Gwen.Control
 		/// Renders the control using specified skin.
 		/// </summary>
 		/// <param name="skin">Skin to use.</param>
-		protected override void Render(Skin.Base skin)
+		protected override void Render(Skin.SkinBase skin)
 		{
 		}
 
