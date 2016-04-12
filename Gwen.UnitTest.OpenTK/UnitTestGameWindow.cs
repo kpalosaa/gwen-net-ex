@@ -30,11 +30,8 @@ namespace Gwen.UnitTest.OpenTK
 		private bool m_AltDown = false;
 
 		public UnitTestGameWindow()
-#if USE_GL42_RENDERER
-			: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
-#else
+			//: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
 			: base(1024, 768)
-#endif
 		{
 			KeyDown += Keyboard_KeyDown;
 			KeyUp += Keyboard_KeyUp;
@@ -129,7 +126,7 @@ namespace Gwen.UnitTest.OpenTK
 			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
 
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
-			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", Configuration.RunningOnMacOS ? 18 : 11);
+			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", Configuration.RunningOnMacOS ? 20 : 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
 			m_Input.Initialize(m_Canvas);

@@ -1,6 +1,4 @@
-﻿#define USE_GL42_RENDERER
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using OpenTK;
@@ -17,11 +15,7 @@ namespace Gwen.XmlDesigner.OpenTK
 	public class XmlDesignerGameWindow : GameWindow
 	{
 		private Gwen.Renderer.OpenTK.Input.OpenTK m_Input;
-#if USE_GL42_RENDERER
-		private Gwen.Renderer.OpenTK.OpenTKGL42 m_Renderer;
-#else
-		private Gwen.Renderer.OpenTK.OpenTKGL21 m_Renderer;
-#endif
+		private Gwen.Renderer.OpenTK.OpenTKBase m_Renderer;
 		private Gwen.Skin.SkinBase m_Skin;
 		private Gwen.Control.Canvas m_Canvas;
 		private Gwen.XmlDesigner.XmlDesigner m_XmlDesigner;
@@ -36,11 +30,8 @@ namespace Gwen.XmlDesigner.OpenTK
 		private static bool m_Restart;
 
 		public XmlDesignerGameWindow()
-#if USE_GL42_RENDERER
-			: base(1024, 768, new GraphicsMode(), "Gwen.net Xml Designer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
-#else
+			//: base(1024, 768, new GraphicsMode(), "Gwen.net Xml Designer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
 			: base(1024, 768)
-#endif
 		{
 			KeyDown += Keyboard_KeyDown;
 			KeyUp += Keyboard_KeyUp;
@@ -130,14 +121,12 @@ namespace Gwen.XmlDesigner.OpenTK
 
 			Platform.Platform.Init(new Platform.Windows());
 
-#if USE_GL42_RENDERER
-			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
-#else
-			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL21();
-#endif
+			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL10();
+			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();
+			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
 
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, Gwen.XmlDesigner.XmlDesigner.Settings.Skin);
-			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
+			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", Configuration.RunningOnMacOS ? 20 : 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);
 			m_Input.Initialize(m_Canvas);

@@ -72,7 +72,7 @@ namespace Gwen.UnitTest
 						padding.Min = 0;
 						padding.Max = 200;
 						padding.Value = 10;
-						padding.Size = new Size(100, 20);
+						padding.Width = 100;
 						padding.ValueChanged += PaddingChanged;
 					}
 				}

@@ -123,7 +123,7 @@ namespace Gwen.Renderer.OpenTK
 		{
 			if (m_VertNum == 0) return;
 
-			GL.InvalidateBufferData(m_Vbo);
+			//GL.InvalidateBufferData(m_Vbo);
 			GL.BufferSubData<Vertex>(BufferTarget.ArrayBuffer, IntPtr.Zero, (IntPtr)(m_VertNum * m_VertexSize), m_Vertices);
 
 			GL.Uniform1(m_GuiShader.Uniforms["uUseTexture"], m_TextureEnabled ? 1.0f : 0.0f);

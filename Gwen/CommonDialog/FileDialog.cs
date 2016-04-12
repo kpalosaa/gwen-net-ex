@@ -422,16 +422,16 @@ namespace Gwen.CommonDialog
 					<DockLayout Dock='Top'>
 						<Label Dock='Left' Margin='2' Alignment='CenterV,Left' Text='Path:' />
 						<TextBox Name='Path' Margin='2' Dock='Fill' SubmitPressed='OnPathSubmitted' />
-						<Button Name='NewFolder' Margin='2' Dock='Right' Width='50' Text='New' Clicked='OnNewFolderClicked' />
-						<Button Name='Up' Margin='2' Dock='Right' Width='50' Text='Up' Clicked='OnUpClicked' />
+						<Button Name='NewFolder' Margin='2' Dock='Right' Padding='10,0,10,0' Text='New' Clicked='OnNewFolderClicked' />
+						<Button Name='Up' Margin='2' Dock='Right' Padding='10,0,10,0' Text='Up' Clicked='OnUpClicked' />
 					</DockLayout>
 					<VerticalSplitter Dock='Fill' Value='0.3' SplitterSize='2'>
 						<TreeControl Name='Folders' Margin='2' Selected='OnFolderSelected' />
 						<ListBox Name='Items' Margin='2' ColumnCount='3' RowSelected='OnItemSelected' RowDoubleClicked='OnItemDoubleClicked' />
 					</VerticalSplitter>
 					<DockLayout Dock='Bottom'>
-						<Button Name='Cancel' Margin='2' Dock='Right' Width='100' Text='Cancel' Clicked='OnCancelClicked' />
-						<Button Name='Ok' Margin='2' Dock='Right' Width='100' Text='Ok' Clicked='OnOkClicked' />
+						<Button Name='Cancel' Margin='2' Dock='Right' Padding='10,0,10,0' Width='100' Text='Cancel' Clicked='OnCancelClicked' />
+						<Button Name='Ok' Margin='2' Dock='Right' Padding='10,0,10,0' Width='100' Text='Ok' Clicked='OnOkClicked' />
 					</DockLayout>
 					<VerticalSplitter Name='NameFilterSplitter' Dock='Bottom' Value='0.7' SplitterSize='2'>
 						<DockLayout>
