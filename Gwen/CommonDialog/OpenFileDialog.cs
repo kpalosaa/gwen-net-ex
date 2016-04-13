@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using Gwen.Control;
+using static global::Gwen.Platform.Platform;
 
 namespace Gwen.CommonDialog
 {
@@ -25,19 +25,19 @@ namespace Gwen.CommonDialog
 
 		protected override void OnItemSelected(string path)
 		{
-			if (File.Exists(path))
+			if (FileExists(path))
 			{
-				SetCurrentItem(Path.GetFileName(path));
+				SetCurrentItem(GetFileName(path));
 			}
 		}
 
 		protected override bool IsSubmittedNameOk(string path)
 		{
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 			{
 				SetPath(path);
 			}
-			else if (File.Exists(path))
+			else if (FileExists(path))
 			{
 				return true;
 			}
@@ -47,7 +47,7 @@ namespace Gwen.CommonDialog
 
 		protected override bool ValidateFileName(string path)
 		{
-			return File.Exists(path);
+			return FileExists(path);
 		}
 	}
 }

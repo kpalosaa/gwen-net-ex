@@ -393,7 +393,7 @@ namespace Gwen.Control
 		/// <returns>Found node or null.</returns>
 		public TreeNode FindNodeByUserData(object userData, bool recursive = true)
 		{
-			TreeNode node = this.Children.Find(x => x is TreeNode && x.UserData == userData) as TreeNode;
+			TreeNode node = this.Children.Where(x => x is TreeNode && x.UserData == userData).FirstOrDefault() as TreeNode;
 			if (node != null)
 				return node;
 

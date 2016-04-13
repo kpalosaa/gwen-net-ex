@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gwen\Gwen.csproj">
-      <Project>{adda2f43-96c0-497f-8216-29c67abc9806}</Project>
+      <Project>{72bfb713-3e5f-4473-add5-31c07c148699}</Project>
       <Name>Gwen</Name>
     </ProjectReference>
   </ItemGroup>

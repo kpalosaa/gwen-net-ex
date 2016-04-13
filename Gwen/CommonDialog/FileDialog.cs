@@ -1,8 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using Gwen.Control;
 using Gwen.Xml;
+using Gwen.Platform;
+using static global::Gwen.Platform.Platform;
 
 namespace Gwen.CommonDialog
 {
@@ -39,7 +40,7 @@ namespace Gwen.CommonDialog
 		/// <summary>
 		/// Set initial folder and selected item.
 		/// </summary>
-		public string CurrentItem { set { SetPath(Path.GetDirectoryName(value)); SetCurrentItem(Path.GetFileName(value)); } }
+		public string CurrentItem { set { SetPath(GetDirectoryName(value)); SetCurrentItem(GetFileName(value)); } }
 
 		/// <summary>
 		/// Window title.
@@ -111,7 +112,7 @@ namespace Gwen.CommonDialog
 
 			m_OnClosing = false;
 
-			m_CurrentFolder = Environment.CurrentDirectory;
+			m_CurrentFolder = CurrentDirectory;
 
 			m_CurrentFilter = "*.*";
 			m_Filters.AddItem("All files (*.*)", "All files (*.*)", "*.*");
@@ -124,7 +125,7 @@ namespace Gwen.CommonDialog
 		/// <returns>True if the path change was successful. False otherwise.</returns>
 		public bool SetPath(string path)
 		{
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 			{
 				m_CurrentFolder = path;
 				m_Path.Text = m_CurrentFolder;
@@ -180,9 +181,9 @@ namespace Gwen.CommonDialog
 		/// <param name="path">Full path of selected file or directory.</param>
 		protected virtual void OnItemSelected(string path)
 		{
-			if ((Directory.Exists(path) && m_FoldersOnly) || (File.Exists(path) && !m_FoldersOnly))
+			if ((DirectoryExists(path) && m_FoldersOnly) || (FileExists(path) && !m_FoldersOnly))
 			{
-				SetCurrentItem(Path.GetFileName(path));
+				SetCurrentItem(GetFileName(path));
 			}
 		}
 
@@ -193,14 +194,14 @@ namespace Gwen.CommonDialog
 		/// <returns>Is the name valid.</returns>
 		protected virtual bool IsSubmittedNameOk(string path)
 		{
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 			{
 				if (!m_FoldersOnly)
 				{
 					SetPath(path);
 				}
 			}
-			else if (File.Exists(path))
+			else if (FileExists(path))
 			{
 				return true;
 			}
@@ -251,7 +252,7 @@ namespace Gwen.CommonDialog
 
 		private void OnUpClicked(ControlBase sender, ClickedEventArgs args)
 		{
-			string newPath = Path.GetDirectoryName(m_CurrentFolder);
+			string newPath = GetDirectoryName(m_CurrentFolder);
 			if (newPath != null)
 			{
 				SetPath(newPath);
@@ -261,7 +262,7 @@ namespace Gwen.CommonDialog
 		private void OnNewFolderClicked(ControlBase sender, ClickedEventArgs args)
 		{
 			string path = m_Path.Text;
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 			{
 				m_Path.Focus();
 			}
@@ -269,7 +270,7 @@ namespace Gwen.CommonDialog
 			{
 				try
 				{
-					Directory.CreateDirectory(path);
+					CreateDirectory(path);
 					SetPath(path);
 				}
 				catch (Exception ex)
@@ -302,7 +303,7 @@ namespace Gwen.CommonDialog
 			string path = args.SelectedItem.UserData as string;
 			if (path != null)
 			{
-				if (Directory.Exists(path))
+				if (DirectoryExists(path))
 				{
 					SetPath(path);
 				}
@@ -315,7 +316,7 @@ namespace Gwen.CommonDialog
 
 		private void OnNameSubmitted(ControlBase sender, EventArgs args)
 		{
-			string path = Path.Combine(m_CurrentFolder, m_SelectedName.Text);
+			string path = Combine(m_CurrentFolder, m_SelectedName.Text);
 			if (IsSubmittedNameOk(path))
 				OnOkClicked(null, null);
 		}
@@ -328,7 +329,7 @@ namespace Gwen.CommonDialog
 
 		private void OnOkClicked(ControlBase sender, ClickedEventArgs args)
 		{
-			string path = Path.Combine(m_CurrentFolder, m_SelectedName.Text);
+			string path = Combine(m_CurrentFolder, m_SelectedName.Text);
 			if (ValidateFileName(path))
 			{
 				OnClosing(path, true);
@@ -349,15 +350,13 @@ namespace Gwen.CommonDialog
 		{
 			m_Items.Clear();
 
-			DirectoryInfo currentDirInfo;
-			IOrderedEnumerable<DirectoryInfo> directories;
-			IOrderedEnumerable<FileInfo> files = null;
+			IOrderedEnumerable<IFileSystemDirectoryInfo> directories;
+			IOrderedEnumerable<IFileSystemFileInfo> files = null;
 			try
 			{
-				currentDirInfo = new DirectoryInfo(m_CurrentFolder);
-				directories = currentDirInfo.GetDirectories().OrderBy(di => di.Name);
+				directories = GetDirectories(m_CurrentFolder).OrderBy(di => di.Name);
 				if (!m_FoldersOnly)
-					files = currentDirInfo.GetFiles(m_CurrentFilter).OrderBy(fi => fi.Name);
+					files = GetFiles(m_CurrentFolder, m_CurrentFilter).OrderBy(fi => fi.Name);
 			}
 			catch (Exception ex)
 			{
@@ -365,20 +364,20 @@ namespace Gwen.CommonDialog
 				return;
 			}
 
-			foreach (DirectoryInfo di in directories)
+			foreach (IFileSystemDirectoryInfo di in directories)
 			{
 				ListBoxRow row = m_Items.AddRow(di.Name, null, di.FullName);
 				row.SetCellText(1, "<dir>");
-				row.SetCellText(2, FormatFileTime(di.LastWriteTime));
+				row.SetCellText(2, di.FormattedLastWriteTime);
 			}
 
 			if (!m_FoldersOnly)
 			{
-				foreach (FileInfo fi in files)
+				foreach (IFileSystemFileInfo fi in files)
 				{
 					ListBoxRow row = m_Items.AddRow(fi.Name, null, fi.FullName);
-					row.SetCellText(1, FormatFileLength(fi.Length));
-					row.SetCellText(2, FormatFileTime(fi.LastWriteTime));
+					row.SetCellText(1, fi.FormattedFileLength);
+					row.SetCellText(2, fi.FormattedFileLength);
 				}
 			}
 		}
@@ -387,7 +386,7 @@ namespace Gwen.CommonDialog
 		{
 			m_Folders.RemoveAllNodes();
 
-			foreach (Platform.SpecialFolder folder in Platform.Platform.GetSpecialFolders())
+			foreach (ISpecialFolder folder in Platform.Platform.GetSpecialFolders())
 			{
 				TreeNode category = m_Folders.FindNodeByName(folder.Category, false);
 				if (category == null)
@@ -413,7 +412,8 @@ namespace Gwen.CommonDialog
 
 		private string FormatFileTime(DateTime dateTime)
 		{
-			return String.Format("{0} {1}", dateTime.ToShortDateString(), dateTime.ToLongTimeString());
+			return "";
+			//return String.Format("{0} {1}", dateTime.ToShortDateString(), dateTime.ToLongTimeString());
 		}
 
 		private static readonly string Xml = @"<?xml version='1.0' encoding='UTF-8'?>

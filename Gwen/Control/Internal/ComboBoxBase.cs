@@ -188,7 +188,7 @@ namespace Gwen.Control.Internal
 		{
 			if (down)
 			{
-				var it = m_Menu.Children.FindIndex(x => x == m_SelectedItem);
+				var it = m_Menu.Children.IndexOf(m_SelectedItem);
 				if (it + 1 < m_Menu.Children.Count)
 					OnItemSelected(this, new ItemSelectedEventArgs(m_Menu.Children[it + 1]));
 			}
@@ -206,7 +206,7 @@ namespace Gwen.Control.Internal
 		{
 			if (down)
 			{
-				var it = m_Menu.Children.FindLastIndex(x => x == m_SelectedItem);
+				var it = m_Menu.Children.LastIndexOf(m_SelectedItem);
 				if (it - 1 >= 0)
 					OnItemSelected(this, new ItemSelectedEventArgs(m_Menu.Children[it - 1]));
 			}

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using System.Linq;
 
 namespace Gwen.Xml
 {
@@ -40,10 +42,22 @@ namespace Gwen.Xml
 					{
 						Type type = handlerElement.Component.GetType();
 
-						MethodInfo methodInfo;
+						MethodInfo methodInfo = null;
 						do
 						{
-							methodInfo = type.GetMethod(m_handlerName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, null, m_paramsType, null);
+							MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+							foreach (MethodInfo mi in methods)
+							{
+								if (mi.Name != m_handlerName)
+									continue;
+								ParameterInfo[] parameters = mi.GetParameters();
+								if (parameters.Length != 2)
+									continue;
+								if (parameters[0].ParameterType != typeof(Gwen.Control.ControlBase) || (parameters[1].ParameterType != typeof(T) && parameters[1].ParameterType != typeof(T).BaseType))
+									continue;
+								methodInfo = mi;
+								break;
+							}
 							if (methodInfo != null)
 								break;
 							type = type.BaseType;

@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Gwen.Control
 {
-    public class EnumRadioButtonGroup<T> : RadioButtonGroup where T : struct, IConvertible
-    {
+    public class EnumRadioButtonGroup<T> : RadioButtonGroup where T : struct
+	{
         public EnumRadioButtonGroup(ControlBase parent) : base(parent)
         {
-            if (!typeof(T).IsEnum) throw new Exception("T must be an enumerated type!");
-            for (int i = 0; i < Enum.GetValues(typeof(T)).Length; i++) {
+            if (!typeof(T).IsEnum)
+				throw new Exception("T must be an enumerated type!");
+
+			for (int i = 0; i < Enum.GetValues(typeof(T)).Length; i++)
+			{
                 string name = Enum.GetNames(typeof(T))[i];
                 LabeledRadioButton lrb = this.AddOption(name);
                 lrb.UserData = Enum.GetValues(typeof(T)).GetValue(i);
@@ -25,8 +25,10 @@ namespace Gwen.Control
             }
             set
             {
-                foreach (ControlBase child in Children) {
-                    if (child is LabeledRadioButton && child.UserData.Equals(value)) {
+                foreach (ControlBase child in Children)
+				{
+                    if (child is LabeledRadioButton && child.UserData.Equals(value))
+					{
                         (child as LabeledRadioButton).RadioButton.Press();
                     }
                 }

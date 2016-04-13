@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using static global::Gwen.Platform.Platform;
 
 namespace Gwen.Xml
 {
@@ -52,7 +53,7 @@ namespace Gwen.Xml
 
 		public Stream GetStream()
 		{
-			return new FileStream(m_fileName, FileMode.Open, FileAccess.Read);
+			return GetFileStream(m_fileName, false);
 		}
 
 		private string m_fileName;

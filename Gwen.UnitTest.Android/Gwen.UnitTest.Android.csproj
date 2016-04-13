@@ -80,11 +80,11 @@
       <Name>Gwen.Renderer.Android.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.UnitTest\Gwen.UnitTest.csproj">
-      <Project>{1e28c643-0671-4edf-adee-b75d33bae5af}</Project>
+      <Project>{98b3d549-c3c9-4ea8-ac94-f7295b12f3de}</Project>
       <Name>Gwen.UnitTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen\Gwen.csproj">
-      <Project>{adda2f43-96c0-497f-8216-29c67abc9806}</Project>
+      <Project>{72bfb713-3e5f-4473-add5-31c07c148699}</Project>
       <Name>Gwen</Name>
     </ProjectReference>
   </ItemGroup>

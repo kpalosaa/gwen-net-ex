@@ -135,7 +135,7 @@ namespace Gwen.Control
 		/// If null is passed in, it will look for null/unset UserData.</param>
 		public void SelectByUserData(object userdata)
 		{
-			ControlBase option = this.Children.Find(x => x.UserData.Equals(userdata));
+			ControlBase option = this.Children.Where(x => x.UserData.Equals(userdata)).FirstOrDefault();
 			if (option != null)
 				(option as LabeledRadioButton).RadioButton.Press();
 		}

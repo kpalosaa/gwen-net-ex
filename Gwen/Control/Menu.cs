@@ -166,7 +166,11 @@ namespace Gwen.Control
         /// </summary>
         public virtual void CloseAll()
         {
-            Children.ForEach(child => { if (child is MenuItem) (child as MenuItem).CloseMenu(); });
+			foreach (var child in Children)
+			{
+				if (child is MenuItem)
+					(child as MenuItem).CloseMenu();
+			}
         }
 
         /// <summary>

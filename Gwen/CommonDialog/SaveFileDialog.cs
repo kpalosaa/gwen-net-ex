@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using Gwen.Control;
+using static global::Gwen.Platform.Platform;
 
 namespace Gwen.CommonDialog
 {
@@ -24,19 +24,19 @@ namespace Gwen.CommonDialog
 
 		protected override void OnItemSelected(string path)
 		{
-			if (File.Exists(path))
+			if (FileExists(path))
 			{
-				SetCurrentItem(Path.GetFileName(path));
+				SetCurrentItem(GetFileName(path));
 			}
 		}
 
 		protected override bool IsSubmittedNameOk(string path)
 		{
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 			{
 				SetPath(path);
 			}
-			else if (File.Exists(path))
+			else if (FileExists(path))
 			{
 				return true;
 			}
@@ -46,12 +46,12 @@ namespace Gwen.CommonDialog
 
 		protected override bool ValidateFileName(string path)
 		{
-			if (Directory.Exists(path))
+			if (DirectoryExists(path))
 				return false;
 
-			if (File.Exists(path))
+			if (FileExists(path))
 			{
-				MessageBox win = MessageBox.Show(View, String.Format("File '{0}' already exists. Do you want to replace it?", Path.GetFileName(path)), Title, MessageBoxButtons.YesNo);
+				MessageBox win = MessageBox.Show(View, String.Format("File '{0}' already exists. Do you want to replace it?", GetFileName(path)), Title, MessageBoxButtons.YesNo);
 				win.Dismissed += OnMessageBoxDismissed;
 				win.UserData = path;
 				return false;

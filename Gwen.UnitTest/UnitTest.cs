@@ -59,9 +59,9 @@ namespace Gwen.UnitTest
 					if (a1.Order == a2.Order)
 					{
 						if (a1.Category == a2.Category)
-							return String.Compare(a1.Name != null ? a1.Name : t1.Name, a2.Name != null ? a2.Name : t2.Name, true);
+							return String.Compare(a1.Name != null ? a1.Name : t1.Name, a2.Name != null ? a2.Name : t2.Name, StringComparison.OrdinalIgnoreCase);
 						else
-							return String.Compare(a1.Category, a2.Category, true);
+							return String.Compare(a1.Category, a2.Category, StringComparison.OrdinalIgnoreCase);
 					}
 					return a1.Order - a2.Order;
 				}

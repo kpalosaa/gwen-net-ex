@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Gwen.Control;
 
 namespace Gwen.Anim
@@ -42,7 +43,7 @@ namespace Gwen.Anim
         {
             foreach (KeyValuePair<ControlBase, List<Animation>> pair in m_Animations)
             {
-                var valCopy = pair.Value.FindAll(x =>true); // list copy so foreach won't break when we remove elements
+				var valCopy = pair.Value.TakeWhile(x => true); // list copy so foreach won't break when we remove elements
                 foreach (Animation animation in valCopy)
                 {
                     animation.Think();

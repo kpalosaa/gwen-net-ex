@@ -394,7 +394,7 @@ namespace Gwen.Xml
 			{
 				if (m_Reader != null)
 				{
-					m_Reader.Close();
+					m_Reader.Dispose();
 					((IDisposable)m_Reader).Dispose();
 					m_Reader = null;
 				}
@@ -430,9 +430,21 @@ namespace Gwen.Xml
 					{
 						ElementHandler handler;
 						if (attrib.CustomHandler != null)
-							handler = Delegate.CreateDelegate(typeof(ElementHandler), type, attrib.CustomHandler) as ElementHandler;
+						{
+							MethodInfo mi = type.GetMethod(attrib.CustomHandler, BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+							if (mi != null)
+							{
+								handler = Delegate.CreateDelegate(typeof(ElementHandler), mi) as ElementHandler;
+							}
+							else
+							{
+								throw new Exception("Elemant handler not found.");
+							}
+						}
 						else
+						{
 							handler = DefaultElementHandler;
+						}
 
 						string name = attrib.ElementName != null ? attrib.ElementName : type.Name;
 

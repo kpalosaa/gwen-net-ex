@@ -60,7 +60,7 @@ namespace Gwen.Control.Internal
 			get
 			{
 				if (m_LineHeight == 0)
-					m_LineHeight = Util.Round(Font.FontMetrics.LineSpacingPixels);
+					m_LineHeight = Util.Ceil(Font.FontMetrics.LineSpacingPixels);
 
 				return m_LineHeight;
 			}

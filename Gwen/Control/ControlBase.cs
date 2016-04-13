@@ -879,7 +879,7 @@ namespace Gwen.Control
 		/// <returns>Found control or null.</returns>
 		public virtual ControlBase FindChildByName(string name, bool recursive = false)
 		{
-			ControlBase b = this.Children.Find(x => x.m_Name == name);
+			ControlBase b = this.Children.Where(x => x.m_Name == name).FirstOrDefault();
 			if (b != null)
 				return b;
 
@@ -1894,7 +1894,7 @@ namespace Gwen.Control
 		public virtual void CloseMenus()
 		{
 			// todo: not very efficient with the copying and recursive closing, maybe store currently open menus somewhere (canvas)?
-			var childrenCopy = m_Children.FindAll(x => true);
+			var childrenCopy = m_Children.TakeWhile(x => true);
 			foreach (ControlBase child in childrenCopy)
 			{
 				child.CloseMenus();
