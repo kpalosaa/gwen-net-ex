@@ -358,13 +358,13 @@ namespace Gwen.Renderer
         private int TranslateX(int x)
         {
             int x1 = x + m_RenderOffset.X;
-            return Util.Ceil(x1 * Scale);
+            return x1;
         }
 
         private int TranslateY(int y)
         {
             int y1 = y + m_RenderOffset.Y;
-            return Util.Ceil(y1 * Scale);
+            return y1;
         }
 
         /// <summary>
@@ -376,9 +376,6 @@ namespace Gwen.Renderer
         {
             x += m_RenderOffset.X;
             y += m_RenderOffset.Y;
-
-            x = Util.Ceil(x * Scale);
-            y = Util.Ceil(y * Scale);
         }
 
         /// <summary>
@@ -397,7 +394,7 @@ namespace Gwen.Renderer
         /// </summary>
         public Rectangle Translate(Rectangle rect)
         {
-            return new Rectangle(TranslateX(rect.X), TranslateY(rect.Y), Util.Ceil(rect.Width * Scale), Util.Ceil(rect.Height * Scale));
+            return new Rectangle(TranslateX(rect.X), TranslateY(rect.Y), rect.Width, rect.Height);
         }
 
         /// <summary>
