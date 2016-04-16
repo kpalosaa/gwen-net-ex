@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gwen\Gwen.csproj">
-      <Project>{72bfb713-3e5f-4473-add5-31c07c148699}</Project>
+      <Project>{72BFB713-3E5F-4473-ADD5-31C07C148699}</Project>
       <Name>Gwen</Name>
     </ProjectReference>
   </ItemGroup>

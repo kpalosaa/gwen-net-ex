@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Gwen.Renderer.Android.OpenTK")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © 2016 Kimmo Palosaari")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

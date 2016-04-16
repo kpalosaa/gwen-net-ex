@@ -93,11 +93,11 @@
       <Name>Gwen.Renderer.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.UnitTest\Gwen.UnitTest.csproj">
-      <Project>{98b3d549-c3c9-4ea8-ac94-f7295b12f3de}</Project>
+      <Project>{98B3D549-C3C9-4EA8-AC94-F7295B12F3DE}</Project>
       <Name>Gwen.UnitTest</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen\Gwen.csproj">
-      <Project>{72bfb713-3e5f-4473-add5-31c07c148699}</Project>
+      <Project>{72BFB713-3E5F-4473-ADD5-31C07C148699}</Project>
       <Name>Gwen</Name>
     </ProjectReference>
   </ItemGroup>
