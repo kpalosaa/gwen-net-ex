@@ -6,6 +6,7 @@ using Foundation;
 using GLKit;
 using UIKit;
 using CoreGraphics;
+using ObjCRuntime;
 using OpenGLES;
 using OpenTK;
 using OpenTK.Graphics.ES20;
@@ -15,6 +16,7 @@ using Gwen.Input;
 namespace Gwen.UnitTest.iOS
 {
 	[Register("GameViewController")]
+	[Adopts("UIKeyInput")]
 	public class GameViewController : GLKViewController, IGLKViewDelegate
 	{
 		private Gwen.Renderer.iOS.OpenTK.OpenTK m_Renderer;
@@ -168,6 +170,8 @@ namespace Gwen.UnitTest.iOS
 				// Cause mouse leave event
 				m_Canvas.Input_MouseMoved(int.MaxValue, int.MaxValue, 0, 0);
 			}
+
+			ProcessKeyboard();
 		}
 
 		public override void TouchesMoved(NSSet touches, UIKit.UIEvent evt)
@@ -180,6 +184,62 @@ namespace Gwen.UnitTest.iOS
 				CGPoint p = touch.LocationInView(touch.View);
 
 				m_Canvas.Input_MouseMoved((int)p.X, (int)p.Y, 0, 0);
+			}
+		}
+
+		public override bool CanBecomeFirstResponder
+		{
+			get
+			{
+				return InputHandler.KeyboardFocus != null && InputHandler.KeyboardFocus.KeyboardNeeded && InputHandler.KeyboardFocus.IsVisible;
+			}
+		}
+
+		[Export("hasText")]
+		public bool HasText { get { return true; } }
+
+		[Export("insertText:")]
+		public void InsertText(String text)
+		{
+			char ch = text.Length > 0 ? text[0] : (char)0;
+			Key key = Key.Invalid;
+
+			switch (ch)
+			{
+				case '\n':
+					key = Key.Return;
+					break;
+				case '\t':
+					key = Key.Tab;
+					break;
+			}
+
+			m_Canvas.Input_Key(key, true);
+			if (ch != 0)
+				m_Canvas.Input_Character(ch);
+			m_Canvas.Input_Key(key, false);
+
+			ProcessKeyboard();
+		}
+
+		[Export("deleteBackward")]
+		public void DeleteBackward()
+		{
+			m_Canvas.Input_Key(Key.Backspace, true);
+			m_Canvas.Input_Key(Key.Backspace, false);
+		}
+
+		private void ProcessKeyboard()
+		{
+			if (InputHandler.KeyboardFocus != null && InputHandler.KeyboardFocus.KeyboardNeeded && InputHandler.KeyboardFocus.IsVisible)
+			{
+				if (!IsFirstResponder)
+					BecomeFirstResponder();
+			}
+			else
+			{
+				if (IsFirstResponder)
+					ResignFirstResponder();
 			}
 		}
 
