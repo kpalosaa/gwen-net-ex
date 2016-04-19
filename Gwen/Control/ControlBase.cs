@@ -1917,7 +1917,7 @@ namespace Gwen.Control
 		public virtual void CloseMenus()
 		{
 			// todo: not very efficient with the copying and recursive closing, maybe store currently open menus somewhere (canvas)?
-			var childrenCopy = m_Children.TakeWhile(x => true);
+			var childrenCopy = m_Children.ToArray();
 			foreach (ControlBase child in childrenCopy)
 			{
 				child.CloseMenus();

@@ -118,6 +118,8 @@ namespace Gwen.UnitTest.iOS
 			m_Canvas.ShouldDrawBackground = true;
 			m_Canvas.BackgroundColor = new Color(255, 150, 170, 170);
 
+			m_Canvas.Scale = 1.5f;
+
 			m_UnitTest = new Gwen.UnitTest.UnitTest(m_Canvas);
 
 			m_Stopwatch.Restart();
