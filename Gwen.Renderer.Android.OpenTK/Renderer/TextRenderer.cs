@@ -45,7 +45,35 @@ namespace Gwen.Renderer.Android.OpenTK
         /// The origin (0, 0) lies at the top-left corner of the backing store.</param>
         public void DrawString(string text, Paint paint, Point point)
         {
-			m_Canvas.DrawText(text, point.X, point.Y - paint.GetFontMetricsInt().Top, paint); // render text on the bitmap
+			m_Canvas.DrawText(text, point.X, point.Y - paint.GetFontMetricsInt().Ascent, paint); // render text on the bitmap
+
+			// Fix ugly looking anti-alias
+			IntPtr data = m_Bitmap.LockPixels();
+			unsafe
+			{
+				// Pointer to the current pixel
+				uint* pPixel = (uint*)data;
+				// Pointer value at which we terminate the loop (end of pixel data)
+				var pLastPixel = pPixel + m_Bitmap.Width * m_Bitmap.Height;
+				uint pixelValue, brightness;
+
+				while (pPixel < pLastPixel)
+				{
+					// Get pixel data
+					pixelValue = *pPixel;
+					// Average RGB
+					brightness = (((pixelValue & 0xff) + ((pixelValue >> 8) & 0xff) + ((pixelValue >> 16) & 0xff)) * 21845) >> 16; // Division by 3
+
+					// Use brightness for alpha value, set R, G, and B 0xff (white)
+					pixelValue = brightness << 24 | 0xffffff;
+
+					// Copy back to image
+					*pPixel = pixelValue;
+					// Next pixel
+					pPixel++;
+				}
+			}
+			m_Bitmap.UnlockPixels();
 
 			OpenTK.LoadTextureInternal(m_Texture, m_Bitmap); // copy bitmap to gl texture
         }

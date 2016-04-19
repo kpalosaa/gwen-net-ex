@@ -70,7 +70,7 @@ namespace Gwen.Renderer.iOS.OpenTK
 						// Get pixel data
 						uint pixelValue = *pPixel;
 						// Average RGB
-						uint brightness = ((pixelValue & 0xFF) + ((pixelValue >> 8) & 0xFF) + ((pixelValue >> 16) & 0xFF)) / 3;
+						uint brightness = (((pixelValue & 0xFF) + ((pixelValue >> 8) & 0xFF) + ((pixelValue >> 16) & 0xFF)) * 21845) >> 16; // Division by 3
 
 						// Use brightness for alpha value, set R, G, and B 0xff (white)
 						pixelValue = brightness << 24 | 0xffffff;

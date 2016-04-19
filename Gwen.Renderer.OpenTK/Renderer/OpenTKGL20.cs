@@ -146,11 +146,13 @@ namespace Gwen.Renderer.OpenTK
 			{
 				// cpu scissors test
 
-				if (rect.Y < ClipRegion.Y)
+				Rectangle clipRect = ClipRegion;
+
+				if (rect.Y < clipRect.Y)
 				{
 					int oldHeight = rect.Height;
-					int delta = ClipRegion.Y - rect.Y;
-					rect.Y = ClipRegion.Y;
+					int delta = clipRect.Y - rect.Y;
+					rect.Y = clipRect.Y;
 					rect.Height -= delta;
 
 					if (rect.Height <= 0)
@@ -163,10 +165,10 @@ namespace Gwen.Renderer.OpenTK
 					v1 += dv * (v2 - v1);
 				}
 
-				if ((rect.Y + rect.Height) > (ClipRegion.Y + ClipRegion.Height))
+				if ((rect.Y + rect.Height) > (clipRect.Y + clipRect.Height))
 				{
 					int oldHeight = rect.Height;
-					int delta = (rect.Y + rect.Height) - (ClipRegion.Y + ClipRegion.Height);
+					int delta = (rect.Y + rect.Height) - (clipRect.Y + clipRect.Height);
 
 					rect.Height -= delta;
 
@@ -180,11 +182,11 @@ namespace Gwen.Renderer.OpenTK
 					v2 -= dv * (v2 - v1);
 				}
 
-				if (rect.X < ClipRegion.X)
+				if (rect.X < clipRect.X)
 				{
 					int oldWidth = rect.Width;
-					int delta = ClipRegion.X - rect.X;
-					rect.X = ClipRegion.X;
+					int delta = clipRect.X - rect.X;
+					rect.X = clipRect.X;
 					rect.Width -= delta;
 
 					if (rect.Width <= 0)
@@ -197,10 +199,10 @@ namespace Gwen.Renderer.OpenTK
 					u1 += du * (u2 - u1);
 				}
 
-				if ((rect.X + rect.Width) > (ClipRegion.X + ClipRegion.Width))
+				if ((rect.X + rect.Width) > (clipRect.X + clipRect.Width))
 				{
 					int oldWidth = rect.Width;
-					int delta = (rect.X + rect.Width) - (ClipRegion.X + ClipRegion.Width);
+					int delta = (rect.X + rect.Width) - (clipRect.X + clipRect.Width);
 
 					rect.Width -= delta;
 

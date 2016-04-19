@@ -305,8 +305,8 @@ namespace Gwen.Renderer.OpenTK
 			GL.BindTexture(TextureTarget.Texture2D, glTex);
 			m_LastTextureID = glTex;
 
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
 			// Sort out our GWEN texture
 			t.RendererData = glTex;
@@ -386,8 +386,8 @@ namespace Gwen.Renderer.OpenTK
 
 			GL.BindTexture(TextureTarget.Texture2D, glTex);
 
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMagFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMagFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
 			// Sort out our GWEN texture
 			t.RendererData = glTex;

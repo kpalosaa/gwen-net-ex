@@ -414,7 +414,7 @@ namespace Gwen.Renderer.Android.OpenTK
 			paint.TextSize = font.RealSize;
 			paint.TextAlign = Paint.Align.Left;
 			paint.Color = global::Android.Graphics.Color.White;
-			//paint.AntiAlias = true;
+			paint.AntiAlias = true;
 
 			font.RendererData = paint;
 
@@ -484,7 +484,7 @@ namespace Gwen.Renderer.Android.OpenTK
 
 			float width = paint.MeasureText(text);
 
-			return new Size((int)Math.Round(width, MidpointRounding.AwayFromZero), (int)Math.Round(paint.FontSpacing, MidpointRounding.AwayFromZero));
+			return new Size(Util.Ceil(width), Util.Ceil(paint.FontSpacing));
 		}
 
 		public override void RenderText(Font font, Point position, string text)
@@ -530,8 +530,8 @@ namespace Gwen.Renderer.Android.OpenTK
 			GL.BindTexture(TextureTarget.Texture2D, glTex);
 			m_LastTextureID = glTex;
 
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
 			// Sort out our GWEN texture
 			t.RendererData = glTex;
@@ -586,8 +586,8 @@ namespace Gwen.Renderer.Android.OpenTK
 
 			GL.BindTexture(TextureTarget.Texture2D, glTex);
 
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMagFilter.Nearest);
-			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Nearest);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMagFilter.Linear);
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
 			// Sort out our GWEN texture
 			t.RendererData = glTex;

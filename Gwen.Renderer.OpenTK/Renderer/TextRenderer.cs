@@ -75,13 +75,14 @@ namespace Gwen.Renderer.OpenTK
 					uint* pPixel = (uint*)lockData.Scan0;
 					// Pointer value at which we terminate the loop (end of pixel data)
 					var pLastPixel = pPixel + m_Bitmap.Width * m_Bitmap.Height;
+					uint pixelValue, brightness;
 
 					while (pPixel < pLastPixel)
 					{
 						// Get pixel data
-						uint pixelValue = *pPixel;
+						pixelValue = *pPixel;
 						// Average RGB
-						uint brightness = ((pixelValue & 0xFF) + ((pixelValue >> 8) & 0xFF) + ((pixelValue >> 16) & 0xFF)) / 3;
+						brightness = (((pixelValue & 0xff) + ((pixelValue >> 8) & 0xff) + ((pixelValue >> 16) & 0xff)) * 21845) >> 16; // Division by 3
 
 						// Use brightness for alpha value, set R, G, and B 0xff (white)
 						pixelValue = brightness << 24 | 0xffffff;
