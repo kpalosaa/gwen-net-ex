@@ -21,7 +21,7 @@ namespace Gwen
 
 		public FontMetrics(Font font)
 		{
-			EmHeightPixels = font.Size;
+			EmHeightPixels = font.RealSize;
 			InternalLeadingPixels = 0.0f;
 			ExternalLeadingPixels = 0.0f;
 			DescentPixels = 0.0f;

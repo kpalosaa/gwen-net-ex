@@ -75,7 +75,9 @@ namespace Gwen.Control
 
 		protected override Size Measure(Size availableSize)
 		{
-			return new Size(m_Texture.Width, m_Texture.Height);
+			float scale = this.Scale;
+
+			return new Size(Util.Ceil(m_Texture.Width * scale), Util.Ceil(m_Texture.Height * scale));
 		}
 
 		protected override Size Arrange(Size finalSize)

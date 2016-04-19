@@ -24,7 +24,7 @@ namespace Gwen.Control
         public ColorSlider(ControlBase parent)
             : base(parent)
         {
-			Width = Skin.BaseUnit * 2;
+			Width = BaseUnit * 2;
 
 			MouseInputEnabled = true;
             m_Depressed = false;

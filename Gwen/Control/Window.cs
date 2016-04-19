@@ -45,7 +45,7 @@ namespace Gwen.Control
 			: base(parent)
 		{
 			m_TitleBar = new WindowTitleBar(this);
-			m_TitleBar.Height = Skin.BaseUnit + 9;
+			m_TitleBar.Height = BaseUnit + 9;
 			m_TitleBar.Title.TextColor = Skin.Colors.Window.TitleInactive;
 			m_TitleBar.CloseButton.Clicked += CloseButtonPressed;
 			m_TitleBar.SendToBack();

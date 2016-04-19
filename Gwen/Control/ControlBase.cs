@@ -262,6 +262,29 @@ namespace Gwen.Control
 		/// </summary>
 		public Size MeasuredSize { get { return m_MeasuredSize; } }
 
+		public virtual float Scale
+		{
+			get
+			{
+				if (m_Parent != null)
+					return m_Parent.Scale;
+				else
+					return 1.0f;
+			}
+			set
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		public int BaseUnit
+		{
+			get
+			{
+				return Util.Ceil(Skin.BaseUnit * Scale);
+			}
+		}
+
 		/// <summary>
 		/// Current padding - inner spacing. Padding is not valid for all controls.
 		/// </summary>

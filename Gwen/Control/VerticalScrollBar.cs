@@ -56,7 +56,7 @@ namespace Gwen.Control
 		public VerticalScrollBar(ControlBase parent)
             : base(parent)
         {
-			Width = Skin.BaseUnit;
+			Width = BaseUnit;
 
             m_Bar.IsVertical = true;
 

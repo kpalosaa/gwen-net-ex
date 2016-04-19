@@ -16,7 +16,7 @@ namespace Gwen.Control.Internal
 		public ComboBoxButton(ControlBase parent, EditableComboBox comboBox)
             : base(parent)
         {
-			Width = Skin.BaseUnit;
+			Width = BaseUnit;
 
 			m_ComboBox = comboBox;
 		}

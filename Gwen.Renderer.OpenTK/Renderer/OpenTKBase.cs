@@ -36,6 +36,11 @@ namespace Gwen.Renderer.OpenTK
 			base.Dispose();
 		}
 
+		protected override void OnScaleChanged(float oldScale)
+		{
+			FlushTextCache();
+		}
+
 		protected abstract void Flush();
 
 		/// <summary>
@@ -130,7 +135,7 @@ namespace Gwen.Renderer.OpenTK
 
 		public override bool LoadFont(Font font)
 		{
-			font.RealSize = font.Size * Scale;
+			font.RealSize = (float)Math.Ceiling(font.Size * Scale);
 			System.Drawing.Font sysFont = font.RendererData as System.Drawing.Font;
 
 			if (sysFont != null)
@@ -144,7 +149,7 @@ namespace Gwen.Renderer.OpenTK
 
 			// apaprently this can't fail @_@
 			// "If you attempt to use a font that is not supported, or the font is not installed on the machine that is running the application, the Microsoft Sans Serif font will be substituted."
-			sysFont = new System.Drawing.Font(font.FaceName, font.Size, fontStyle);
+			sysFont = new System.Drawing.Font(font.FaceName, font.RealSize, fontStyle);
 			font.RendererData = sysFont;
 
 			return true;
@@ -239,7 +244,7 @@ namespace Gwen.Renderer.OpenTK
 
 			SizeF size = m_Graphics.MeasureString(text, sysFont, System.Drawing.Point.Empty, m_StringFormat);
 
-			return new Size((int)Math.Round(size.Width, MidpointRounding.AwayFromZero), (int)Math.Round(size.Height, MidpointRounding.AwayFromZero));
+			return new Size(Util.Ceil(size.Width), Util.Ceil(size.Height));
 		}
 
 		public override void RenderText(Font font, Point position, string text)

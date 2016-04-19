@@ -14,7 +14,7 @@ namespace Gwen.UnitTest
 			: base(parent)
 		{
 			font = Skin.DefaultFont.Copy();
-			font.Size = 20;
+			font.Size *= 2;
 
 			Control.Label inner1, inner2, inner3, inner4, inner5;
 

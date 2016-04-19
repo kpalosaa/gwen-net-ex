@@ -11,9 +11,14 @@ namespace Gwen.Renderer
         //public Random rnd;
         private Point m_RenderOffset;
         private Rectangle m_ClipRegion;
+		private float m_Scale;
         //protected ICacheToTexture m_RTT;
 
-        public float Scale { get; set; }
+		public float Scale { get { return m_Scale; } set { float oldScale = m_Scale; m_Scale = value; OnScaleChanged(oldScale); } }
+
+		protected virtual void OnScaleChanged(float oldScale)
+		{
+		}
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RendererBase"/> class.
@@ -22,7 +27,7 @@ namespace Gwen.Renderer
         {
             //rnd = new Random();
             m_RenderOffset = Point.Zero;
-            Scale = 1.0f;
+            m_Scale = 1.0f;
             if (CTT != null)
                 CTT.Initialize();
         }

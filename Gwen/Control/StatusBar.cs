@@ -22,7 +22,7 @@ namespace Gwen.Control
         /// <param name="parent">Parent control.</param>
         public StatusBar(ControlBase parent) : base(parent)
         {
-			Height = Skin.BaseUnit + 11;
+			Height = BaseUnit + 11;
 			Dock = Dock.Bottom;
             Padding = new Padding(6, 2, 6, 1);
 

@@ -21,12 +21,12 @@ namespace Gwen.Control
 				m_vertical = value;
 				if (m_vertical)
 				{
-					m_DragBar.Height = Skin.BaseUnit + 2;
+					m_DragBar.Height = BaseUnit + 2;
 					m_DragBar.Width = Util.Ignore;
 				}
 				else
 				{
-					m_DragBar.Width = Skin.BaseUnit + 2;
+					m_DragBar.Width = BaseUnit + 2;
 					m_DragBar.Height = Util.Ignore;
 				}
 				EnableResizing();

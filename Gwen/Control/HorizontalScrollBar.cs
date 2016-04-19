@@ -64,7 +64,7 @@ namespace Gwen.Control
 		public HorizontalScrollBar(ControlBase parent)
             : base(parent)
         {
-			Height = Skin.BaseUnit;
+			Height = BaseUnit;
 
 			m_Bar.IsHorizontal = true;
 

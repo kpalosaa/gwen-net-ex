@@ -14,7 +14,7 @@ namespace Gwen.Control.Internal
         public UpDownButton_Down(ControlBase parent)
             : base(parent)
         {
-			Width = Skin.BaseUnit / 2;
+			Width = BaseUnit / 2;
         }
 
         /// <summary>

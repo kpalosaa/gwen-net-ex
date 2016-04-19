@@ -33,7 +33,7 @@ namespace Gwen.Control
         public CheckBox(ControlBase parent)
             : base(parent)
         {
-			Size = new Size(Skin.BaseUnit);
+			Size = new Size(BaseUnit);
 			IsToggle = true;
         }
 

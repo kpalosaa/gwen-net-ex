@@ -27,7 +27,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Scale for rendering.
 		/// </summary>
-		public float Scale
+		public override float Scale
 		{
 			get { return m_Scale; }
 			set

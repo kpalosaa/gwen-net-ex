@@ -91,12 +91,12 @@ namespace Gwen.Control
 			m_Scroll[0] = new ScrollBarButton(this);
 			m_Scroll[0].SetDirectionLeft();
 			m_Scroll[0].Clicked += ScrollPressedLeft;
-			m_Scroll[0].Size = new Size(Skin.BaseUnit);
+			m_Scroll[0].Size = new Size(BaseUnit);
 
 			m_Scroll[1] = new ScrollBarButton(this);
 			m_Scroll[1].SetDirectionRight();
 			m_Scroll[1].Clicked += ScrollPressedRight;
-			m_Scroll[1].Size = new Size(Skin.BaseUnit);
+			m_Scroll[1].Size = new Size(BaseUnit);
 
 			m_InnerPanel = new TabControlInner(this);
 			m_InnerPanel.Dock = Dock.Fill;

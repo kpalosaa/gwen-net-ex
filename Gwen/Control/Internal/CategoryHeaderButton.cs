@@ -19,7 +19,6 @@ namespace Gwen.Control.Internal
             IsToggle = true;
             Alignment = Alignment.Center;
             TextPadding = new Padding(3, 0, 3, 0);
-			Height = Skin.BaseUnit + 5;
         }
 
         /// <summary>

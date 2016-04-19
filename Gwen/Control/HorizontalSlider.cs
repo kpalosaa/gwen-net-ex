@@ -16,7 +16,7 @@ namespace Gwen.Control
         public HorizontalSlider(ControlBase parent)
             : base(parent)
         {
-			Height = Skin.BaseUnit;
+			Height = BaseUnit;
 
             m_SliderBar.IsHorizontal = true;
         }

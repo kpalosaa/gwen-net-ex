@@ -15,7 +15,7 @@ namespace Gwen.Control.Internal
         public TreeToggleButton(ControlBase parent)
             : base(parent)
         {
-			Size = new Size(Skin.BaseUnit);
+			Size = new Size(BaseUnit);
 
             IsToggle = true;
             IsTabable = false;

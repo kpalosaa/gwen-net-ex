@@ -17,7 +17,7 @@ namespace Gwen.Control.Internal
         /// <param name="parent">Parent control.</param>
         public ColorDisplay(ControlBase parent) : base(parent)
         {
-			Size = new Size(Skin.BaseUnit * 2);
+			Size = new Size(BaseUnit * 2);
 			m_Color = new Color(255, 255, 0, 0);
             //m_DrawCheckers = true;
         }

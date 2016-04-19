@@ -51,7 +51,7 @@ namespace Gwen.Control
 		{
 			MouseInputEnabled = true;
 
-			int baseSize = Skin.BaseUnit;
+			int baseSize = BaseUnit;
 
 			m_LerpBox = new ColorLerpBox(this);
 			m_LerpBox.Margin = Margin.Two;
@@ -202,14 +202,14 @@ namespace Gwen.Control
 			{
 				m_After.Margin = new Margin(2, 2, 2, 0);
 				m_Before.Margin = new Margin(2, 0, 2, 2);
-				m_After.Height = Skin.BaseUnit * 2;
+				m_After.Height = BaseUnit * 2;
 				m_Before.Show();
 			}
 			else
 			{
 				m_After.Margin = Margin.Two;
 				m_Before.Collapse();
-				m_After.Height = Skin.BaseUnit * 4;
+				m_After.Height = BaseUnit * 4;
 			}
 		}
 	}

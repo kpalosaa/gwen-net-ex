@@ -411,7 +411,7 @@ namespace Gwen.Renderer.Android.OpenTK
 			paint = new Paint(paintFlags);
 			paint.SetTypeface(typeface);
 			paint.SetStyle(Paint.Style.Fill);
-			paint.TextSize = font.Size;
+			paint.TextSize = font.RealSize;
 			paint.TextAlign = Paint.Align.Left;
 			paint.Color = global::Android.Graphics.Color.White;
 			//paint.AntiAlias = true;
