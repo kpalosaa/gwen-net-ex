@@ -24,7 +24,9 @@ namespace Gwen.Skin
 			get { return m_DefaultFont; }
 			set
 			{
-				m_DefaultFont.Dispose();
+				if (m_DefaultFont != null)
+					m_DefaultFont.Dispose();
+
 				m_DefaultFont = value;
 
 				m_BaseUnit = Util.Ceil(m_DefaultFont.FontMetrics.EmHeightPixels) + 1;
@@ -47,8 +49,9 @@ namespace Gwen.Skin
 		/// <param name="renderer">Renderer to use.</param>
 		protected SkinBase(Renderer.RendererBase renderer)
 		{
-			m_DefaultFont = new Font(renderer);
 			m_Renderer = renderer;
+
+			DefaultFont = new Font(renderer);
 		}
 
 		/// <summary>

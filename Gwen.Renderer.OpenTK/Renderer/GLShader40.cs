@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Gwen.Renderer.OpenTK
 {
-	public class GLShader42 : IDisposable
+	public class GLShader40 : IDisposable
 	{
 		public int Program { get; set; }
 		public int VertexShader { get; set; }
@@ -14,7 +14,7 @@ namespace Gwen.Renderer.OpenTK
 		private UniformDictionary _uniforms;
 		public UniformDictionary Uniforms { get { return _uniforms; } set { return; } }
 
-		public GLShader42()
+		public GLShader40()
 		{
 			this.Program = 0;
 			this.VertexShader = 0;
@@ -96,7 +96,7 @@ namespace Gwen.Renderer.OpenTK
 		}
 
 		private const string vShaderSource = @"
-#version 420
+#version 400
 
 layout(location=0) in vec2 in_screen_coords;
 layout(location=1) in vec2 in_uv;
@@ -119,7 +119,7 @@ void main(void)
 }";
 
 		private const string fShaderSource = @"
-#version 420
+#version 400
 
 in vec2 frag_uv;
 in vec4 frag_color;

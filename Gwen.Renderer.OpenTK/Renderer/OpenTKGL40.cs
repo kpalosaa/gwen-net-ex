@@ -4,7 +4,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Gwen.Renderer.OpenTK
 {
-	public class OpenTKGL42 : OpenTKBase
+	public class OpenTKGL40 : OpenTKBase
 	{
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		public struct Vertex
@@ -27,9 +27,9 @@ namespace Gwen.Renderer.OpenTK
 
 		private int m_Vbo, m_Vao;
 
-		GLShader42 m_GuiShader;
+		private GLShader40 m_GuiShader;
 
-		public OpenTKGL42(bool restoreRenderState = true)
+		public OpenTKGL40(bool restoreRenderState = true)
 			: base()
 		{
 			m_Vertices = new Vertex[MaxVerts];
@@ -38,7 +38,7 @@ namespace Gwen.Renderer.OpenTK
 
 			CreateBuffers();
 
-			m_GuiShader = new GLShader42();
+			m_GuiShader = new GLShader40();
 			m_GuiShader.Load("gui");
 		}
 
@@ -124,11 +124,17 @@ namespace Gwen.Renderer.OpenTK
 
 		public override int VertexCount { get { return m_TotalVertNum; } }
 
-		protected override unsafe void Flush()
+		protected override void Flush()
 		{
 			if (m_VertNum == 0) return;
 
-			GL.InvalidateBufferData(m_Vbo);
+			if (GLVersion >= 43)
+				GL.InvalidateBufferData(m_Vbo);
+			//else
+				// This will slow down rendering. It seems to work without this but there could be synchronization problems with some drivers.
+				// If that's the case then enable this.
+				//GL.BufferData(BufferTarget.ArrayBuffer, (IntPtr)(m_VertexSize * MaxVerts), IntPtr.Zero, BufferUsageHint.StreamDraw);
+
 			GL.BufferSubData<Vertex>(BufferTarget.ArrayBuffer, IntPtr.Zero, (IntPtr)(m_VertNum * m_VertexSize), m_Vertices);
 
 			GL.Uniform1(m_GuiShader.Uniforms["uUseTexture"], m_TextureEnabled ? 1.0f : 0.0f);

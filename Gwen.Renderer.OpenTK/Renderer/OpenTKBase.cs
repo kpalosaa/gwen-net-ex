@@ -21,9 +21,13 @@ namespace Gwen.Renderer.OpenTK
 
 		private StringFormat m_StringFormat;
 
+		private int m_GLVersion;
+
 		public OpenTKBase()
             : base()
         {
+			m_GLVersion = GL.GetInteger(GetPName.MajorVersion) * 10 + GL.GetInteger(GetPName.MinorVersion);
+
 			m_StringCache = new Dictionary<Tuple<String, Font>, TextRenderer>();
 			m_Graphics = Graphics.FromImage(new Bitmap(1024, 1024, PixelFormat.Format32bppArgb));
 			m_StringFormat = new StringFormat(StringFormat.GenericTypographic);
@@ -51,6 +55,8 @@ namespace Gwen.Renderer.OpenTK
 		public int DrawCallCount { get { return m_DrawCallCount; } }
 
 		public abstract int VertexCount { get; }
+
+		public int GLVersion { get { return m_GLVersion; } }
 
 		/// <summary>
 		/// Clears the text rendering cache. Make sure to call this if cached strings size becomes too big (check TextCacheSize).

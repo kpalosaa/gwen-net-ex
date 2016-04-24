@@ -106,13 +106,13 @@ namespace Gwen.Control
 		{
 			DoThink();
 
-			Renderer.RendererBase render = Skin.Renderer;
+			Skin.SkinBase skin = Skin;
+			Renderer.RendererBase render = skin.Renderer;
 
 			render.Begin();
 
 			render.ClipRegion = Bounds;
 			render.RenderOffset = Point.Zero;
-			render.Scale = Scale;
 
 			if (ShouldDrawBackground)
 			{
@@ -120,11 +120,11 @@ namespace Gwen.Control
 				render.DrawFilledRect(RenderBounds);
 			}
 
-			DoRender(Skin);
+			DoRender(skin);
 
-			DragAndDrop.RenderOverlay(this, Skin);
+			DragAndDrop.RenderOverlay(this, skin);
 
-			Gwen.ToolTip.RenderToolTip(Skin);
+			Gwen.ToolTip.RenderToolTip(skin);
 
 			render.EndClip();
 

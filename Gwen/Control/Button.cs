@@ -208,18 +208,19 @@ namespace Gwen.Control
 			{
 				if (m_Text != null)
 				{
-					Size innerSize = finalSize - m_TextPadding - Padding;
-					Rectangle rect = new Rectangle(Point.Zero, Size.Min(m_Text.MeasuredSize, innerSize));
+					Size innerSize = finalSize - Padding;
+					Size textSize = m_Text.MeasuredSize + m_TextPadding;
+					Rectangle rect = new Rectangle(Point.Zero, textSize);
 
 					if ((m_Align & Alignment.CenterH) != 0)
-						rect.X = (innerSize.Width - m_Text.MeasuredSize.Width) / 2;
+						rect.X = (innerSize.Width - rect.Width) / 2;
 					else if ((m_Align & Alignment.Right) != 0)
-						rect.X = innerSize.Width - m_Text.MeasuredSize.Width;
+						rect.X = innerSize.Width - rect.Width;
 
 					if ((m_Align & Alignment.CenterV) != 0)
-						rect.Y = (innerSize.Height - m_Text.MeasuredSize.Height) / 2;
+						rect.Y = (innerSize.Height - rect.Height) / 2;
 					else if ((m_Align & Alignment.Bottom) != 0)
-						rect.Y = innerSize.Height - m_Text.MeasuredSize.Height;
+						rect.Y = innerSize.Height - rect.Height;
 
 					rect.Offset(m_TextPadding + Padding);
 
@@ -302,6 +303,9 @@ namespace Gwen.Control
 		/// </summary>
 		public override void UpdateColors()
         {
+			if (m_Text == null)
+				return;
+
             if (IsDisabled)
             {
                 TextColor = Skin.Colors.Button.Disabled;

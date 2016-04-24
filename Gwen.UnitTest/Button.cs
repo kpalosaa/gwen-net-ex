@@ -66,9 +66,10 @@ namespace Gwen.UnitTest
 					button.SetImage("test16.png", ImageAlign.Fill);
 
 					button = new Control.Button(vlayout);
+					button.HorizontalAlignment = HorizontalAlignment.Left;
+					button.Padding = Padding.Three;
 					button.Margin = Margin.Five;
 					button.SetImage("test16.png");
-					button.Size = new Size(20, 20);
 
 					button = new Control.Button(vlayout);
 					button.Margin = Margin.Five;
