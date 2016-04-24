@@ -124,7 +124,7 @@ void main(void)
 in vec2 frag_uv;
 in vec4 frag_color;
 
-layout(binding=0) uniform sampler2D tex;
+uniform sampler2D tex;
 
 out vec4 out_frag_color;
 

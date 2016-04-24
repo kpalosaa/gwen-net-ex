@@ -30,8 +30,8 @@ namespace Gwen.UnitTest.OpenTK
 		private bool m_AltDown = false;
 
 		public UnitTestGameWindow()
-			//: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
-			: base(1024, 768)
+			: base(1024, 768, new GraphicsMode(), "Gwen OpenTK Renderer", GameWindowFlags.Default, DisplayDevice.Default, 4, 2, GraphicsContextFlags.Default)
+			//: base(1024, 768)
 		{
 			KeyDown += Keyboard_KeyDown;
 			KeyUp += Keyboard_KeyUp;
