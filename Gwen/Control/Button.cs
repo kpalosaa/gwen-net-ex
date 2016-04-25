@@ -98,6 +98,72 @@ namespace Gwen.Control
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the size of the image.
+		/// </summary>
+		[Xml.XmlProperty]
+		public Size ImageSize
+		{
+			get
+			{
+				if (m_Image != null)
+					return m_Image.ImageSize;
+				else
+					return Size.Zero;
+			}
+			set
+			{
+				if (m_Image == null)
+					return;
+
+				m_Image.ImageSize = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the texture coordinates of the image in pixels.
+		/// </summary>
+		[Xml.XmlProperty]
+		public Rectangle ImageTextureRect
+		{
+			get
+			{
+				if (m_Image != null)
+					return m_Image.TextureRect;
+				else
+					return Rectangle.Empty;
+			}
+			set
+			{
+				if (m_Image == null)
+					return;
+
+				m_Image.TextureRect = value;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the color of the image.
+		/// </summary>
+		[Xml.XmlProperty]
+		public Color ImageColor
+		{
+			get
+			{
+				if (m_Image != null)
+					return m_Image.ImageColor;
+				else
+					return Color.White;
+			}
+			set
+			{
+				if (m_Image == null)
+					return;
+
+				m_Image.ImageColor = value;
+			}
+		}
+
         /// <summary>
         /// Control constructor.
         /// </summary>

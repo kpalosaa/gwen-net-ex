@@ -65,11 +65,38 @@ namespace Gwen.UnitTest
 					button.Text = "Image button (image fill)";
 					button.SetImage("test16.png", ImageAlign.Fill);
 
-					button = new Control.Button(vlayout);
-					button.HorizontalAlignment = HorizontalAlignment.Left;
-					button.Padding = Padding.Three;
-					button.Margin = Margin.Five;
-					button.SetImage("test16.png");
+					HorizontalLayout hlayout2 = new HorizontalLayout(vlayout);
+					{
+						button = new Control.Button(hlayout2);
+						button.HorizontalAlignment = HorizontalAlignment.Left;
+						button.Padding = Padding.Three;
+						button.Margin = Margin.Five;
+						button.SetImage("test16.png");
+						button.ImageSize = new Size(32, 32);
+
+						button = new Control.Button(hlayout2);
+						button.HorizontalAlignment = HorizontalAlignment.Left;
+						button.VerticalAlignment = VerticalAlignment.Center;
+						button.Padding = Padding.Three;
+						button.Margin = Margin.Five;
+						button.SetImage("test16.png");
+
+						button = new Control.Button(hlayout2);
+						button.HorizontalAlignment = HorizontalAlignment.Left;
+						button.VerticalAlignment = VerticalAlignment.Center;
+						button.Padding = Padding.Three;
+						button.Margin = Margin.Five;
+						button.SetImage("test16.png");
+						button.ImageTextureRect = new Rectangle(4, 4, 8, 8);
+
+						button = new Control.Button(hlayout2);
+						button.HorizontalAlignment = HorizontalAlignment.Left;
+						button.VerticalAlignment = VerticalAlignment.Center;
+						button.Padding = Padding.Three;
+						button.Margin = Margin.Five;
+						button.SetImage("test16.png");
+						button.ImageColor = Color.DarkGrey;
+					}
 
 					button = new Control.Button(vlayout);
 					button.Margin = Margin.Five;

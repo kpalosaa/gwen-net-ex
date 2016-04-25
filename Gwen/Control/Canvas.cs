@@ -42,6 +42,7 @@ namespace Gwen.Control
 
 				OnScaleChanged();
 				Redraw();
+				Invalidate();
 			}
 		}
 

@@ -15,6 +15,10 @@ namespace Gwen.UnitTest
         private readonly Control.CollapsibleList m_List;
         private readonly ControlBase m_Center;
         private readonly Control.LabeledCheckBox m_DebugCheck;
+		private readonly Control.TextBoxNumeric m_UIScale;
+		private readonly Control.Button m_DecScale;
+		private readonly Control.Button m_IncScale;
+		private readonly Control.Label m_UIScaleText;
 
         public double Fps; // set this in your rendering loop
         public string Note; // additional text to display in status bar
@@ -43,6 +47,35 @@ namespace Gwen.UnitTest
 			m_DebugCheck = new Control.LabeledCheckBox(m_StatusBar);
 			m_DebugCheck.Text = "Debug outlines";
 			m_DebugCheck.CheckChanged += DebugCheckChanged;
+
+			m_IncScale = new Control.Button(m_StatusBar);
+			m_IncScale.HorizontalAlignment = HorizontalAlignment.Left;
+			m_IncScale.VerticalAlignment = VerticalAlignment.Stretch;
+			m_IncScale.Width = 30;
+			m_IncScale.Margin = new Margin(0, 0, 8, 0);
+			m_IncScale.TextPadding = new Padding(5, 0, 5, 0);
+			m_IncScale.Text = "+";
+			m_IncScale.Clicked += (sender, arguments) => { m_UIScale.Value = Math.Min(m_UIScale.Value + 0.25f, 3.0f); };
+
+			m_UIScale = new Control.TextBoxNumeric(m_StatusBar);
+			m_UIScale.VerticalAlignment = VerticalAlignment.Stretch;
+			m_UIScale.Width = 70;
+			m_UIScale.Value = GetCanvas().Scale;
+			m_UIScale.TextChanged += (sender, arguments) => { GetCanvas().Scale = m_UIScale.Value; };
+
+			m_DecScale = new Control.Button(m_StatusBar);
+			m_DecScale.HorizontalAlignment = HorizontalAlignment.Left;
+			m_DecScale.VerticalAlignment = VerticalAlignment.Stretch;
+			m_DecScale.Width = 30;
+			m_DecScale.Margin = new Margin(4, 0, 0, 0);
+			m_DecScale.TextPadding = new Padding(5, 0, 5, 0);
+			m_DecScale.Text = "-";
+			m_DecScale.Clicked += (sender, arguments) => { m_UIScale.Value = Math.Max(m_UIScale.Value - 0.25f, 1.0f); };
+
+			m_UIScaleText = new Control.Label(m_StatusBar);
+			m_UIScaleText.VerticalAlignment = VerticalAlignment.Stretch;
+			m_UIScaleText.Alignment = Alignment.Left | Alignment.CenterV;
+			m_UIScaleText.Text = "Scale:";
 
 			m_Center = new Control.Layout.DockLayout(dock);
             m_Center.Dock = Dock.Fill;
