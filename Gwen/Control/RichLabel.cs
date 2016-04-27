@@ -59,60 +59,82 @@ namespace Gwen.Control
 
 				foreach (Paragraph paragraph in m_Document.Paragraphs)
 				{
-					List<TextBlock> textBlocks = lineBreaker.LineBreak(paragraph, m_BuildWidth);
-
-					if (textBlocks != null)
+					if (paragraph is ImageParagraph)
 					{
-						x = paragraph.Margin.Left;
-						y += paragraph.Margin.Top;
-						width = 0;
-						height = 0;
+						ImageParagraph imageParagraph = paragraph as ImageParagraph;
 
-						foreach (TextBlock textBlock in textBlocks)
+						ImagePanel image = new ImagePanel(this);
+						image.ImageName = imageParagraph.ImageName;
+						if (imageParagraph.ImageSize != null)
+							image.Size = (Size)imageParagraph.ImageSize;
+						if (imageParagraph.TextureRect != null)
+							image.TextureRect = (Rectangle)imageParagraph.TextureRect;
+						if (imageParagraph.ImageColor != null)
+							image.ImageColor = (Color)imageParagraph.ImageColor;
+
+						image.DoMeasure(Size.Infinity);
+						image.DoArrange(paragraph.Margin.Left, y + paragraph.Margin.Top, image.MeasuredSize.Width, image.MeasuredSize.Height);
+
+						size.Width = Math.Max(size.Width, image.MeasuredSize.Width + paragraph.Margin.Left + paragraph.Margin.Right);
+
+						y += image.MeasuredSize.Height + paragraph.Margin.Top + paragraph.Margin.Bottom;
+					}
+					else
+					{
+						List<TextBlock> textBlocks = lineBreaker.LineBreak(paragraph, m_BuildWidth);
+
+						if (textBlocks != null)
 						{
-							if (textBlock.Part is LinkPart)
+							x = paragraph.Margin.Left;
+							y += paragraph.Margin.Top;
+							width = 0;
+							height = 0;
+
+							foreach (TextBlock textBlock in textBlocks)
 							{
-								LinkPart linkPart = textBlock.Part as LinkPart;
+								if (textBlock.Part is LinkPart)
+								{
+									LinkPart linkPart = textBlock.Part as LinkPart;
 
-								LinkLabel link = new LinkLabel(this);
-								link.Text = textBlock.Text;
-								link.Link = linkPart.Link;
-								link.Font = linkPart.Font;
-								link.LinkClicked += OnLinkClicked;
-								if (linkPart.Color != null)
-									link.TextColor = (Color)linkPart.Color;
-								if (linkPart.HoverColor != null)
-									link.HoverColor = (Color)linkPart.HoverColor;
-								if (linkPart.HoverFont != null)
-									link.HoverFont = linkPart.HoverFont;
+									LinkLabel link = new LinkLabel(this);
+									link.Text = textBlock.Text;
+									link.Link = linkPart.Link;
+									link.Font = linkPart.Font;
+									link.LinkClicked += OnLinkClicked;
+									if (linkPart.Color != null)
+										link.TextColor = (Color)linkPart.Color;
+									if (linkPart.HoverColor != null)
+										link.HoverColor = (Color)linkPart.HoverColor;
+									if (linkPart.HoverFont != null)
+										link.HoverFont = linkPart.HoverFont;
 
-								link.DoMeasure(Size.Infinity);
-								link.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
+									link.DoMeasure(Size.Infinity);
+									link.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
 
-								width = Math.Max(width, link.ActualRight);
-								height = Math.Max(height, link.ActualBottom);
+									width = Math.Max(width, link.ActualRight);
+									height = Math.Max(height, link.ActualBottom);
+								} else if (textBlock.Part is TextPart)
+								{
+									TextPart textPart = textBlock.Part as TextPart;
+
+									Text text = new Text(this);
+									text.String = textBlock.Text;
+									text.Font = textPart.Font;
+									if (textPart.Color != null)
+										text.TextColor = (Color)textPart.Color;
+
+									text.DoMeasure(Size.Infinity);
+									text.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
+
+									width = Math.Max(width, text.ActualRight + 1);
+									height = Math.Max(height, text.ActualBottom + 1);
+								}
 							}
-							else if (textBlock.Part is TextPart)
-							{
-								TextPart textPart = textBlock.Part as TextPart;
 
-								Text text = new Text(this);
-								text.String = textBlock.Text;
-								text.Font = textPart.Font;
-								if (textPart.Color != null)
-									text.TextColor = (Color)textPart.Color;
+							size.Width = Math.Max(size.Width, width + paragraph.Margin.Right);
 
-								text.DoMeasure(Size.Infinity);
-								text.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
-
-								width = Math.Max(width, text.ActualRight + 1);
-								height = Math.Max(height, text.ActualBottom + 1);
-							}
+							y = height + paragraph.Margin.Bottom;
 						}
-
-						size.Width = Math.Max(size.Width, width + paragraph.Margin.Right);
-
-						y = height + paragraph.Margin.Bottom;
 					}
 				}
 

@@ -207,6 +207,7 @@
     <Compile Include="Xml\XmlSource.cs" />
     <Compile Include="FontMetrics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichText\ImageParagraph.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />

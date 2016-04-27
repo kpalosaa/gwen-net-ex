@@ -144,7 +144,7 @@ namespace Gwen.Xml
 					throw new System.Xml.XmlException("Attribute value error. Parsing the value as point failed.");
 				}
 			},
-			{ typeof(Gwen.Margin), (element, value) =>
+			{ typeof(Margin), (element, value) =>
 				{
 					int[] values = ParseArrayInt32(value);
 					if (values != null)

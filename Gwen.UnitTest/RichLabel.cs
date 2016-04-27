@@ -65,6 +65,8 @@ namespace Gwen.UnitTest
 					Link("Test Link 2", "Test Link 2", Color.Blue, new Color(0xFFADD8E6), f4).
 					Text(").", new Color(0xFFFF00FF));
 
+			document.Image("gwen.png", new Size(200, 200));
+
 			label.Document = document;
 
 			return label;
@@ -102,6 +104,7 @@ namespace Gwen.UnitTest
 			(
 @"In olden times when wishing still helped one, there lived a king whose daughters were all beautiful, but the youngest was so beautiful that the sun itself, which has seen so much, was astonished whenever it shone in her face. Close by the king's castle lay a great dark forest, and under an old lime-tree in the forest was a well, and when the day was very warm, the king's child went out into the forest and sat down by the side of the cool fountain, and when she was bored she took a golden ball, and threw it up on high and caught it, and this ball was her favorite plaything."
 			);
+			document.Image("gwen.png", new Size(200, 200), new Rectangle(32, 32, 448, 448), Color.White, new Margin(20, 10, 20, 10));
 			document.Paragraph(Margin.Ten, 20).Text
 			(
 @"Now it so happened that on one occasion the princess's golden ball did not fall into the little hand which she was holding up for it, but on to the ground beyond, and rolled straight into the water. The king's daughter followed it with her eyes, but it vanished, and the well was deep, so deep that the bottom could not be seen. At this she began to cry, and cried louder and louder, and could not be comforted. And as she thus lamented someone said to her, ""What ails you, king's daughter? You weep so that even a stone would show pity."""

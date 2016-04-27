@@ -28,5 +28,35 @@ namespace Gwen.RichText
 
 			return paragraph;
 		}
+
+		public ImageParagraph Image(string imageName, Size? imageSize = null, Rectangle? textureRect = null, Color? imageColor = null, Margin margin = new Margin(), int indent = 0)
+		{
+			ImageParagraph paragraph = new ImageParagraph(margin, indent);
+			paragraph.Image(imageName, imageSize, textureRect, imageColor);
+
+			m_Paragraphs.Add(paragraph);
+
+			return paragraph;
+		}
+
+		public ImageParagraph Image(string imageName, Margin margin, int indent)
+		{
+			ImageParagraph paragraph = new ImageParagraph(margin, indent);
+			paragraph.Image(imageName);
+
+			m_Paragraphs.Add(paragraph);
+
+			return paragraph;
+		}
+
+		public ImageParagraph Image(string imageName, Size imageSize, Margin margin = new Margin(), int indent = 0)
+		{
+			ImageParagraph paragraph = new ImageParagraph(margin, indent);
+			paragraph.Image(imageName, imageSize);
+
+			m_Paragraphs.Add(paragraph);
+		
+			return paragraph;
+		}
 	}
 }
