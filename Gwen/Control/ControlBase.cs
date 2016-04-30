@@ -651,10 +651,9 @@ namespace Gwen.Control
 			if (m_Disposed)
 			{
 #if DEBUG
-				throw new ObjectDisposedException(String.Format("Control.Base [{1:X}] disposed twice: {0}", this, GetHashCode()));
-#else
-				return;
+				System.Diagnostics.Debug.WriteLine(String.Format("Control {{{0}}} disposed twice.", this));
 #endif
+				return;
 			}
 
 			if (InputHandler.HoveredControl == this)
@@ -683,7 +682,7 @@ namespace Gwen.Control
 #if DEBUG
 		~ControlBase()
 		{
-			throw new InvalidOperationException(String.Format("IDisposable object finalized [{1:X}]: {0}", this, GetHashCode()));
+			throw new InvalidOperationException(String.Format("IDisposable object {{{0}}} finalized.", this));
 		}
 #endif
 
