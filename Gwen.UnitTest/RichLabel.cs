@@ -7,7 +7,7 @@ namespace Gwen.UnitTest
 	[UnitTest(Category = "Non-Interactive", Order = 102)]
 	public class RichLabel : GUnit
 	{
-		private Font f1, f2, f3, f4;
+		private Font f1, f2, f3, f4, f5;
 
 		public RichLabel(ControlBase parent) : base(parent)
 		{
@@ -22,6 +22,8 @@ namespace Gwen.UnitTest
 			f4 = new Font(Skin.Renderer, "Times New Roman", 20);
 			f4.Bold = true;
 			f4.Underline = true;
+
+			f5 = new Font(Skin.Renderer, "Courier New", 10);
 
 			Control.RichLabel label = CreateLabel(this);
 
@@ -38,6 +40,7 @@ namespace Gwen.UnitTest
 			f2.Dispose();
 			f3.Dispose();
 			f4.Dispose();
+			f5.Dispose();
 			base.Dispose();
 		}
 
@@ -65,7 +68,26 @@ namespace Gwen.UnitTest
 					Link("Test Link 2", "Test Link 2", Color.Blue, new Color(0xFFADD8E6), f4).
 					Text(").", new Color(0xFFFF00FF));
 
-			document.Image("gwen.png", new Size(200, 200));
+			document.Paragraph().
+				Font(f5).
+					Text("\n").
+					Text("document.Paragraph().").LineBreak().LineBreak().
+					Text("\tFont(f1).").LineBreak().
+					Text("\t\tText(\"This test uses Arial 15, Red. Padding. \", Color.Red).").LineBreak().
+					Text("\tFont(f2).").LineBreak().
+					Text("\t\tText(\"This text uses Times New Roman Bold 20, Green. Padding. \", Color.Green).").LineBreak().
+					Text("\tFont(f3).").LineBreak().
+					Text("\t\tText(\"This text uses Courier New Italic 15, Blue. Padding. \", Color.Blue).\n\n").
+					Text("\tFont().\n").
+					Text("\t\tText(\"Test link (\").\n").
+					Text("\t\tLink(\"Test Link 1\", \"Test Link 1\", Color.Blue, new Color(0xFFADD8E6)).\n").
+					Text("\t\tText(\"). \").\n\n\n").
+					Text("\tFont(f2).\n").
+					Text("\t\tText(\"Test link custom font (\", new Color(0xFFFF00FF)).\n").
+					Text("\t\tLink(\"Test Link 2\", \"Test Link 2\", Color.Blue, new Color(0xFFADD8E6), f4).\n").
+					Text("\t\tText(\").\", new Color(0xFFFF00FF));");
+
+			document.Image("gwen.png", new Size(100, 100));
 
 			label.Document = document;
 
@@ -104,7 +126,7 @@ namespace Gwen.UnitTest
 			(
 @"In olden times when wishing still helped one, there lived a king whose daughters were all beautiful, but the youngest was so beautiful that the sun itself, which has seen so much, was astonished whenever it shone in her face. Close by the king's castle lay a great dark forest, and under an old lime-tree in the forest was a well, and when the day was very warm, the king's child went out into the forest and sat down by the side of the cool fountain, and when she was bored she took a golden ball, and threw it up on high and caught it, and this ball was her favorite plaything."
 			);
-			document.Image("gwen.png", new Size(200, 200), new Rectangle(32, 32, 448, 448), Color.White, new Margin(20, 10, 20, 10));
+			document.Image("gwen.png", new Size(60, 60), new Rectangle(32, 32, 448, 448), Color.White, new Margin(20, 10, 20, 10));
 			document.Paragraph(Margin.Ten, 20).Text
 			(
 @"Now it so happened that on one occasion the princess's golden ball did not fall into the little hand which she was holding up for it, but on to the ground beyond, and rolled straight into the water. The king's daughter followed it with her eyes, but it vanished, and the well was deep, so deep that the bottom could not be seen. At this she began to cry, and cried louder and louder, and could not be comforted. And as she thus lamented someone said to her, ""What ails you, king's daughter? You weep so that even a stone would show pity."""

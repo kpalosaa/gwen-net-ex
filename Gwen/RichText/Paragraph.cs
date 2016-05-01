@@ -51,5 +51,12 @@ namespace Gwen.RichText
 
 			return this;
 		}
+
+		public Paragraph LineBreak()
+		{
+			m_Parts.Add(new LineBreakPart());
+
+			return this;
+		}
 	}
 }

@@ -30,18 +30,28 @@ namespace Gwen.RichText.Simple
 			while (index < nodes.Count)
 			{
 				w += nodes[index].Size.Width;
-				if (w > lineWidth || index == (nodes.Count - 1))
+				if (w > lineWidth || index == (nodes.Count - 1) || nodes[index].IsLineBreak)
 				{
 					lineStop = index;
+
 					if (w > lineWidth)
+					{
+						if (lineStart == index)
+							index++; // Too long word to fit on the line
+						else
+							lineStop--;
+					}
+					else if (nodes[index].IsLineBreak)
+					{
 						lineStop--;
-					else
 						index++;
+					}
+					else
+					{
+						index++;
+					}
 
-					if (lineStop < lineStart)
-						lineStop = lineStart;
-
-					while (lineStop > lineStart && nodes[lineStop].Text == null)
+					while (lineStop > lineStart && nodes[lineStop].IsSpace)
 						lineStop--;
 
 					int height = 0;
@@ -67,7 +77,7 @@ namespace Gwen.RichText.Simple
 							int h = 0;
 							for (int k = blockStart; k <= i; k++)
 							{
-								if (nodes[k].Text == null)
+								if (nodes[k].IsSpace)
 								{
 									str.Append(' ');
 								}
@@ -92,7 +102,7 @@ namespace Gwen.RichText.Simple
 						}
 					}
 
-					while (index < nodes.Count && nodes[index].Text == null)
+					while (index < nodes.Count && nodes[index].IsSpace)
 						index++;
 
 					lineStart = index;
@@ -133,6 +143,15 @@ namespace Gwen.RichText.Simple
 					{
 						nodes.Add(new Node(Renderer.MeasureText(font, word), part));
 					}
+					else if (word[0] == '\n')
+					{
+						if (nodes.Count > 0)
+						{
+							if (nodes[nodes.Count - 1].IsLineBreak)
+								nodes.Add(new Node(" ", Renderer.MeasureText(font, " "), nodes[nodes.Count - 2].Part));
+							nodes.Add(new Node());
+						}
+					}
 					else
 					{
 						nodes.Add(new Node(word, Renderer.MeasureText(font, word), part));
@@ -163,13 +182,26 @@ namespace Gwen.RichText.Simple
 				Part = part;
 			}
 
+			public Node()
+			{
+				Text = null;
+				Size = Size.Zero;
+				Part = null;
+			}
+
+			public bool IsSpace { get { return Text == null && Part != null; } }
+
+			public bool IsLineBreak { get { return Part == null; } }
+
 #if DEBUG
 			public override string ToString()
 			{
-				if (Text == null)
+				if (Part == null)
+					return String.Format("Node: LineBreak");
+				else if (Text == null)
 					return String.Format("Node: Width = {0} Value = Space", Size.Width);
 				else
-					return String.Format("Node: Width = {0} Value = {1}", Text);
+					return String.Format("Node: Width = {0} Value = \"{1}\"", Size.Width, Text);
 			}
 #endif
 		}
