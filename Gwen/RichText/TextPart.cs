@@ -41,17 +41,35 @@ namespace Gwen.RichText
 
 			while (index < len)
 			{
-				i = str.IndexOf(' ', index);
+				i = str.IndexOfAny(m_separator, index);
 				if (i == index)
 				{
-					strs.Add(" ");
-					while (index < len && str[index] == ' ')
+					if (str[i] == ' ')
+					{
+						strs.Add(" ");
+						while (index < len && str[index] == ' ')
+							index++;
+					}
+					else
+					{
+						strs.Add("\n");
 						index++;
+						if (index < len && str[index - 1] == '\r' && str[index] == '\n')
+							index++;
+					}
 				}
 				else if (i != -1)
 				{
-					strs.Add(str.Substring(index, i - index + 1));
-					index = i + 1;
+					if (str[i] == ' ')
+					{
+						strs.Add(str.Substring(index, i - index + 1));
+						index = i + 1;
+					}
+					else
+					{
+						strs.Add(str.Substring(index, i - index));
+						index = i;
+					}
 				}
 				else
 				{
@@ -62,5 +80,7 @@ namespace Gwen.RichText
 
 			return strs.ToArray();
 		}
+
+		private static readonly char[] m_separator = new char[] { ' ', '\n', '\r' };
 	}
 }

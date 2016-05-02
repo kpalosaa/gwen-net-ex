@@ -3,46 +3,46 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using Gwen.Control;
-using Gwen.Control.Layout;
+using Gwen.Control.Internal;
 
 namespace Gwen.UnitTest
 {
-    public class UnitTest : ControlBase
-    {
-        private Control.ControlBase m_LastControl;
-        private readonly Control.StatusBar m_StatusBar;
-        private readonly Control.ListBox m_TextOutput;
-        private readonly Control.CollapsibleList m_List;
-        private readonly ControlBase m_Center;
-        private readonly Control.LabeledCheckBox m_DebugCheck;
+	public class UnitTest : ControlBase
+	{
+		private Control.ControlBase m_LastControl;
+		private readonly Control.StatusBar m_StatusBar;
+		private readonly Control.ListBox m_TextOutput;
+		private readonly Control.CollapsibleList m_List;
+		private readonly ControlBase m_Center;
+		private readonly Control.LabeledCheckBox m_DebugCheck;
 		private readonly Control.TextBoxNumeric m_UIScale;
 		private readonly Control.Button m_DecScale;
 		private readonly Control.Button m_IncScale;
 		private readonly Control.Label m_UIScaleText;
 
-        public double Fps; // set this in your rendering loop
-        public string Note; // additional text to display in status bar
+		public double Fps; // set this in your rendering loop
+		public string Note; // additional text to display in status bar
 
-        public UnitTest(ControlBase parent) : base(parent)
-        {
-            Dock = Dock.Fill;
+		public UnitTest(ControlBase parent) : base(parent)
+		{
+			Dock = Dock.Fill;
 
 			DockBase dock = new DockBase(this);
 			dock.Dock = Dock.Fill;
 
 			m_List = new Control.CollapsibleList(this);
 
-            dock.LeftDock.TabControl.AddPage("Unit tests", m_List);
+			dock.LeftDock.TabControl.AddPage("Unit tests", m_List);
 			dock.LeftDock.Width = 150;
 
-            m_TextOutput = new Control.ListBox(this);
+			m_TextOutput = new Control.ListBox(this);
 			m_TextOutput.AlternateColor = false;
 
-            dock.BottomDock.TabControl.AddPage("Output", m_TextOutput);
-            dock.BottomDock.Height = 200;
+			dock.BottomDock.TabControl.AddPage("Output", m_TextOutput);
+			dock.BottomDock.Height = 200;
 
-            m_StatusBar = new Control.StatusBar(this);
-            m_StatusBar.Dock = Dock.Bottom;
+			m_StatusBar = new Control.StatusBar(this);
+			m_StatusBar.Dock = Dock.Bottom;
 
 			m_DebugCheck = new Control.LabeledCheckBox(m_StatusBar);
 			m_DebugCheck.Text = "Debug outlines";
@@ -78,7 +78,7 @@ namespace Gwen.UnitTest
 			m_UIScaleText.Text = "Scale:";
 
 			m_Center = new Control.Layout.DockLayout(dock);
-            m_Center.Dock = Dock.Fill;
+			m_Center.Dock = Dock.Fill;
 
 			List<Type> tests = typeof(UnitTest).Assembly.GetTypes().Where(t => t.IsDefined(typeof(UnitTestAttribute), false)).ToList();
 			tests.Sort((t1, t2) =>
@@ -120,50 +120,55 @@ namespace Gwen.UnitTest
 			}
 
 			m_StatusBar.SendToBack();
-            PrintText("Unit Test started!");
+			PrintText("Unit Test started!");
 		}
 
 		public void RegisterUnitTest(string name, CollapsibleCategory cat, GUnit test)
-        {
-            Control.Button btn = cat.Add(name);
-            test.Dock = Dock.Fill;
-            test.Collapse();
-            test.UnitTest = this;
-            btn.UserData = test;
-            btn.Clicked += OnCategorySelect;
-        }
+		{
+			Control.Button btn = cat.Add(name);
+			test.Dock = Dock.Fill;
+			test.Collapse();
+			test.UnitTest = this;
+			btn.UserData = test;
+			btn.Clicked += OnCategorySelect;
+		}
 
 		private void DebugCheckChanged(ControlBase control, EventArgs args)
-        {
-            if (m_DebugCheck.IsChecked)
-                m_Center.DrawDebugOutlines = true;
-            else
-                m_Center.DrawDebugOutlines = false;
-            //Invalidate();
-        }
+		{
+			m_Center.DrawDebugOutlines = m_DebugCheck.IsChecked;
+
+			foreach (ControlBase c in GetCanvas().Children.Where(x => x is WindowBase))
+			{
+				WindowBase win = c as WindowBase;
+				if (win != null)
+				{
+					win.Content.DrawDebugOutlines = m_DebugCheck.IsChecked;
+				}
+			}
+		}
 
 		private void OnCategorySelect(ControlBase control, EventArgs args)
-        {
-            if (m_LastControl != null)
-            {
-                m_LastControl.Collapse();
-            }
-            ControlBase test = control.UserData as ControlBase;
-            test.Show();
-            m_LastControl = test;
-        }
+		{
+			if (m_LastControl != null)
+			{
+				m_LastControl.Collapse();
+			}
+			ControlBase test = control.UserData as ControlBase;
+			test.Show();
+			m_LastControl = test;
+		}
 
-        public void PrintText(string str)
-        {
-            m_TextOutput.AddRow(str);
-            m_TextOutput.ScrollToBottom();
-        }
+		public void PrintText(string str)
+		{
+			m_TextOutput.AddRow(str);
+			m_TextOutput.ScrollToBottom();
+		}
 
-        protected override void Render(Skin.SkinBase skin)
-        {
-            m_StatusBar.Text = String.Format("GWEN.Net Unit Test - {0:F0} fps. {1}", Fps, Note);
+		protected override void Render(Skin.SkinBase skin)
+		{
+			m_StatusBar.Text = String.Format("GWEN.Net Unit Test - {0:F0} fps. {1}", Fps, Note);
 
-            base.Render(skin);
-        }
-    }
+			base.Render(skin);
+		}
+	}
 }
