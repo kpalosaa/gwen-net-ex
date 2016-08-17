@@ -438,7 +438,7 @@ namespace Gwen.Xml
 							}
 							else
 							{
-								throw new Exception("Elemant handler not found.");
+								throw new XmlException("Elemant handler not found.");
 							}
 						}
 						else

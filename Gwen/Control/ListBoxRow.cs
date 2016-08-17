@@ -75,6 +75,11 @@ namespace Gwen.Control
 		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
 			ListBoxRow element = new ListBoxRow(parent);
+			ListBox listBox = parent as ListBox;
+			if (listBox != null)
+				element.ColumnCount = listBox.ColumnCount;
+			else
+				throw new System.Xml.XmlException("Unknown parent for ListBox Row.");
 			parser.ParseAttributes(element);
 			if (parser.MoveToContent())
 			{
