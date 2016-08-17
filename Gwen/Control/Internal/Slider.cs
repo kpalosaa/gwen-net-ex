@@ -236,16 +236,16 @@ namespace Gwen.Control.Internal
             skin.DrawKeyboardHighlight(this, RenderBounds, 0);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			m_SliderBar.DoMeasure(availableSize);
+			m_SliderBar.Measure(availableSize);
 
 			return m_SliderBar.MeasuredSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_SliderBar.DoArrange(new Rectangle(Point.Zero, m_SliderBar.MeasuredSize));
+			m_SliderBar.Arrange(new Rectangle(Point.Zero, m_SliderBar.MeasuredSize));
 
 			UpdateBarFromValue();
 

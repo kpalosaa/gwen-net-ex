@@ -126,7 +126,7 @@ namespace Gwen.Control.Layout
 			Invalidate();
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize -= Padding;
 
@@ -179,7 +179,7 @@ namespace Gwen.Control.Layout
 							size.Height = (int)h;
 					}
 
-					size = child.DoMeasure(size);
+					size = child.Measure(size);
 				}
 
 				if (m_ColumnWidths[columnIndex] < size.Width)
@@ -257,7 +257,7 @@ namespace Gwen.Control.Layout
 			return new Size(width, height) + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int y = Padding.Top;
 			int x = Padding.Left;
@@ -288,7 +288,7 @@ namespace Gwen.Control.Layout
 							height = (int)h;
 					}
 
-					child.DoArrange(new Rectangle(x, y, width, height));
+					child.Arrange(new Rectangle(x, y, width, height));
 				}
 
 				x += width;

@@ -54,19 +54,19 @@ namespace Gwen.Control.Layout
             return m_Panel[panelIndex];
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Size size = Size.Zero;
 
 			if (m_Panel[0] != null)
 			{
-				m_Panel[0].DoMeasure(new Size(availableSize.Width, availableSize.Height / 2));
+				m_Panel[0].Measure(new Size(availableSize.Width, availableSize.Height / 2));
 				size = m_Panel[0].MeasuredSize;
 			}
 
 			if (m_Panel[1] != null)
 			{
-				m_Panel[1].DoMeasure(new Size(availableSize.Width, availableSize.Height / 2));
+				m_Panel[1].Measure(new Size(availableSize.Width, availableSize.Height / 2));
 				size.Width = Math.Max(size.Width, m_Panel[1].MeasuredSize.Width);
 				size.Height += m_Panel[1].MeasuredSize.Height;
 			}
@@ -74,19 +74,19 @@ namespace Gwen.Control.Layout
 			return size;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int y = 0;
 
 			if (m_Panel[0] != null)
 			{
-				m_Panel[0].DoArrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height / 2));
+				m_Panel[0].Arrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height / 2));
 				y = m_Panel[0].ActualHeight;
 			}
 
 			if (m_Panel[1] != null)
 			{
-				m_Panel[1].DoArrange(new Rectangle(0, y, finalSize.Width, finalSize.Height / 2));
+				m_Panel[1].Arrange(new Rectangle(0, y, finalSize.Width, finalSize.Height / 2));
 				y += m_Panel[1].ActualHeight;
 			}
 

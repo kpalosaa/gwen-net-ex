@@ -65,8 +65,9 @@ namespace Gwen.Control
 		/// <summary>
 		/// If set, try to set the control size the same as the content size. If it doesn't fit, enable scrolling.
 		/// </summary>
+		/// <remarks>Try to avoid setting this. This can cause a total invalidation of all controls.</remarks>
 		[Xml.XmlProperty]
-		public bool AutoSizeToContent { get { return m_AutoSizeToContent; } set { if (value == m_AutoSizeToContent) return; m_AutoSizeToContent = value; Invalidate(); } }
+		public bool AutoSizeToContent { get { return m_AutoSizeToContent; } set { if (value == m_AutoSizeToContent) return; m_AutoSizeToContent = value; IsVirtualControl = !value; Invalidate(); } }
 
 		/// <summary>
 		/// Determines whether the scroll bars should be hidden if not needed.
@@ -136,7 +137,7 @@ namespace Gwen.Control
 			UpdateScrollArea();
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Size innerSize = availableSize - Padding;
 
@@ -148,22 +149,22 @@ namespace Gwen.Control
 
 			if (needScrollH)
 			{
-				m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+				m_HorizontalScrollBar.Measure(scrollAreaSize);
 				scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 			}
 			if (needScrollV)
 			{
-				m_VerticalScrollBar.DoMeasure(scrollAreaSize);
+				m_VerticalScrollBar.Measure(scrollAreaSize);
 				scrollAreaSize.Width = innerSize.Width - m_VerticalScrollBar.MeasuredSize.Width;
 				// Re-measure horizontal scroll bar to take into account the width of the vertical scroll bar
 				if (needScrollH)
 				{
-					m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+					m_HorizontalScrollBar.Measure(scrollAreaSize);
 					scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 				}
 			}
 
-			m_ScrollArea.DoMeasure(scrollAreaSize);
+			m_ScrollArea.Measure(scrollAreaSize);
 			Size contentSize = m_ScrollArea.Content.MeasuredSize;
 
 			// If auto hide flag set and one of measure results is larger than the scroll area, we need a scroll bar and re-measure scroll area
@@ -174,22 +175,22 @@ namespace Gwen.Control
 
 				if (needScrollH)
 				{
-					m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+					m_HorizontalScrollBar.Measure(scrollAreaSize);
 					scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 				}
 				if (needScrollV)
 				{
-					m_VerticalScrollBar.DoMeasure(scrollAreaSize);
+					m_VerticalScrollBar.Measure(scrollAreaSize);
 					scrollAreaSize.Width = innerSize.Width - m_VerticalScrollBar.MeasuredSize.Width;
 					// Re-measure horizontal scroll bar to take into account the width of the vertical scroll bar
 					if (needScrollH)
 					{
-						m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+						m_HorizontalScrollBar.Measure(scrollAreaSize);
 						scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 					}
 				}
 
-				m_ScrollArea.DoMeasure(scrollAreaSize);
+				m_ScrollArea.Measure(scrollAreaSize);
 				contentSize = m_ScrollArea.Content.MeasuredSize;
 
 				// If setting one of the scroll bars visible caused the scroll area to shrink smaller than the content, we need one more measure pass
@@ -200,22 +201,22 @@ namespace Gwen.Control
 
 					if (needScrollH)
 					{
-						m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+						m_HorizontalScrollBar.Measure(scrollAreaSize);
 						scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 					}
 					if (needScrollV)
 					{
-						m_VerticalScrollBar.DoMeasure(scrollAreaSize);
+						m_VerticalScrollBar.Measure(scrollAreaSize);
 						scrollAreaSize.Width = innerSize.Width - m_VerticalScrollBar.MeasuredSize.Width;
 						// Re-measure horizontal scroll bar to take into account the width of the vertical scroll bar
 						if (needScrollH)
 						{
-							m_HorizontalScrollBar.DoMeasure(scrollAreaSize);
+							m_HorizontalScrollBar.Measure(scrollAreaSize);
 							scrollAreaSize.Height = innerSize.Height - m_HorizontalScrollBar.MeasuredSize.Height;
 						}
 					}
 
-					m_ScrollArea.DoMeasure(scrollAreaSize);
+					m_ScrollArea.Measure(scrollAreaSize);
 				}
 			}
 
@@ -256,30 +257,30 @@ namespace Gwen.Control
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int scrollAreaWidth = finalSize.Width - Padding.Left - Padding.Right;
 			int scrollAreaHeight = finalSize.Height - Padding.Top - Padding.Bottom;
 
 			if (!m_VerticalScrollBar.IsCollapsed && !m_HorizontalScrollBar.IsCollapsed)
 			{
-				m_VerticalScrollBar.DoArrange(new Rectangle(finalSize.Width - Padding.Right - m_VerticalScrollBar.MeasuredSize.Width, Padding.Top, m_VerticalScrollBar.MeasuredSize.Width, m_VerticalScrollBar.MeasuredSize.Height));
+				m_VerticalScrollBar.Arrange(new Rectangle(finalSize.Width - Padding.Right - m_VerticalScrollBar.MeasuredSize.Width, Padding.Top, m_VerticalScrollBar.MeasuredSize.Width, m_VerticalScrollBar.MeasuredSize.Height));
 				scrollAreaWidth -= m_VerticalScrollBar.MeasuredSize.Width;
-				m_HorizontalScrollBar.DoArrange(new Rectangle(Padding.Left, finalSize.Height - Padding.Bottom - m_HorizontalScrollBar.MeasuredSize.Height, m_HorizontalScrollBar.MeasuredSize.Width, m_HorizontalScrollBar.MeasuredSize.Height));
+				m_HorizontalScrollBar.Arrange(new Rectangle(Padding.Left, finalSize.Height - Padding.Bottom - m_HorizontalScrollBar.MeasuredSize.Height, m_HorizontalScrollBar.MeasuredSize.Width, m_HorizontalScrollBar.MeasuredSize.Height));
 				scrollAreaHeight -= m_HorizontalScrollBar.MeasuredSize.Height;
 			}
 			else if (!m_VerticalScrollBar.IsCollapsed)
 			{
-				m_VerticalScrollBar.DoArrange(new Rectangle(finalSize.Width - Padding.Right - m_VerticalScrollBar.MeasuredSize.Width, Padding.Top, m_VerticalScrollBar.MeasuredSize.Width, m_VerticalScrollBar.MeasuredSize.Height));
+				m_VerticalScrollBar.Arrange(new Rectangle(finalSize.Width - Padding.Right - m_VerticalScrollBar.MeasuredSize.Width, Padding.Top, m_VerticalScrollBar.MeasuredSize.Width, m_VerticalScrollBar.MeasuredSize.Height));
 				scrollAreaWidth -= m_VerticalScrollBar.MeasuredSize.Width;
 			}
 			else if (!m_HorizontalScrollBar.IsCollapsed)
 			{
-				m_HorizontalScrollBar.DoArrange(new Rectangle(Padding.Left, finalSize.Height - Padding.Bottom - m_HorizontalScrollBar.MeasuredSize.Height, m_HorizontalScrollBar.MeasuredSize.Width, m_HorizontalScrollBar.MeasuredSize.Height));
+				m_HorizontalScrollBar.Arrange(new Rectangle(Padding.Left, finalSize.Height - Padding.Bottom - m_HorizontalScrollBar.MeasuredSize.Height, m_HorizontalScrollBar.MeasuredSize.Width, m_HorizontalScrollBar.MeasuredSize.Height));
 				scrollAreaHeight -= m_HorizontalScrollBar.MeasuredSize.Height;
 			}
 
-			m_ScrollArea.DoArrange(new Rectangle(Padding.Left, Padding.Top, scrollAreaWidth, scrollAreaHeight));
+			m_ScrollArea.Arrange(new Rectangle(Padding.Left, Padding.Top, scrollAreaWidth, scrollAreaHeight));
 
 			UpdateScrollBars();
 

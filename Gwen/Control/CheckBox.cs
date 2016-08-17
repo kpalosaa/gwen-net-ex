@@ -89,12 +89,12 @@ namespace Gwen.Control
 				CheckChanged.Invoke(this, EventArgs.Empty);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			return new Size(15, 15);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return MeasuredSize;
 		}

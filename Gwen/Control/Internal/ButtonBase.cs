@@ -179,12 +179,12 @@ namespace Gwen.Control.Internal
 			OnMouseClickedLeft(x, y, true);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			return Size.Zero;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return finalSize;
 		}

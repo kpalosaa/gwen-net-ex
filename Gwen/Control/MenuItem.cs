@@ -130,31 +130,31 @@ namespace Gwen.Control
 			skin.DrawMenuItem(this, IsMenuOpen, m_Checkable ? m_Checked : false);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size size = base.Measure(availableSize);
+			Size size = base.OnMeasure(availableSize);
 			if (m_Accelerator != null)
 			{
-				Size accSize = m_Accelerator.DoMeasure(availableSize);
+				Size accSize = m_Accelerator.Measure(availableSize);
 				size.Width += accSize.Width;
 			}
 			if (m_SubmenuArrow != null)
 			{
-				m_SubmenuArrow.DoMeasure(availableSize);
+				m_SubmenuArrow.Measure(availableSize);
 			}
 
 			return size;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_SubmenuArrow != null)
-				m_SubmenuArrow.DoArrange(new Rectangle(finalSize.Width - Padding.Right - m_SubmenuArrow.MeasuredSize.Width, (finalSize.Height - m_SubmenuArrow.MeasuredSize.Height) / 2, m_SubmenuArrow.MeasuredSize.Width, m_SubmenuArrow.MeasuredSize.Height));
+				m_SubmenuArrow.Arrange(new Rectangle(finalSize.Width - Padding.Right - m_SubmenuArrow.MeasuredSize.Width, (finalSize.Height - m_SubmenuArrow.MeasuredSize.Height) / 2, m_SubmenuArrow.MeasuredSize.Width, m_SubmenuArrow.MeasuredSize.Height));
 
 			if (m_Accelerator != null)
-				m_Accelerator.DoArrange(new Rectangle(finalSize.Width - Padding.Right - m_Accelerator.MeasuredSize.Width, (finalSize.Height - m_Accelerator.MeasuredSize.Height) / 2, m_Accelerator.MeasuredSize.Width, m_Accelerator.MeasuredSize.Height));
+				m_Accelerator.Arrange(new Rectangle(finalSize.Width - Padding.Right - m_Accelerator.MeasuredSize.Width, (finalSize.Height - m_Accelerator.MeasuredSize.Height) / 2, m_Accelerator.MeasuredSize.Width, m_Accelerator.MeasuredSize.Height));
 
-			return base.Arrange(finalSize);
+			return base.OnArrange(finalSize);
 		}
 
 		/// <summary>

@@ -144,13 +144,13 @@ namespace Gwen.Control
             return m_HSplitter.ActualLeft / (float)(ActualWidth - m_HSplitter.ActualWidth);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Size size = Size.Zero;
 
-			m_VSplitter.DoMeasure(new Size(availableSize.Width, m_BarSize));
-			m_HSplitter.DoMeasure(new Size(m_BarSize, availableSize.Height));
-			m_CSplitter.DoMeasure(new Size(m_BarSize, m_BarSize));
+			m_VSplitter.Measure(new Size(availableSize.Width, m_BarSize));
+			m_HSplitter.Measure(new Size(m_BarSize, availableSize.Height));
+			m_CSplitter.Measure(new Size(m_BarSize, m_BarSize));
 			size = new Size(m_HSplitter.Width, m_VSplitter.Height);
 
 			int h = (int)((availableSize.Width - m_BarSize) * m_HVal);
@@ -160,60 +160,60 @@ namespace Gwen.Control
 			{
 				if (m_Sections[0] != null)
 				{
-					m_Sections[0].DoMeasure(new Size(h, v));
+					m_Sections[0].Measure(new Size(h, v));
 					size += m_Sections[0].MeasuredSize;
 				}
 				if (m_Sections[1] != null)
 				{
-					m_Sections[1].DoMeasure(new Size(availableSize.Width - m_BarSize - h, v));
+					m_Sections[1].Measure(new Size(availableSize.Width - m_BarSize - h, v));
 					size += m_Sections[1].MeasuredSize;
 				}
 				if (m_Sections[2] != null)
 				{
-					m_Sections[2].DoMeasure(new Size(h, availableSize.Height - m_BarSize - v));
+					m_Sections[2].Measure(new Size(h, availableSize.Height - m_BarSize - v));
 					size += m_Sections[2].MeasuredSize;
 				}
 				if (m_Sections[3] != null)
 				{
-					m_Sections[3].DoMeasure(new Size(availableSize.Width - m_BarSize - h, availableSize.Height - m_BarSize - v));
+					m_Sections[3].Measure(new Size(availableSize.Width - m_BarSize - h, availableSize.Height - m_BarSize - v));
 					size += m_Sections[3].MeasuredSize;
 				}
 			}
 			else
 			{
-				m_Sections[m_ZoomedSection].DoMeasure(availableSize);
+				m_Sections[m_ZoomedSection].Measure(availableSize);
 				size = m_Sections[m_ZoomedSection].MeasuredSize;
 			}
 
 			return size;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int h = (int)((finalSize.Width - m_BarSize) * m_HVal);
 			int v = (int)((finalSize.Height - m_BarSize) * m_VVal);
 
-			m_VSplitter.DoArrange(new Rectangle(0, v, m_VSplitter.MeasuredSize.Width, m_VSplitter.MeasuredSize.Height));
-			m_HSplitter.DoArrange(new Rectangle(h, 0, m_HSplitter.MeasuredSize.Width, m_HSplitter.MeasuredSize.Height));
-			m_CSplitter.DoArrange(new Rectangle(h, v, m_CSplitter.MeasuredSize.Width, m_CSplitter.MeasuredSize.Height));
+			m_VSplitter.Arrange(new Rectangle(0, v, m_VSplitter.MeasuredSize.Width, m_VSplitter.MeasuredSize.Height));
+			m_HSplitter.Arrange(new Rectangle(h, 0, m_HSplitter.MeasuredSize.Width, m_HSplitter.MeasuredSize.Height));
+			m_CSplitter.Arrange(new Rectangle(h, v, m_CSplitter.MeasuredSize.Width, m_CSplitter.MeasuredSize.Height));
 
 			if (m_ZoomedSection == -1)
 			{
 				if (m_Sections[0] != null)
-					m_Sections[0].DoArrange(new Rectangle(0, 0, h, v));
+					m_Sections[0].Arrange(new Rectangle(0, 0, h, v));
 
 				if (m_Sections[1] != null)
-					m_Sections[1].DoArrange(new Rectangle(h + m_BarSize, 0, finalSize.Width - m_BarSize - h, v));
+					m_Sections[1].Arrange(new Rectangle(h + m_BarSize, 0, finalSize.Width - m_BarSize - h, v));
 
 				if (m_Sections[2] != null)
-					m_Sections[2].DoArrange(new Rectangle(0, v + m_BarSize, h, finalSize.Height - m_BarSize - v));
+					m_Sections[2].Arrange(new Rectangle(0, v + m_BarSize, h, finalSize.Height - m_BarSize - v));
 
 				if (m_Sections[3] != null)
-					m_Sections[3].DoArrange(new Rectangle(h + m_BarSize, v + m_BarSize, finalSize.Width - m_BarSize - h, finalSize.Height - m_BarSize - v));
+					m_Sections[3].Arrange(new Rectangle(h + m_BarSize, v + m_BarSize, finalSize.Width - m_BarSize - h, finalSize.Height - m_BarSize - v));
 			}
 			else
 			{
-				m_Sections[m_ZoomedSection].DoArrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height));
+				m_Sections[m_ZoomedSection].Arrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height));
 			}
 
 			return finalSize;

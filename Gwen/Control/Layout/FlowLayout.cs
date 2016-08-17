@@ -18,7 +18,7 @@ namespace Gwen.Control.Layout
 		{
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize -= Padding;
 
@@ -30,7 +30,7 @@ namespace Gwen.Control.Layout
 
 			foreach (ControlBase child in Children)
 			{
-				Size size = child.DoMeasure(availableSize);
+				Size size = child.Measure(availableSize);
 
 				if ((lineWidth + size.Width) > availableSize.Width)
 				{
@@ -55,7 +55,7 @@ namespace Gwen.Control.Layout
 			return new Size(width, height) + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			finalSize -= Padding;
 
@@ -75,7 +75,7 @@ namespace Gwen.Control.Layout
 					lineHeight = 0;
 				}
 
-				child.DoArrange(new Rectangle(x + Padding.Left, y + Padding.Top, child.MeasuredSize.Width, child.MeasuredSize.Height));
+				child.Arrange(new Rectangle(x + Padding.Left, y + Padding.Top, child.MeasuredSize.Width, child.MeasuredSize.Height));
 				width = Math.Max(width, x + child.MeasuredSize.Width);
 				height = Math.Max(height, y + child.MeasuredSize.Height);
 

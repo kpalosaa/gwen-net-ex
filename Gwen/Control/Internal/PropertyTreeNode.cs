@@ -46,25 +46,25 @@ namespace Gwen.Control.Internal
 			m_Title.TextColorOverride = Skin.Colors.Properties.Title;
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size buttonSize = m_ToggleButton.DoMeasure(availableSize);
-			Size labelSize = m_Title.DoMeasure(availableSize);
+			Size buttonSize = m_ToggleButton.Measure(availableSize);
+			Size labelSize = m_Title.Measure(availableSize);
 			Size innerSize = Size.Zero;
 
 			if (!m_InnerPanel.IsCollapsed)
-				innerSize = m_InnerPanel.DoMeasure(availableSize);
+				innerSize = m_InnerPanel.Measure(availableSize);
 
 			return new Size(Math.Max(buttonSize.Width + labelSize.Width, TreeIndentation + innerSize.Width), Math.Max(buttonSize.Height, labelSize.Height) + innerSize.Height);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_ToggleButton.DoArrange(new Rectangle(0, (m_Title.MeasuredSize.Height - m_ToggleButton.MeasuredSize.Height) / 2, m_ToggleButton.MeasuredSize.Width, m_ToggleButton.MeasuredSize.Height));
-			m_Title.DoArrange(new Rectangle(m_ToggleButton.MeasuredSize.Width, 0, finalSize.Width - m_ToggleButton.MeasuredSize.Width, m_Title.MeasuredSize.Height));
+			m_ToggleButton.Arrange(new Rectangle(0, (m_Title.MeasuredSize.Height - m_ToggleButton.MeasuredSize.Height) / 2, m_ToggleButton.MeasuredSize.Width, m_ToggleButton.MeasuredSize.Height));
+			m_Title.Arrange(new Rectangle(m_ToggleButton.MeasuredSize.Width, 0, finalSize.Width - m_ToggleButton.MeasuredSize.Width, m_Title.MeasuredSize.Height));
 
 			if (!m_InnerPanel.IsCollapsed)
-				m_InnerPanel.DoArrange(new Rectangle(TreeIndentation, Math.Max(m_ToggleButton.MeasuredSize.Height, m_Title.MeasuredSize.Height), finalSize.Width - TreeIndentation, m_InnerPanel.MeasuredSize.Height));
+				m_InnerPanel.Arrange(new Rectangle(TreeIndentation, Math.Max(m_ToggleButton.MeasuredSize.Height, m_Title.MeasuredSize.Height), finalSize.Width - TreeIndentation, m_InnerPanel.MeasuredSize.Height));
 
 			return new Size(finalSize.Width, MeasuredSize.Height);
 		}

@@ -212,12 +212,12 @@ namespace Gwen.Control
 			}
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (!m_Root)
 			{
-				Size buttonSize = m_ToggleButton.DoMeasure(availableSize);
-				Size labelSize = m_Title.DoMeasure(availableSize);
+				Size buttonSize = m_ToggleButton.Measure(availableSize);
+				Size labelSize = m_Title.Measure(availableSize);
 				Size innerSize = Size.Zero;
 
 				if (m_InnerPanel.Children.Count == 0)
@@ -230,30 +230,30 @@ namespace Gwen.Control
 				{
 					m_ToggleButton.Show();
 					if (!m_InnerPanel.IsCollapsed)
-						innerSize = m_InnerPanel.DoMeasure(availableSize);
+						innerSize = m_InnerPanel.Measure(availableSize);
 				}
 
 				return new Size(Math.Max(buttonSize.Width + labelSize.Width, m_ToggleButton.MeasuredSize.Width + innerSize.Width), Math.Max(buttonSize.Height, labelSize.Height) + innerSize.Height) + Padding;
 			}
 			else
 			{
-				return m_InnerPanel.DoMeasure(availableSize) + Padding;
+				return m_InnerPanel.Measure(availableSize) + Padding;
 			}
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (!m_Root)
 			{
-				m_ToggleButton.DoArrange(new Rectangle(Padding.Left, Padding.Top + (m_Title.MeasuredSize.Height - m_ToggleButton.MeasuredSize.Height) / 2, m_ToggleButton.MeasuredSize.Width, m_ToggleButton.MeasuredSize.Height));
-				m_Title.DoArrange(new Rectangle(Padding.Left + m_ToggleButton.MeasuredSize.Width, Padding.Top, m_Title.MeasuredSize.Width, m_Title.MeasuredSize.Height));
+				m_ToggleButton.Arrange(new Rectangle(Padding.Left, Padding.Top + (m_Title.MeasuredSize.Height - m_ToggleButton.MeasuredSize.Height) / 2, m_ToggleButton.MeasuredSize.Width, m_ToggleButton.MeasuredSize.Height));
+				m_Title.Arrange(new Rectangle(Padding.Left + m_ToggleButton.MeasuredSize.Width, Padding.Top, m_Title.MeasuredSize.Width, m_Title.MeasuredSize.Height));
 
 				if (!m_InnerPanel.IsCollapsed)
-					m_InnerPanel.DoArrange(new Rectangle(Padding.Left + m_ToggleButton.MeasuredSize.Width, Padding.Top + Math.Max(m_ToggleButton.MeasuredSize.Height, m_Title.MeasuredSize.Height), m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height));
+					m_InnerPanel.Arrange(new Rectangle(Padding.Left + m_ToggleButton.MeasuredSize.Width, Padding.Top + Math.Max(m_ToggleButton.MeasuredSize.Height, m_Title.MeasuredSize.Height), m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height));
 			}
 			else
 			{
-				m_InnerPanel.DoArrange(new Rectangle(Padding.Left, Padding.Top, m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height));
+				m_InnerPanel.Arrange(new Rectangle(Padding.Left, Padding.Top, m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height));
 			}
 
 			return MeasuredSize;

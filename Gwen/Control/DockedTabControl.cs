@@ -31,12 +31,12 @@ namespace Gwen.Control
 			AllowReorder = true;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			TabStrip.Collapse(TabCount <= 1, false);
 			UpdateTitleBar();
 
-			return base.Measure(availableSize);
+			return base.OnMeasure(availableSize);
 		}
 
 		private void UpdateTitleBar()

@@ -128,9 +128,9 @@ namespace Gwen.UnitTest
             }
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			return base.Measure(availableSize);
+			return base.OnMeasure(availableSize);
 		}
 
 		public override void Dispose()

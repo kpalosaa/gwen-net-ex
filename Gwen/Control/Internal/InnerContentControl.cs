@@ -20,20 +20,20 @@ namespace Gwen.Control.Internal
 			base.OnChildAdded(child);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (m_InnerPanel != null)
 			{
-				return m_InnerPanel.DoMeasure(availableSize - Padding) + Padding;
+				return m_InnerPanel.Measure(availableSize - Padding) + Padding;
 			}
 
 			return Size.Zero;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_InnerPanel != null)
-				m_InnerPanel.DoArrange(new Rectangle(Padding.Left, Padding.Top, finalSize - Padding));
+				m_InnerPanel.Arrange(new Rectangle(Padding.Left, Padding.Top, finalSize - Padding));
 
 			return finalSize;
 		}

@@ -75,16 +75,16 @@ namespace Gwen.Control
 			base.OnItemSelected(control, args);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			return Size.Max(m_Button.DoMeasure(availableSize), m_DownArrow.DoMeasure(availableSize));
+			return Size.Max(m_Button.Measure(availableSize), m_DownArrow.Measure(availableSize));
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_Button.DoArrange(new Rectangle(Point.Zero, finalSize));
+			m_Button.Arrange(new Rectangle(Point.Zero, finalSize));
 
-			m_DownArrow.DoArrange(new Rectangle(finalSize.Width - m_Button.TextPadding.Right - m_DownArrow.MeasuredSize.Width, (finalSize.Height - m_DownArrow.MeasuredSize.Height) / 2, m_DownArrow.MeasuredSize.Width, m_DownArrow.MeasuredSize.Height));
+			m_DownArrow.Arrange(new Rectangle(finalSize.Width - m_Button.TextPadding.Right - m_DownArrow.MeasuredSize.Width, (finalSize.Height - m_DownArrow.MeasuredSize.Height) / 2, m_DownArrow.MeasuredSize.Width, m_DownArrow.MeasuredSize.Height));
 
 			return finalSize;
 		}

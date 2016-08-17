@@ -221,30 +221,30 @@ namespace Gwen.Control
 			return Changed;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			m_Resizer[(int)ResizerPos.Left].DoMeasure(new Size(ResizerThickness, availableSize.Height - 2 * ResizerThickness));
-			m_Resizer[(int)ResizerPos.LeftTop].DoMeasure(new Size(ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Top].DoMeasure(new Size(availableSize.Width - 2 * ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.RightTop].DoMeasure(new Size(ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Right].DoMeasure(new Size(ResizerThickness, availableSize.Height - 2 * ResizerThickness));
-			m_Resizer[(int)ResizerPos.RightBottom].DoMeasure(new Size(ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Bottom].DoMeasure(new Size(availableSize.Width - 2 * ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.LeftBottom].DoMeasure(new Size(ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Left].Measure(new Size(ResizerThickness, availableSize.Height - 2 * ResizerThickness));
+			m_Resizer[(int)ResizerPos.LeftTop].Measure(new Size(ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Top].Measure(new Size(availableSize.Width - 2 * ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.RightTop].Measure(new Size(ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Right].Measure(new Size(ResizerThickness, availableSize.Height - 2 * ResizerThickness));
+			m_Resizer[(int)ResizerPos.RightBottom].Measure(new Size(ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Bottom].Measure(new Size(availableSize.Width - 2 * ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.LeftBottom].Measure(new Size(ResizerThickness, ResizerThickness));
 
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_Resizer[(int)ResizerPos.Left].DoArrange(new Rectangle(0, ResizerThickness, ResizerThickness, finalSize.Height - 2 * ResizerThickness));
-			m_Resizer[(int)ResizerPos.LeftTop].DoArrange(new Rectangle(0, 0, ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Top].DoArrange(new Rectangle(ResizerThickness, 0, finalSize.Width - 2 * ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.RightTop].DoArrange(new Rectangle(finalSize.Width - ResizerThickness, 0, ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Right].DoArrange(new Rectangle(finalSize.Width - ResizerThickness, ResizerThickness, ResizerThickness, finalSize.Height - 2 * ResizerThickness));
-			m_Resizer[(int)ResizerPos.RightBottom].DoArrange(new Rectangle(finalSize.Width - ResizerThickness, finalSize.Height - ResizerThickness, ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.Bottom].DoArrange(new Rectangle(ResizerThickness, finalSize.Height - ResizerThickness, finalSize.Width - 2 * ResizerThickness, ResizerThickness));
-			m_Resizer[(int)ResizerPos.LeftBottom].DoArrange(new Rectangle(0, finalSize.Height - ResizerThickness, ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Left].Arrange(new Rectangle(0, ResizerThickness, ResizerThickness, finalSize.Height - 2 * ResizerThickness));
+			m_Resizer[(int)ResizerPos.LeftTop].Arrange(new Rectangle(0, 0, ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Top].Arrange(new Rectangle(ResizerThickness, 0, finalSize.Width - 2 * ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.RightTop].Arrange(new Rectangle(finalSize.Width - ResizerThickness, 0, ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Right].Arrange(new Rectangle(finalSize.Width - ResizerThickness, ResizerThickness, ResizerThickness, finalSize.Height - 2 * ResizerThickness));
+			m_Resizer[(int)ResizerPos.RightBottom].Arrange(new Rectangle(finalSize.Width - ResizerThickness, finalSize.Height - ResizerThickness, ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.Bottom].Arrange(new Rectangle(ResizerThickness, finalSize.Height - ResizerThickness, finalSize.Width - 2 * ResizerThickness, ResizerThickness));
+			m_Resizer[(int)ResizerPos.LeftBottom].Arrange(new Rectangle(0, finalSize.Height - ResizerThickness, ResizerThickness, ResizerThickness));
 
 			return finalSize;
 		}

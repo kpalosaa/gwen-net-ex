@@ -24,24 +24,24 @@ namespace Gwen.Control.Internal
 			Target = parent;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			m_Title.DoMeasure(availableSize);
+			m_Title.Measure(availableSize);
 
 			if (!m_CloseButton.IsCollapsed)
-				m_CloseButton.DoMeasure(availableSize);
+				m_CloseButton.Measure(availableSize);
 
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_Title.DoArrange(new Rectangle(8, 0, m_Title.MeasuredSize.Width, finalSize.Height));
+			m_Title.Arrange(new Rectangle(8, 0, m_Title.MeasuredSize.Width, finalSize.Height));
 
 			if (!m_CloseButton.IsCollapsed)
 			{
 				int closeButtonSize = finalSize.Height;
-				m_CloseButton.DoArrange(new Rectangle(finalSize.Width - 6 - closeButtonSize, 0, closeButtonSize, closeButtonSize));
+				m_CloseButton.Arrange(new Rectangle(finalSize.Width - 6 - closeButtonSize, 0, closeButtonSize, closeButtonSize));
 			}
 
 			return finalSize;

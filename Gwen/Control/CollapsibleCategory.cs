@@ -142,9 +142,9 @@ namespace Gwen.Control
             }
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size headerSize = m_HeaderButton.DoMeasure(availableSize);
+			Size headerSize = m_HeaderButton.Measure(availableSize);
 
 			if (IsCategoryCollapsed)
 			{
@@ -161,7 +161,7 @@ namespace Gwen.Control
 					if (button == null)
 						continue;
 
-					Size size = child.DoMeasure(availableSize);
+					Size size = child.Measure(availableSize);
 					if (size.Width > width)
 						width = child.Width;
 					height += size.Height;
@@ -173,9 +173,9 @@ namespace Gwen.Control
 			}
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_HeaderButton.DoArrange(new Rectangle(0, 0, finalSize.Width, m_HeaderButton.MeasuredSize.Height));
+			m_HeaderButton.Arrange(new Rectangle(0, 0, finalSize.Width, m_HeaderButton.MeasuredSize.Height));
 
 			if (IsCategoryCollapsed)
 			{
@@ -197,7 +197,7 @@ namespace Gwen.Control
 					button.UpdateColors();
 					b = !b;
 
-					child.DoArrange(new Rectangle(Padding.Left, y, width, child.MeasuredSize.Height));
+					child.Arrange(new Rectangle(Padding.Left, y, width, child.MeasuredSize.Height));
 					y += child.MeasuredSize.Height;
 				}
 

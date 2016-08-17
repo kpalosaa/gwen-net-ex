@@ -45,8 +45,8 @@ namespace Gwen.Control.Property
 
 			Point p = m_Button.LocalPosToCanvas(Point.Zero);
 
-			popup.DoMeasure(canvas.ActualSize);
-			popup.DoArrange(new Rectangle(p.X + m_Button.ActualWidth - popup.MeasuredSize.Width, p.Y + ActualHeight, popup.MeasuredSize.Width, popup.MeasuredSize.Height));
+			popup.Measure(canvas.ActualSize);
+			popup.Arrange(new Rectangle(p.X + m_Button.ActualWidth - popup.MeasuredSize.Width, p.Y + ActualHeight, popup.MeasuredSize.Width, popup.MeasuredSize.Height));
 
 			popup.Open(new Point(p.X + m_Button.ActualWidth - popup.MeasuredSize.Width, p.Y + ActualHeight));
 		}

@@ -12,8 +12,11 @@ namespace Gwen.Control.Internal
 	{
 		private string m_String;
 		private Font m_Font;
+		private Size m_TextSize;
 
 		private string m_FitToText;
+
+		private string m_TextOverride;
 
 		/// <summary>
 		/// Font used to display the text.
@@ -21,7 +24,7 @@ namespace Gwen.Control.Internal
 		/// <remarks>
 		/// The font is not being disposed by this class.
 		/// </remarks>
-		public Font Font { get { return m_Font; } set { m_Font = value; Invalidate(); } }
+		public Font Font { get { return m_Font; } set { m_Font = value; IsDirty = true; Invalidate(); } }
 
 		/// <summary>
 		/// Text to display.
@@ -35,6 +38,7 @@ namespace Gwen.Control.Internal
 					return;
 
 				m_String = value;
+				IsDirty = true;
 				if (AutoSizeToContents)
 					Invalidate();
 			}
@@ -61,14 +65,27 @@ namespace Gwen.Control.Internal
 		public Color TextColorOverride { get; set; }
 
 		/// <summary>
-		/// Text override - used to display different string.
+		/// Text override. Used to display different string.
 		/// </summary>
-		public string TextOverride { get; set; }
+		public string TextOverride
+		{
+			get { return m_TextOverride; }
+			set
+			{
+				if (value == m_TextOverride)
+					return;
+
+				m_TextOverride = value;
+				IsDirty = true;
+				if (AutoSizeToContents)
+					Invalidate();
+			}
+		}
 
 		/// <summary>
 		/// Set the minimum size of the control to be able to show the text of this property.
 		/// </summary>
-		public string FitToText { get { return m_FitToText; } set { if (m_FitToText == value) return; m_FitToText = value; Invalidate(); } }
+		public string FitToText { get { return m_FitToText; } set { if (m_FitToText == value) return; m_FitToText = value; IsDirty = true; Invalidate(); } }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Text"/> class.
@@ -82,7 +99,6 @@ namespace Gwen.Control.Internal
 			m_String = String.Empty;
 			m_FitToText = null;
 			TextColor = Skin.Colors.Label.Default;
-			MouseInputEnabled = false;
 			TextColorOverride = new Color(0, 255, 255, 255); // A==0, override disabled
 		}
 
@@ -122,7 +138,7 @@ namespace Gwen.Control.Internal
 #endif
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (String == null)
 				return Size.Zero;
@@ -130,23 +146,33 @@ namespace Gwen.Control.Internal
 			if (Font == null)
 				throw new InvalidOperationException("Text control font not set.");
 
-			Size size = Size.Zero;
+			if (!IsDirty)
+				return m_TextSize;
 
 			string text = TextOverride ?? String;
 
 			if (AutoSizeToContents && text.Length == 0)
-				size = Skin.Renderer.MeasureText(Font, " ");
+				m_TextSize = Skin.Renderer.MeasureText(m_Font, " ");
 			else if (!AutoSizeToContents && !String.IsNullOrWhiteSpace(m_FitToText))
-				size = Skin.Renderer.MeasureText(Font, m_FitToText);
+				m_TextSize = Skin.Renderer.MeasureText(m_Font, m_FitToText);
 			else
-				size = Skin.Renderer.MeasureText(Font, text);
+				m_TextSize = Skin.Renderer.MeasureText(m_Font, text);
 
-			return size;
+			IsDirty = false;
+
+			return m_TextSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return MeasuredSize;
+		}
+
+		protected override void OnScaleChanged()
+		{
+			base.OnScaleChanged();
+
+			IsDirty = true;
 		}
 
 		/// <summary>

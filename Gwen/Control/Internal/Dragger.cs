@@ -83,12 +83,12 @@ namespace Gwen.Control.Internal
 				Dragged.Invoke(this, EventArgs.Empty);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return finalSize;
 		}

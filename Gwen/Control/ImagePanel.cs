@@ -121,7 +121,7 @@ namespace Gwen.Control
             base.Touch();
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (m_Texture == null)
 				return Size.Zero;
@@ -135,7 +135,7 @@ namespace Gwen.Control
 			return new Size(Util.Ceil(size.Width * scale), Util.Ceil(size.Height * scale));
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return finalSize;
 		}

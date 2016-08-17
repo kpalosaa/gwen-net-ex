@@ -55,25 +55,25 @@ namespace Gwen.Control
 			m_Label.KeyboardInputEnabled = false;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size labelSize = m_Label.DoMeasure(availableSize);
-			Size radioButtonSize = m_RadioButton.DoMeasure(availableSize);
+			Size labelSize = m_Label.Measure(availableSize);
+			Size radioButtonSize = m_RadioButton.Measure(availableSize);
 
 			return new Size(labelSize.Width + 4 + radioButtonSize.Width, Math.Max(labelSize.Height, radioButtonSize.Height));
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_RadioButton.MeasuredSize.Height > m_Label.MeasuredSize.Height)
 			{
-				m_RadioButton.DoArrange(new Rectangle(0, 0, m_RadioButton.MeasuredSize.Width, m_RadioButton.MeasuredSize.Height));
-				m_Label.DoArrange(new Rectangle(m_RadioButton.MeasuredSize.Width + 4, (m_RadioButton.MeasuredSize.Height - m_Label.MeasuredSize.Height) / 2, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
+				m_RadioButton.Arrange(new Rectangle(0, 0, m_RadioButton.MeasuredSize.Width, m_RadioButton.MeasuredSize.Height));
+				m_Label.Arrange(new Rectangle(m_RadioButton.MeasuredSize.Width + 4, (m_RadioButton.MeasuredSize.Height - m_Label.MeasuredSize.Height) / 2, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
 			}
 			else
 			{
-				m_RadioButton.DoArrange(new Rectangle(0, (m_Label.MeasuredSize.Height - m_RadioButton.MeasuredSize.Height) / 2, m_RadioButton.MeasuredSize.Width, m_RadioButton.MeasuredSize.Height));
-				m_Label.DoArrange(new Rectangle(m_RadioButton.MeasuredSize.Width + 4, 0, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
+				m_RadioButton.Arrange(new Rectangle(0, (m_Label.MeasuredSize.Height - m_RadioButton.MeasuredSize.Height) / 2, m_RadioButton.MeasuredSize.Width, m_RadioButton.MeasuredSize.Height));
+				m_Label.Arrange(new Rectangle(m_RadioButton.MeasuredSize.Width + 4, 0, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
 			}
 
 			return finalSize;

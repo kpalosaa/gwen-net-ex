@@ -85,13 +85,13 @@ namespace Gwen.Control
             skin.DrawPropertyRow(this, m_Label.ActualRight, IsEditing, IsHovered | m_Property.IsHovered);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Properties parent = Parent as Properties;
 			if (parent != null)
 			{
-				Size labelSize = m_Label.DoMeasure(new Size(parent.LabelWidth - Padding.Left - Padding.Right, availableSize.Height)) + Padding;
-				Size propertySize = m_Property.DoMeasure(new Size(availableSize.Width - parent.LabelWidth, availableSize.Height)) + Padding;
+				Size labelSize = m_Label.Measure(new Size(parent.LabelWidth - Padding.Left - Padding.Right, availableSize.Height)) + Padding;
+				Size propertySize = m_Property.Measure(new Size(availableSize.Width - parent.LabelWidth, availableSize.Height)) + Padding;
 
 				return new Size(labelSize.Width + propertySize.Width, Math.Max(labelSize.Height, propertySize.Height));
 			}
@@ -99,13 +99,13 @@ namespace Gwen.Control
 			return Size.Zero;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			Properties parent = Parent as Properties;
 			if (parent != null)
 			{
-				m_Label.DoArrange(new Rectangle(Padding.Left, Padding.Top, parent.LabelWidth - Padding.Left - Padding.Right, m_Label.MeasuredSize.Height));
-				m_Property.DoArrange(new Rectangle(parent.LabelWidth + Padding.Left, Padding.Top, finalSize.Width - parent.LabelWidth - Padding.Left - Padding.Right, m_Property.MeasuredSize.Height));
+				m_Label.Arrange(new Rectangle(Padding.Left, Padding.Top, parent.LabelWidth - Padding.Left - Padding.Right, m_Label.MeasuredSize.Height));
+				m_Property.Arrange(new Rectangle(parent.LabelWidth + Padding.Left, Padding.Top, finalSize.Width - parent.LabelWidth - Padding.Left - Padding.Right, m_Property.MeasuredSize.Height));
 
 				return new Size(finalSize.Width, Math.Max(m_Label.MeasuredSize.Height, m_Property.MeasuredSize.Height) + Padding.Top + Padding.Bottom);
 			}

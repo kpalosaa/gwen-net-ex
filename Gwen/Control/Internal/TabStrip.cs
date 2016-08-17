@@ -95,7 +95,7 @@ namespace Gwen.Control.Internal
 			Invalidate();
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			int num = 0;
 			foreach (var child in Children)
@@ -122,7 +122,7 @@ namespace Gwen.Control.Internal
 				num++;
 			}
 
-			m_TotalSize = base.Measure(Size.Infinity);
+			m_TotalSize = base.OnMeasure(Size.Infinity);
 
 			return m_TotalSize;
 		}

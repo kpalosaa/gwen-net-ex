@@ -72,9 +72,9 @@ namespace Gwen.Control
 			m_Bar.Dragged += OnBarMoved;
         }
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			Size size = base.Arrange(finalSize);
+			Size size = base.OnArrange(finalSize);
 
 			SetScrollAmount(ScrollAmount, true);
 

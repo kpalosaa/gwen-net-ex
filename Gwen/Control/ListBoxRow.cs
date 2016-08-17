@@ -1,5 +1,4 @@
 ﻿using System;
-using Gwen.Control.Layout;
 
 namespace Gwen.Control
 {
@@ -11,9 +10,6 @@ namespace Gwen.Control
     {
         private bool m_Selected;
 
-		private ListBox m_ListBox;
-		public ListBox ListBox { get { return m_ListBox; } }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxRow"/> class.
         /// </summary>
@@ -21,8 +17,6 @@ namespace Gwen.Control
         public ListBoxRow(ControlBase parent)
             : base(parent)
         {
-			m_ListBox = parent as ListBox;
-
 			MouseInputEnabled = true;
             IsSelected = false;
         }
@@ -43,11 +37,16 @@ namespace Gwen.Control
             }
         }
 
-        /// <summary>
-        /// Renders the control using specified skin.
-        /// </summary>
-        /// <param name="skin">Skin to use.</param>
-        protected override void Render(Skin.SkinBase skin)
+		/// <summary>
+		/// Invoked when the row has been selected.
+		/// </summary>
+		public event GwenEventHandler<ItemSelectedEventArgs> Selected;
+
+		/// <summary>
+		/// Renders the control using specified skin.
+		/// </summary>
+		/// <param name="skin">Skin to use.</param>
+		protected override void Render(Skin.SkinBase skin)
         {
             skin.DrawListBoxLine(this, IsSelected, EvenRow);
         }
@@ -63,10 +62,15 @@ namespace Gwen.Control
 			base.OnMouseClickedLeft(x, y, down);
             if (down)
             {
-                //IsSelected = true; // [omeg] ListBox manages that
                 OnRowSelected();
             }
         }
+
+		protected virtual void OnRowSelected()
+		{
+			if (Selected != null)
+				Selected.Invoke(this, new ItemSelectedEventArgs(this));
+		}
 
 		internal static ControlBase XmlElementHandler(Xml.Parser parser, Type type, ControlBase parent)
 		{
@@ -82,7 +86,7 @@ namespace Gwen.Control
 						if (parser.MoveToContent())
 						{
 							ControlBase column = parser.ParseElement(element);
-							element.SetCellContents(colIndex++, column, true);
+							element.SetCellContents(colIndex++, column);
 						}
 						else
 						{

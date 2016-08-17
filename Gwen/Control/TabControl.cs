@@ -198,9 +198,9 @@ namespace Gwen.Control
 			page.IsHidden = false;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			Size size = base.Arrange(finalSize);
+			Size size = base.OnArrange(finalSize);
 
 			// At this point we know TabStrip location so lets move ScrollButtons
 			int buttonSize = m_Scroll[0].Size.Width;

@@ -142,12 +142,12 @@ namespace Gwen.Control
 		/// </summary>
 		protected virtual void OnTextChanged() {}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			return m_Text.DoMeasure(availableSize) + m_TextPadding + Padding;
+			return m_Text.Measure(availableSize) + m_TextPadding + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			Size innerSize = finalSize - m_TextPadding - Padding;
 			Rectangle rect = new Rectangle(Point.Zero, Size.Min(m_Text.MeasuredSize, innerSize));
@@ -164,7 +164,7 @@ namespace Gwen.Control
 
 			rect.Offset(m_TextPadding + Padding);
 
-			m_Text.DoArrange(rect);
+			m_Text.Arrange(rect);
 
 			return finalSize;
 		}

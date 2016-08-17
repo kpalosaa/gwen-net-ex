@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Gwen.Control;
 using Gwen.Control.Layout;
@@ -12,10 +13,11 @@ namespace Gwen.UnitTest
             : base(parent)
         {
 			HorizontalLayout hlayout = new HorizontalLayout(this);
+			hlayout.Margin = Margin.Three;
 			hlayout.Dock = Dock.Top;
-
 			{
                 Control.ListBox ctrl = new Control.ListBox(hlayout);
+				ctrl.Margin = Margin.Three;
 				ctrl.AutoSizeToContent = true;
 				ctrl.AllowMultiSelect = true;
 
@@ -39,9 +41,9 @@ namespace Gwen.UnitTest
                 ctrl.RowSelected += RowSelected;
                 ctrl.RowUnselected += RowUnSelected;
             }
-
             {
                 Table ctrl = new Table(hlayout);
+				ctrl.Margin = Margin.Three;
 
 				ctrl.AddRow("First");
                 ctrl.AddRow("Blue");
@@ -60,26 +62,23 @@ namespace Gwen.UnitTest
 
                 ctrl.SizeToContent();
             }
-
             {
                 Control.ListBox ctrl = new Control.ListBox(hlayout);
+				ctrl.Margin = Margin.Three;
 				ctrl.AutoSizeToContent = true;
 				ctrl.ColumnCount = 3;
                 ctrl.RowSelected += RowSelected;
                 ctrl.RowUnselected += RowUnSelected;
-
                 {
                     TableRow row = ctrl.AddRow("Baked Beans");
                     row.SetCellText(1, "Heinz");
                     row.SetCellText(2, "£3.50");
                 }
-
                 {
                     TableRow row = ctrl.AddRow("Bananas");
                     row.SetCellText(1, "Trees");
                     row.SetCellText(2, "£1.27");
                 }
-
                 {
                     TableRow row = ctrl.AddRow("Chicken");
                     row.SetCellText(1, "\u5355\u5143\u6D4B\u8BD5");
@@ -88,11 +87,12 @@ namespace Gwen.UnitTest
 			}
 
 			VerticalLayout vlayout = new VerticalLayout(hlayout);
-
             {
                 // fixed-size list box
                 Control.ListBox ctrl = new Control.ListBox(vlayout);
-				ctrl.AutoSizeToContent = true;
+				ctrl.Margin = Margin.Three;
+				ctrl.Height = 90;
+				//ctrl.AutoSizeToContent = true;
 				ctrl.HorizontalAlignment = HorizontalAlignment.Left;
                 ctrl.ColumnCount = 3;
 
@@ -110,10 +110,10 @@ namespace Gwen.UnitTest
                 ctrl.AddRow("Row 3, medium");
                 ctrl[2].SetCellText(2, "Last cell");
 			}
-
             {
                 // autosized list box
                 Control.ListBox ctrl = new Control.ListBox(vlayout);
+				ctrl.Margin = Margin.Three;
 				ctrl.AutoSizeToContent = true;
 				ctrl.HorizontalAlignment = HorizontalAlignment.Left;
 				ctrl.ColumnCount = 3;
@@ -128,8 +128,48 @@ namespace Gwen.UnitTest
                 ctrl.AddRow("Row 3, medium");
                 ctrl[2].SetCellText(2, "Last cell");
 			}
+			{
+				Control.ListBox ctrl = new Control.ListBox(vlayout);
+				ctrl.Margin = Margin.Three;
+				ctrl.HorizontalAlignment = HorizontalAlignment.Left;
+				ctrl.AutoSizeToContent = true;
+				ctrl.Height = 110;
 
+				ObservableCollection<ListBoxItem> items = new ObservableCollection<ListBoxItem>();
+				items.Add(new ListBoxItem() { Name = "Baked Beans", Type = "Heinz", Price = 3.50 });
+				items.Add(new ListBoxItem() { Name = "Bananas", Type = "Trees", Price = 1.27 });
+
+				ctrl.DisplayMembers = new string[] { "Name", "Type", "Price" };
+				ctrl.ItemsSource = items;
+
+				HorizontalLayout hlayout2 = new HorizontalLayout(vlayout);
+				{
+					Control.Button add = new Control.Button(hlayout2);
+					add.Margin = Margin.Three;
+					add.Text = "Insert";
+					add.Clicked += (s, e) =>
+					{
+						int selectedIndex = ctrl.SelectedRowIndex;
+						if (selectedIndex != -1)
+							items.Insert(selectedIndex, new ListBoxItem() { Name = "Chicken", Type = "\u5355\u5143\u6D4B\u8BD5", Price = 8.95 });
+						else
+							items.Add(new ListBoxItem() { Name = "Chicken", Type = "\u5355\u5143\u6D4B\u8BD5", Price = 8.95 });
+					};
+				}
+				{
+					Control.Button remove = new Control.Button(hlayout2);
+					remove.Margin = Margin.Three;
+					remove.Text = "Remove";
+					remove.Clicked += (s, e) =>
+					{
+						int selectedIndex = ctrl.SelectedRowIndex;
+						if (selectedIndex != -1)
+							items.RemoveAt(selectedIndex);
+					};
+				}
+			}
 			hlayout = new HorizontalLayout(this);
+			hlayout.Margin = Margin.Six;
 			hlayout.Dock = Dock.Top;
 
 			/* Selecting Rows in Code */
@@ -137,12 +177,13 @@ namespace Gwen.UnitTest
 				Control.ListBox ctrl = new Control.ListBox(hlayout);
 				ctrl.AutoSizeToContent = true;
 
-				ListBoxRow Row = ctrl.AddRow("Row");
+				ListBoxRow row = ctrl.AddRow("Row");
                 ctrl.AddRow("Text");
                 ctrl.AddRow("InternalName", "Name");
                 ctrl.AddRow("UserData", "Internal", 12);
 
                 Control.LabeledCheckBox multiline = new Control.LabeledCheckBox(this);
+				multiline.Margin = Margin.Six;
 				multiline.Dock = Dock.Top;
 				multiline.Text = "Enable MultiSelect";
 				multiline.CheckChanged += delegate(ControlBase sender, EventArgs args)
@@ -151,17 +192,16 @@ namespace Gwen.UnitTest
                 };
 
 				vlayout = new VerticalLayout(hlayout);
-                //Select by Menu Item
+                //Select by Row
                 {
                     Control.Button TriangleButton = new Control.Button(vlayout);
                     TriangleButton.Text = "Row";
                     TriangleButton.Width = 100;
                     TriangleButton.Clicked += delegate(ControlBase sender, ClickedEventArgs args)
                     {
-                        ctrl.SelectedRow = Row;
+                        ctrl.SelectedRow = row;
                     };
                 }
-
                 //Select by Text
                 {
                     Control.Button TestBtn = new Control.Button(vlayout);
@@ -169,10 +209,9 @@ namespace Gwen.UnitTest
                     TestBtn.Width = 100;
                     TestBtn.Clicked += delegate(ControlBase sender, ClickedEventArgs args)
                     {
-                        ctrl.SelectByText("Text");
+                        ctrl.SelectRows("Text");
                     };
                 }
-
                 //Select by Name
                 {
                     Control.Button TestBtn = new Control.Button(vlayout);
@@ -183,7 +222,6 @@ namespace Gwen.UnitTest
                         ctrl.SelectByName("Name");
                     };
                 }
-
                 //Select by UserData
                 {
                     Control.Button TestBtn = new Control.Button(vlayout);
@@ -210,5 +248,12 @@ namespace Gwen.UnitTest
             Control.ListBox list = control as Control.ListBox;
             UnitPrint(String.Format("ListBox: OnRowUnselected"));
         }
+
+		private class ListBoxItem
+		{
+			public string Name { get; set; }
+			public string Type { get; set; }
+			public double Price { get; set; }
+		}
     }
 }

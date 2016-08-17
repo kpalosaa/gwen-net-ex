@@ -22,19 +22,19 @@ namespace Gwen.Control.Layout
 		{
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Size size = availableSize - Padding;
 
 			foreach (ControlBase child in Children)
 			{
-				child.DoMeasure(size);
+				child.Measure(size);
 			}
 
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			Size size = finalSize - Padding;
 
@@ -50,7 +50,7 @@ namespace Gwen.Control.Layout
 				int right = anchorBounds.Right + (size.Width - initialSize.Width) * anchor.Right / 100;
 				int bottom = anchorBounds.Bottom + (size.Height - initialSize.Height) * anchor.Bottom / 100;
 
-				child.DoArrange(new Rectangle(left, top, right - left + 1, bottom - top + 1));
+				child.Arrange(new Rectangle(left, top, right - left + 1, bottom - top + 1));
 			}
 
 			return finalSize;

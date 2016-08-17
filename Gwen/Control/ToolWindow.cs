@@ -81,40 +81,40 @@ namespace Gwen.Control
 
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size titleBarSize = m_DragBar.DoMeasure(new Size(availableSize.Width, availableSize.Height));
+			Size titleBarSize = m_DragBar.Measure(new Size(availableSize.Width, availableSize.Height));
 
 			if (m_InnerPanel != null)
 			{
 				if (m_vertical)
-					m_InnerPanel.DoMeasure(new Size(availableSize.Width, availableSize.Height - titleBarSize.Height));
+					m_InnerPanel.Measure(new Size(availableSize.Width, availableSize.Height - titleBarSize.Height));
 				else
-					m_InnerPanel.DoMeasure(new Size(availableSize.Width - titleBarSize.Width, availableSize.Height));
+					m_InnerPanel.Measure(new Size(availableSize.Width - titleBarSize.Width, availableSize.Height));
 			}
 
 			if (m_vertical)
-				return base.Measure(new Size(m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height + titleBarSize.Height));
+				return base.OnMeasure(new Size(m_InnerPanel.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height + titleBarSize.Height));
 			else
-				return base.Measure(new Size(m_InnerPanel.MeasuredSize.Width + titleBarSize.Width, m_InnerPanel.MeasuredSize.Height));
+				return base.OnMeasure(new Size(m_InnerPanel.MeasuredSize.Width + titleBarSize.Width, m_InnerPanel.MeasuredSize.Height));
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_vertical)
-				m_DragBar.DoArrange(new Rectangle(0, 0, finalSize.Width, m_DragBar.MeasuredSize.Height));
+				m_DragBar.Arrange(new Rectangle(0, 0, finalSize.Width, m_DragBar.MeasuredSize.Height));
 			else
-				m_DragBar.DoArrange(new Rectangle(0, 0, m_DragBar.MeasuredSize.Width, finalSize.Height));
+				m_DragBar.Arrange(new Rectangle(0, 0, m_DragBar.MeasuredSize.Width, finalSize.Height));
 
 			if (m_InnerPanel != null)
 			{
 				if (m_vertical)
-					m_InnerPanel.DoArrange(new Rectangle(0, m_DragBar.MeasuredSize.Height, finalSize.Width, finalSize.Height - m_DragBar.MeasuredSize.Height));
+					m_InnerPanel.Arrange(new Rectangle(0, m_DragBar.MeasuredSize.Height, finalSize.Width, finalSize.Height - m_DragBar.MeasuredSize.Height));
 				else
-					m_InnerPanel.DoArrange(new Rectangle(m_DragBar.MeasuredSize.Width, 0, finalSize.Width - m_DragBar.MeasuredSize.Width, finalSize.Height));
+					m_InnerPanel.Arrange(new Rectangle(m_DragBar.MeasuredSize.Width, 0, finalSize.Width - m_DragBar.MeasuredSize.Width, finalSize.Height));
 			}
 
-			return base.Arrange(finalSize);
+			return base.OnArrange(finalSize);
 		}
 
 		public override void EnableResizing(bool left = true, bool top = true, bool right = true, bool bottom = true)

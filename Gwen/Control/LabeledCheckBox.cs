@@ -59,25 +59,25 @@ namespace Gwen.Control
             IsTabable = false;
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			Size labelSize = m_Label.DoMeasure(availableSize);
-			Size radioButtonSize = m_CheckBox.DoMeasure(availableSize);
+			Size labelSize = m_Label.Measure(availableSize);
+			Size radioButtonSize = m_CheckBox.Measure(availableSize);
 
 			return new Size(labelSize.Width + 4 + radioButtonSize.Width, Math.Max(labelSize.Height, radioButtonSize.Height));
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_CheckBox.MeasuredSize.Height > m_Label.MeasuredSize.Height)
 			{
-				m_CheckBox.DoArrange(new Rectangle(0, 0, m_CheckBox.MeasuredSize.Width, m_CheckBox.MeasuredSize.Height));
-				m_Label.DoArrange(new Rectangle(m_CheckBox.MeasuredSize.Width + 4, (m_CheckBox.MeasuredSize.Height - m_Label.MeasuredSize.Height) / 2, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
+				m_CheckBox.Arrange(new Rectangle(0, 0, m_CheckBox.MeasuredSize.Width, m_CheckBox.MeasuredSize.Height));
+				m_Label.Arrange(new Rectangle(m_CheckBox.MeasuredSize.Width + 4, (m_CheckBox.MeasuredSize.Height - m_Label.MeasuredSize.Height) / 2, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
 			}
 			else
 			{
-				m_CheckBox.DoArrange(new Rectangle(0, (m_Label.MeasuredSize.Height - m_CheckBox.MeasuredSize.Height) / 2, m_CheckBox.MeasuredSize.Width, m_CheckBox.MeasuredSize.Height));
-				m_Label.DoArrange(new Rectangle(m_CheckBox.MeasuredSize.Width + 4, 0, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
+				m_CheckBox.Arrange(new Rectangle(0, (m_Label.MeasuredSize.Height - m_CheckBox.MeasuredSize.Height) / 2, m_CheckBox.MeasuredSize.Width, m_CheckBox.MeasuredSize.Height));
+				m_Label.Arrange(new Rectangle(m_CheckBox.MeasuredSize.Width + 4, 0, m_Label.MeasuredSize.Width, m_Label.MeasuredSize.Height));
 			}
 
 			return MeasuredSize;

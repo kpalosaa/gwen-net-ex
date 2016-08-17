@@ -113,14 +113,14 @@ namespace Gwen.Control
 			base.OnItemSelected(control, args);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			return m_TextBox.DoMeasure(availableSize);
+			return m_TextBox.Measure(availableSize);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			m_TextBox.DoArrange(new Rectangle(Point.Zero, finalSize));
+			m_TextBox.Arrange(new Rectangle(Point.Zero, finalSize));
 
 			return finalSize;
 		}

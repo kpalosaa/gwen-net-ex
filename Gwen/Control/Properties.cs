@@ -41,24 +41,24 @@ namespace Gwen.Control
 			m_InnerPanel = new Layout.VerticalLayout(this);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize -= Padding;
 
-			Size size = m_InnerPanel.DoMeasure(availableSize);
+			Size size = m_InnerPanel.Measure(availableSize);
 
-			m_SplitterBar.DoMeasure(new Size(availableSize.Width, size.Height));
+			m_SplitterBar.Measure(new Size(availableSize.Width, size.Height));
 
 			return size + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			finalSize -= Padding;
 
-			m_InnerPanel.DoArrange(Padding.Left, Padding.Top, finalSize.Width, finalSize.Height);
+			m_InnerPanel.Arrange(Padding.Left, Padding.Top, finalSize.Width, finalSize.Height);
 
-			m_SplitterBar.DoArrange(Padding.Left + m_LabelWidth - 2, Padding.Top, m_SplitterBar.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height);
+			m_SplitterBar.Arrange(Padding.Left + m_LabelWidth - 2, Padding.Top, m_SplitterBar.MeasuredSize.Width, m_InnerPanel.MeasuredSize.Height);
 
 			return new Size(finalSize.Width, m_InnerPanel.MeasuredSize.Height) + Padding;
 		}

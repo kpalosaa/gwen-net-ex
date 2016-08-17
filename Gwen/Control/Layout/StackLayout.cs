@@ -21,7 +21,7 @@ namespace Gwen.Control.Layout
 		{
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize -= Padding;
 
@@ -35,7 +35,7 @@ namespace Gwen.Control.Layout
 					if (child.IsCollapsed)
 						continue;
 
-					Size size = child.DoMeasure(availableSize);
+					Size size = child.Measure(availableSize);
 					availableSize.Width -= size.Width;
 					if (size.Height > height)
 						height = size.Height;
@@ -49,7 +49,7 @@ namespace Gwen.Control.Layout
 					if (child.IsCollapsed)
 						continue;
 
-					Size size = child.DoMeasure(availableSize);
+					Size size = child.Measure(availableSize);
 					availableSize.Height -= size.Height;
 					if (size.Width > width)
 						width = size.Width;
@@ -60,7 +60,7 @@ namespace Gwen.Control.Layout
 			return new Size(width, height) + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			finalSize -= Padding;
 
@@ -74,7 +74,7 @@ namespace Gwen.Control.Layout
 					if (child.IsCollapsed)
 						continue;
 
-					child.DoArrange(new Rectangle(x, Padding.Top, child.MeasuredSize.Width, height));
+					child.Arrange(new Rectangle(x, Padding.Top, child.MeasuredSize.Width, height));
 					x += child.MeasuredSize.Width;
 				}
 
@@ -92,7 +92,7 @@ namespace Gwen.Control.Layout
 					if (child.IsCollapsed)
 						continue;
 
-					child.DoArrange(new Rectangle(Padding.Left, y, width, child.MeasuredSize.Height));
+					child.Arrange(new Rectangle(Padding.Left, y, width, child.MeasuredSize.Height));
 					y += child.MeasuredSize.Height;
 				}
 

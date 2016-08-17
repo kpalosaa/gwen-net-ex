@@ -289,7 +289,7 @@ namespace Gwen.Control.Internal
 			return best;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize -= Padding;
 
@@ -299,7 +299,7 @@ namespace Gwen.Control.Internal
 
 			foreach (Text line in m_TextLines)
 			{
-				Size size = line.DoMeasure(availableSize);
+				Size size = line.Measure(availableSize);
 				availableSize.Height -= lineHeight;
 				if (size.Width > width)
 					width = size.Width;
@@ -309,7 +309,7 @@ namespace Gwen.Control.Internal
 			return new Size(width + 2, height) + Padding;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			finalSize -= Padding;
 
@@ -319,7 +319,7 @@ namespace Gwen.Control.Internal
 
 			foreach (Text line in m_TextLines)
 			{
-				line.DoArrange(new Rectangle(Padding.Left, y, width, line.MeasuredSize.Height));
+				line.Arrange(new Rectangle(Padding.Left, y, width, line.MeasuredSize.Height));
 				y += lineHeight;
 			}
 

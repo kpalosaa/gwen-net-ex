@@ -17,12 +17,12 @@ namespace Gwen.Control.Internal
         {
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			return new Size(10, 1);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return new Size(finalSize.Width, 1);
 		}

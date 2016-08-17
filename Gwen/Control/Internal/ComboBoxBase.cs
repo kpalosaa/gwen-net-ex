@@ -153,7 +153,7 @@ namespace Gwen.Control.Internal
 				if (p.Y > canvasHeight - 100)
 				{
 					// We need to do layout for the menu here to know the height of it.
-					m_Menu.DoArrange(new Rectangle(Point.Zero, m_Menu.DoMeasure(Size.Infinity)));
+					m_Menu.Arrange(new Rectangle(Point.Zero, m_Menu.Measure(Size.Infinity)));
 					m_Menu.Position = new Point(p.X, p.Y - m_Menu.ActualHeight);
 				}
 				else

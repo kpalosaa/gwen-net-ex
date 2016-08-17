@@ -210,14 +210,14 @@ namespace Gwen.Control
 			base.OnBoundsChanged(oldBounds);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			m_CursorPos = new Point(0, 0);
 
 			return new Size(128, 128);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return finalSize;
 		}

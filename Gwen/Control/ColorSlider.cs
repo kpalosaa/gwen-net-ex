@@ -150,12 +150,12 @@ namespace Gwen.Control
         /// </summary>
         public Color SelectedColor { get { return GetColorAtHeight(m_SelectedDist); } set { SetColor(value); } }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			return new Size(32, 10);
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			return new Size(MeasuredSize.Width, finalSize.Height);
 		}

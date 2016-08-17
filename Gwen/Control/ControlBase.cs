@@ -422,6 +422,12 @@ namespace Gwen.Control
 		public bool IsTabable { get { return IsSetInternalFlag(InternalFlags.Tabable); } set { SetInternalFlag(InternalFlags.Tabable, value); } }
 
 		/// <summary>
+		/// Flag for internal use to indicate if the control needs to measure itself.
+		/// </summary>
+		/// <remarks>Not used in the base class. This is only for control implementers to optimize measurement pass.</remarks>
+		protected bool IsDirty { get { return IsSetInternalFlag(InternalFlags.Dirty); } set { SetInternalFlag(InternalFlags.Dirty, value); } }
+
+		/// <summary>
 		/// Indicates whether control's background should be drawn during rendering.
 		/// </summary>
 		public bool ShouldDrawBackground { get { return IsSetInternalFlag(InternalFlags.DrawBackground); } set { SetInternalFlag(InternalFlags.DrawBackground, value); } }
@@ -608,6 +614,8 @@ namespace Gwen.Control
 		/// <param name="parent">Parent control.</param>
 		public ControlBase(ControlBase parent = null)
 		{
+			m_InternalFlags = 0; // All flags set to false by default
+
 			m_Children = new List<ControlBase>();
 			m_Accelerators = new Dictionary<string, GwenEventHandler<EventArgs>>();
 
@@ -621,20 +629,13 @@ namespace Gwen.Control
 
 			m_AnchorBounds = new Rectangle(0, 0, 0, 0);
 
-			SetInternalFlag(InternalFlags.AlignHStretch | InternalFlags.AlignVStretch | InternalFlags.DockNone, true);
+			SetInternalFlag(InternalFlags.AlignHStretch | InternalFlags.AlignVStretch | InternalFlags.DockNone | InternalFlags.DrawBackground | InternalFlags.Dirty, true);
 
 			Parent = parent;
-
-			RestrictToParent = false;
-
-			MouseInputEnabled = false; // Edit: Changed to false. Todo: Check if this is ok.
-			KeyboardInputEnabled = false;
 
 			Invalidate();
 			Cursor = Cursor.Normal;
 			m_ToolTip = null;
-			IsTabable = false;
-			ShouldDrawBackground = true;
 			m_CacheTextureDirty = true;
 			m_CacheToTexture = false;
 
@@ -891,6 +892,23 @@ namespace Gwen.Control
 				newIndex++;
 
 			m_ActualParent.m_Children.Insert(newIndex, this);
+		}
+
+		public virtual void MoveChildToIndex(int index)
+		{
+			if (m_ActualParent == null)
+				return;
+
+			int oldIndex = m_ActualParent.m_Children.IndexOf(this);
+
+			if (oldIndex == index)
+				return;
+
+			if (oldIndex < index)
+				index--;
+
+			m_ActualParent.m_Children.Remove(this);
+			m_ActualParent.m_Children.Insert(index, this);
 		}
 
 		/// <summary>
@@ -1537,7 +1555,8 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="availableSize">Available size for the control. The control doesn't need to use all the space that is available.</param>
 		/// <returns>Minimum size that the control needs to draw itself correctly.</returns>
-		protected virtual Size Measure(Size availableSize)
+		/// <remarks>There is no need to call the base method if you don't need a dock layout implementation.</remarks>
+		protected virtual Size OnMeasure(Size availableSize)
 		{
 			int parentWidth = m_Padding.Left + m_Padding.Right;
 			int parentHeight = m_Padding.Top + m_Padding.Bottom;
@@ -1556,7 +1575,7 @@ namespace Gwen.Control
 
 				Size childSize = new Size(Math.Max(0, availableSize.Width - childrenWidth), Math.Max(0, availableSize.Height - childrenHeight));
 
-				childSize = child.DoMeasure(childSize);
+				childSize = child.Measure(childSize);
 
 				switch (child.Dock)
 				{
@@ -1585,7 +1604,7 @@ namespace Gwen.Control
 
 				Size childSize = new Size(Math.Max(0, availableSize.Width - childrenWidth), Math.Max(0, availableSize.Height - childrenHeight));
 
-				childSize = child.DoMeasure(childSize);
+				childSize = child.Measure(childSize);
 
 				parentWidth = Math.Max(parentWidth, childrenWidth + childSize.Width);
 				parentHeight = Math.Max(parentHeight, childrenHeight + childSize.Height);
@@ -1601,7 +1620,7 @@ namespace Gwen.Control
 				if (dock != Dock.None)
 					continue;
 
-				Size childSize = child.DoMeasure(availableSize);
+				Size childSize = child.Measure(availableSize);
 
 				parentWidth = Math.Max(parentWidth, child.Left + childSize.Width);
 				parentHeight = Math.Max(parentHeight, child.Top + childSize.Height);
@@ -1619,9 +1638,9 @@ namespace Gwen.Control
 		/// <param name="availableWidth">Width that is available for the control.</param>
 		/// <param name="availableHeight">Height that is available for the control.</param>
 		/// <returns>Minimum size that the control needs to draw itself correctly.</returns>
-		public Size DoMeasure(int availableWidth, int availableHeight)
+		public Size Measure(int availableWidth, int availableHeight)
 		{
-			return DoMeasure(new Size(availableWidth, availableHeight));
+			return Measure(new Size(availableWidth, availableHeight));
 		}
 
 		/// <summary>
@@ -1629,7 +1648,7 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="availableSize">Size that is available for the control.</param>
 		/// <returns>Minimum size that the control needs to draw itself correctly.</returns>
-		public Size DoMeasure(Size availableSize)
+		public Size Measure(Size availableSize)
 		{
 			availableSize -= m_Margin;
 
@@ -1641,7 +1660,7 @@ namespace Gwen.Control
 			availableSize.Width = Util.Clamp(availableSize.Width, m_MinimumSize.Width, m_MaximumSize.Width);
 			availableSize.Height = Util.Clamp(availableSize.Height, m_MinimumSize.Height, m_MaximumSize.Height);
 
-			Size size = Measure(availableSize);
+			Size size = OnMeasure(availableSize);
 			if (Util.IsInfinity(size.Width) || Util.IsInfinity(size.Height))
 				throw new InvalidOperationException("Measured size cannot be infinity.");
 
@@ -1670,7 +1689,8 @@ namespace Gwen.Control
 		/// </summary>
 		/// <param name="finalSize">Space that the control should fill.</param>
 		/// <returns>Space that the control filled.</returns>
-		protected virtual Size Arrange(Size finalSize)
+		/// <remarks>There is no need to call the base method if you don't need a dock layout implementation.</remarks>
+		protected virtual Size OnArrange(Size finalSize)
 		{
 			int childrenLeft = m_Padding.Left;
 			int childrenTop = m_Padding.Top;
@@ -1712,7 +1732,7 @@ namespace Gwen.Control
 						break;
 				}
 
-				child.DoArrange(bounds);
+				child.Arrange(bounds);
 			}
 
 			foreach (ControlBase child in m_Children)
@@ -1729,7 +1749,7 @@ namespace Gwen.Control
 
 				m_InnerBounds = bounds;
 
-				child.DoArrange(bounds);
+				child.Arrange(bounds);
 			}
 
 			foreach (ControlBase child in m_Children)
@@ -1745,7 +1765,7 @@ namespace Gwen.Control
 				Size childSize = child.MeasuredSize;
 				Rectangle bounds = new Rectangle(child.Left, child.Top, finalSize.Width - child.Left, finalSize.Height - child.Top);
 
-				child.DoArrange(bounds);
+				child.Arrange(bounds);
 			}
 
 			return finalSize;
@@ -1758,16 +1778,16 @@ namespace Gwen.Control
 		/// <param name="y">Final vertical location. This includes margins.</param>
 		/// <param name="width">Final width of the control. This includes margins.</param>
 		/// <param name="height">Final height of the control. This includes margins.</param>
-		public void DoArrange(int x, int y, int width, int height)
+		public void Arrange(int x, int y, int width, int height)
 		{
-			DoArrange(new Rectangle(x, y, width, height));
+			Arrange(new Rectangle(x, y, width, height));
 		}
 
 		/// <summary>
 		/// Call this method for all child controls.
 		/// </summary>
 		/// <param name="finalRect">Final location and size of the control. This includes margins.</param>
-		public void DoArrange(Rectangle finalRect)
+		public void Arrange(Rectangle finalRect)
 		{
 			Size finalSize = finalRect.Size;
 
@@ -1786,7 +1806,7 @@ namespace Gwen.Control
 			if (!Util.IsIgnore(m_DesiredBounds.Height))
 				finalSize.Height = Math.Min(finalRect.Height, m_DesiredBounds.Height);
 
-			Size arrangedSize = Arrange(finalSize);
+			Size arrangedSize = OnArrange(finalSize);
 
 			if (!Util.IsIgnore(m_DesiredBounds.Width))
 				arrangedSize.Width = m_DesiredBounds.Width;
@@ -1830,8 +1850,8 @@ namespace Gwen.Control
 		/// </summary>
 		public virtual void DoLayout()
 		{
-			Measure(m_Bounds.Size);
-			Arrange(m_Bounds.Size);
+			OnMeasure(m_Bounds.Size);
+			OnArrange(m_Bounds.Size);
 
 			NeedsLayout = false;
 			LayoutDone = true;
@@ -2462,6 +2482,7 @@ namespace Gwen.Control
 			DrawBackground		= 1 << 24,
 			Tabable				= 1 << 25,
 			KeyboardNeeded		= 1 << 26,
+			Dirty				= 1 << 27,
 		}
 	}
 }

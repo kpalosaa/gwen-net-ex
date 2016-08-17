@@ -72,8 +72,8 @@ namespace Gwen.Control
 						if (imageParagraph.ImageColor != null)
 							image.ImageColor = (Color)imageParagraph.ImageColor;
 
-						image.DoMeasure(Size.Infinity);
-						image.DoArrange(paragraph.Margin.Left, y + paragraph.Margin.Top, image.MeasuredSize.Width, image.MeasuredSize.Height);
+						image.Measure(Size.Infinity);
+						image.Arrange(paragraph.Margin.Left, y + paragraph.Margin.Top, image.MeasuredSize.Width, image.MeasuredSize.Height);
 
 						size.Width = Math.Max(size.Width, image.MeasuredSize.Width + paragraph.Margin.Left + paragraph.Margin.Right);
 
@@ -108,8 +108,8 @@ namespace Gwen.Control
 									if (linkPart.HoverFont != null)
 										link.HoverFont = linkPart.HoverFont;
 
-									link.DoMeasure(Size.Infinity);
-									link.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
+									link.Measure(Size.Infinity);
+									link.Arrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
 
 									width = Math.Max(width, link.ActualRight);
 									height = Math.Max(height, link.ActualBottom);
@@ -123,8 +123,8 @@ namespace Gwen.Control
 									if (textPart.Color != null)
 										text.TextColor = (Color)textPart.Color;
 
-									text.DoMeasure(Size.Infinity);
-									text.DoArrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
+									text.Measure(Size.Infinity);
+									text.Arrange(new Rectangle(x + textBlock.Position.X, y + textBlock.Position.Y, textBlock.Size.Width, textBlock.Size.Height));
 
 									width = Math.Max(width, text.ActualRight + 1);
 									height = Math.Max(height, text.ActualBottom + 1);
@@ -148,7 +148,7 @@ namespace Gwen.Control
 			m_Updating = false;
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (m_NeedsRebuild || availableSize.Width != m_BuildWidth)
 			{
@@ -159,7 +159,7 @@ namespace Gwen.Control
 			return m_TextSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_NeedsRebuild || finalSize.Width != m_BuildWidth)
 			{

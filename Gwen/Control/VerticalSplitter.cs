@@ -110,11 +110,11 @@ namespace Gwen.Control
 			return m_HSplitter.ActualLeft / (float)(ActualWidth - m_HSplitter.ActualWidth);
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			Size size = Size.Zero;
 
-			m_HSplitter.DoMeasure(new Size(m_BarSize, availableSize.Height));
+			m_HSplitter.Measure(new Size(m_BarSize, availableSize.Height));
 			size.Width += m_HSplitter.Width;
 
 			int h = (int)((availableSize.Width - m_BarSize) * m_HVal);
@@ -123,44 +123,44 @@ namespace Gwen.Control
 			{
 				if (m_Sections[0] != null)
 				{
-					m_Sections[0].DoMeasure(new Size(h, availableSize.Height));
+					m_Sections[0].Measure(new Size(h, availableSize.Height));
 					size.Width += m_Sections[0].MeasuredSize.Width;
 					size.Height = Math.Max(size.Height, m_Sections[0].MeasuredSize.Height);
 				}
 
 				if (m_Sections[1] != null)
 				{
-					m_Sections[1].DoMeasure(new Size(availableSize.Width - m_BarSize - h, availableSize.Height));
+					m_Sections[1].Measure(new Size(availableSize.Width - m_BarSize - h, availableSize.Height));
 					size.Width += m_Sections[1].MeasuredSize.Width;
 					size.Height = Math.Max(size.Height, m_Sections[1].MeasuredSize.Height);
 				}
 			}
 			else
 			{
-				m_Sections[m_ZoomedSection].DoMeasure(availableSize);
+				m_Sections[m_ZoomedSection].Measure(availableSize);
 				size = m_Sections[m_ZoomedSection].MeasuredSize;
 			}
 
 			return size;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int h = (int)((finalSize.Width - m_BarSize) * m_HVal);
 
-			m_HSplitter.DoArrange(new Rectangle(h, 0, m_HSplitter.MeasuredSize.Width, finalSize.Height));
+			m_HSplitter.Arrange(new Rectangle(h, 0, m_HSplitter.MeasuredSize.Width, finalSize.Height));
 
 			if (m_ZoomedSection == -1)
 			{
 				if (m_Sections[0] != null)
-					m_Sections[0].DoArrange(new Rectangle(0, 0, h, finalSize.Height));
+					m_Sections[0].Arrange(new Rectangle(0, 0, h, finalSize.Height));
 
 				if (m_Sections[1] != null)
-					m_Sections[1].DoArrange(new Rectangle(h + m_BarSize, 0, finalSize.Width - m_BarSize - h, finalSize.Height));
+					m_Sections[1].Arrange(new Rectangle(h + m_BarSize, 0, finalSize.Width - m_BarSize - h, finalSize.Height));
 			}
 			else
 			{
-				m_Sections[m_ZoomedSection].DoArrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height));
+				m_Sections[m_ZoomedSection].Arrange(new Rectangle(0, 0, finalSize.Width, finalSize.Height));
 			}
 
 			return finalSize;

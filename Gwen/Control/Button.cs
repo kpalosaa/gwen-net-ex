@@ -231,13 +231,13 @@ namespace Gwen.Control
 			Invalidate();
 		}
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			if (m_Image == null)
 			{
 				Size size = Size.Zero;
 				if (m_Text != null)
-					size = m_Text.DoMeasure(availableSize);
+					size = m_Text.Measure(availableSize);
 
 				size += m_TextPadding + Padding;
 
@@ -245,8 +245,8 @@ namespace Gwen.Control
 			}
 			else
 			{
-				Size imageSize = m_Image.DoMeasure(availableSize);
-				Size textSize = m_Text != null ? m_Text.DoMeasure(availableSize) + m_TextPadding : Size.Zero;
+				Size imageSize = m_Image.Measure(availableSize);
+				Size textSize = m_Text != null ? m_Text.Measure(availableSize) + m_TextPadding : Size.Zero;
 
 				Size totalSize;
 				switch (m_ImageAlign)
@@ -268,7 +268,7 @@ namespace Gwen.Control
 			}
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			if (m_Image == null)
 			{
@@ -290,7 +290,7 @@ namespace Gwen.Control
 
 					rect.Offset(m_TextPadding + Padding);
 
-					m_Text.DoArrange(rect);
+					m_Text.Arrange(rect);
 				}
 			}
 			else
@@ -352,12 +352,12 @@ namespace Gwen.Control
 				}
 
 				imageRect.Offset(Padding);
-				m_Image.DoArrange(imageRect);
+				m_Image.Arrange(imageRect);
 
 				if (m_Text != null)
 				{
 					textRect.Offset(Padding + m_TextPadding);
-					m_Text.DoArrange(textRect);
+					m_Text.Arrange(textRect);
 				}
 			}
 

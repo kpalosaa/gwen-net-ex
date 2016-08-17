@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Reflection;
 
 namespace Gwen.Control
 {
@@ -8,14 +11,21 @@ namespace Gwen.Control
 	/// </summary>
 	public class Table : ControlBase
 	{
+		public delegate TableRow CreateRow();
+
 		private bool m_AutoSizeToContent;
 		private bool m_SizeToContents;
-		private bool m_RowMeasurementDirty;
 		private bool m_AlternateColor;
 		private int m_ColumnCount;
 		private int m_MaxWidth; // for autosizing, if nonzero - fills last cell up to this size
 
-		private readonly int[] m_ColumnWidth;
+		private int[] m_ColumnWidth;
+
+		private IEnumerable m_ItemsSource;
+		private string m_DisplayMember;
+		private string[] m_DisplayMembers;
+
+		private CreateRow m_CreateRow;
 
 		/// <summary>
 		/// Column count (default 1).
@@ -27,9 +37,30 @@ namespace Gwen.Control
 		/// </summary>
 		public int RowCount { get { return Children.Count; } }
 
+		/// <summary>
+		/// Adjust the size of the control to fit all rows and columns.
+		/// </summary>
 		public bool AutoSizeToContent { get { return m_AutoSizeToContent; } set { m_AutoSizeToContent = value; } }
 
+		/// <summary>
+		/// Alternate row background colors.
+		/// </summary>
 		public bool AlternateColor { get { return m_AlternateColor; } set { m_AlternateColor = value; } }
+
+		/// <summary>
+		/// Collection of items. If the collection implements the INotifyCollectionChanged interface, items will be added and removed when the collection changes.
+		/// </summary>
+		public IEnumerable ItemsSource { get { return m_ItemsSource; } set { SetItemsSource(value); } }
+
+		/// <summary>
+		/// Property name of the item to display. Table will be one column table.
+		/// </summary>
+		public string DisplayMember { get { return m_DisplayMember; } set { m_DisplayMember = value; m_DisplayMembers = new string[] { value }; InitCollection(); } }
+
+		/// <summary>
+		/// Property names of the item to display. Each name represent a column on the table.
+		/// </summary>
+		public string[] DisplayMembers { get { return m_DisplayMembers; } set { m_DisplayMembers = value; InitCollection(); } }
 
 		/// <summary>
 		/// Returns specific row of the table.
@@ -42,57 +73,121 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Table(ControlBase parent) : base(parent)
+		public Table(ControlBase parent, CreateRow createRow = null) : base(parent)
 		{
 			m_ColumnCount = 1;
 
-			m_ColumnWidth = new int[TableRow.MaxColumns];
-
-			for (int i = 0; i < TableRow.MaxColumns; i++)
-			{
-				m_ColumnWidth[i] = 20;
-			}
+			m_ColumnWidth = new int[m_ColumnCount];
 
 			m_AutoSizeToContent = false;
 			m_SizeToContents = false;
-			m_RowMeasurementDirty = false;
+
+			if (createRow == null)
+				m_CreateRow = CreateRowDefault;
+			else
+				m_CreateRow = createRow;
+		}
+
+		/// <summary>
+		/// Set collection of items. If the collection implements the INotifyCollectionChanged interface, items will be added and removed when the collection changes.
+		/// </summary>
+		/// <param name="itemsSource">Items.</param>
+		public void SetItemsSource(IEnumerable itemsSource)
+		{
+			if (m_ItemsSource == itemsSource)
+				return;
+
+			if (m_ItemsSource != null && m_ItemsSource is INotifyCollectionChanged)
+			{
+				((INotifyCollectionChanged)m_ItemsSource).CollectionChanged -= OnCollectionChanged;
+			}
+
+			m_ItemsSource = itemsSource;
+
+			if (m_ItemsSource != null)
+			{
+				if (m_ItemsSource is INotifyCollectionChanged)
+				{
+					((INotifyCollectionChanged)m_ItemsSource).CollectionChanged += OnCollectionChanged;
+				}
+
+				InitCollection();
+			}
+			else
+			{
+				Clear();
+			}
 		}
 
 		/// <summary>
 		/// Sets the number of columns.
 		/// </summary>
-		/// <param name="count">Number of columns.</param>
-		public void SetColumnCount(int count)
+		/// <param name="columnCount">Number of columns.</param>
+		public void SetColumnCount(int columnCount)
 		{
-			if (m_ColumnCount == count) return;
-			foreach (TableRow row in Children.OfType<TableRow>())
+			if (m_ColumnCount == columnCount)
+				return;
+
+			int[] newColumnWidth = new int[columnCount];
+
+			for (int i = 0; i < m_ColumnCount; i++)
 			{
-				row.ColumnCount = count;
+				if (i < columnCount)
+				{
+					newColumnWidth[i] = m_ColumnWidth[i];
+				}
 			}
 
-			m_ColumnCount = count;
+			foreach (TableRow row in Children.OfType<TableRow>())
+			{
+				row.ColumnCount = columnCount;
+			}
+
+			m_ColumnWidth = newColumnWidth;
+			m_ColumnCount = columnCount;
+
+			IsDirty = true;
+			Invalidate();
 		}
 
 		/// <summary>
 		/// Sets the column width (in pixels).
 		/// </summary>
-		/// <param name="column">Column index.</param>
+		/// <param name="columnIndex">Column index.</param>
 		/// <param name="width">Column width.</param>
-		public void SetColumnWidth(int column, int width)
+		public void SetColumnWidth(int columnIndex, int width)
 		{
-			if (m_ColumnWidth[column] == width) return;
-			m_ColumnWidth[column] = width;
+			if (columnIndex >= m_ColumnCount)
+				throw new ArgumentOutOfRangeException("columnIndex");
+
+			if (m_ColumnWidth[columnIndex] == width)
+				return;
+
+			m_ColumnWidth[columnIndex] = width;
+			IsDirty = true;
 			Invalidate();
 		}
 
 		/// <summary>
 		/// Gets the column width (in pixels).
 		/// </summary>
-		/// <param name="column">Column index.</param>
+		/// <param name="columnIndex">Column index.</param>
 		/// <returns>Column width.</returns>
-		public int GetColumnWidth(int column)
+		public int GetColumnWidth(int columnIndex)
 		{
-			return m_ColumnWidth[column];
+			if (columnIndex >= m_ColumnCount)
+				throw new ArgumentOutOfRangeException("columnIndex");
+
+			return m_ColumnWidth[columnIndex];
+		}
+
+		private TableRow CreateRowDefault()
+		{
+			TableRow row = new TableRow(this);
+			row.ColumnCount = m_ColumnCount;
+			IsDirty = true;
+			Invalidate();
+			return row;
 		}
 
 		/// <summary>
@@ -101,32 +196,143 @@ namespace Gwen.Control
 		/// <returns>Newly created row.</returns>
 		public TableRow AddRow()
 		{
-			TableRow row = new TableRow(this);
-			row.ColumnCount = m_ColumnCount;
-			m_RowMeasurementDirty = true;
-			return row;
+			return m_CreateRow();
 		}
 
 		/// <summary>
-		/// Adds a new row.
+		/// Adds a row.
 		/// </summary>
 		/// <param name="row">Row to add.</param>
 		public void AddRow(TableRow row)
 		{
 			row.Parent = this;
 			row.ColumnCount = m_ColumnCount;
-			m_RowMeasurementDirty = true;
+			IsDirty = true;
+			Invalidate();
 		}
 
 		/// <summary>
 		/// Adds a new row with specified text in first column.
 		/// </summary>
 		/// <param name="text">Text to add.</param>
+		/// <param name="name">Internal control name.</param>
+		/// <param name="userData">User data for newly created row.</param>
 		/// <returns>New row.</returns>
-		public TableRow AddRow(string text)
+		public TableRow AddRow(string text, string name = "", object userData = null)
 		{
-			var row = AddRow();
+			var row = m_CreateRow();
 			row.SetCellText(0, text);
+			row.Name = name;
+			row.UserData = userData;
+			IsDirty = true;
+			Invalidate();
+			return row;
+		}
+
+		/// <summary>
+		/// Adds a new row with specified item.
+		/// </summary>
+		/// <param name="item">Item to add.</param>
+		/// <returns>New row.</returns>
+		public TableRow AddRow(object item)
+		{
+			if (item == null)
+				return null;
+
+			TableRow row = m_CreateRow();
+
+			if (m_DisplayMembers == null || m_DisplayMembers.Length == 0)
+			{
+				string col = item.ToString();
+				row.Name = col;
+				row.UserData = item;
+			}
+			else
+			{
+				string col = GetPropertyValue(item, m_DisplayMembers[0]);
+				row.Name = col;
+				row.UserData = item;
+				row.SetCellText(0, col);
+
+				for (int i = 1; i < m_DisplayMembers.Length; i++)
+				{
+					row.SetCellText(i, GetPropertyValue(item, m_DisplayMembers[i]));
+				}
+			}
+
+			IsDirty = true;
+			Invalidate();
+
+			return row;
+		}
+
+		/// <summary>
+		/// Insert a new empty row to specified index.
+		/// </summary>
+		/// <param name="index">Index where to insert.</param>
+		/// <returns>New row.</returns>
+		public TableRow InsertRow(int index)
+		{
+			if (index < 0 || index > RowCount)
+				throw new ArgumentOutOfRangeException("index");
+
+			TableRow row = AddRow();
+
+			row.MoveChildToIndex(index);
+
+			return row;
+		}
+
+		/// <summary>
+		/// Insert a row to specified index.
+		/// </summary>
+		/// <param name="index">Index where to insert.</param>
+		/// <param name="row">Row.</param>
+		public void InsertRow(int index, TableRow row)
+		{
+			if (index < 0 || index > RowCount)
+				throw new ArgumentOutOfRangeException("index");
+
+			AddRow(row);
+
+			row.MoveChildToIndex(index);
+		}
+
+		/// <summary>
+		/// Insert a new row with specified text in first column to specified index.
+		/// </summary>
+		/// <param name="index">Index where to insert.</param>
+		/// <param name="text">Text to add.</param>
+		/// <param name="name">Internal control name.</param>
+		/// <param name="userData">User data for newly created row.</param>
+		/// <returns>New row.</returns>
+		public TableRow InsertRow(int index, string text, string name = "", object userData = null)
+		{
+			if (index < 0 || index > RowCount)
+				throw new ArgumentOutOfRangeException("index");
+
+			TableRow row = AddRow(text, name, userData);
+
+			row.MoveChildToIndex(index);
+
+			return row;
+		}
+
+		/// <summary>
+		/// Insert a new row with specified item to specified index.
+		/// </summary>
+		/// <param name="index">Index where to insert.</param>
+		/// <param name="item">Item to add.</param>
+		/// <returns>New row.</returns>
+		public TableRow InsertRow(int index, object item)
+		{
+			if (index < 0 || index > RowCount)
+				throw new ArgumentOutOfRangeException("index");
+
+			TableRow row = AddRow(item);
+
+			row.MoveChildToIndex(index);
+
 			return row;
 		}
 
@@ -137,7 +343,8 @@ namespace Gwen.Control
 		public void RemoveRow(TableRow row)
 		{
 			RemoveChild(row, true);
-			m_RowMeasurementDirty = true;
+			IsDirty = true;
+			Invalidate();
 		}
 
 		/// <summary>
@@ -151,9 +358,27 @@ namespace Gwen.Control
 		}
 
 		/// <summary>
+		/// Remove row by item.
+		/// </summary>
+		/// <param name="item">Item to remove.</param>
+		public void RemoveRow(object item)
+		{
+			TableRow removeRow = null;
+
+			foreach (TableRow row in Children)
+			{
+				if (row.UserData == item)
+					removeRow = row;
+			}
+
+			if (removeRow != null)
+				RemoveRow(removeRow);
+		}
+
+		/// <summary>
 		/// Removes all rows.
 		/// </summary>
-		public void RemoveAll()
+		public void Clear()
 		{
 			while (RowCount > 0)
 				RemoveRow(0);
@@ -169,12 +394,69 @@ namespace Gwen.Control
 			return Children.IndexOf(row);
 		}
 
-		protected override Size Measure(Size availableSize)
+		/// <summary>
+		/// Sizes to fit contents.
+		/// </summary>
+		public void SizeToContent(int maxWidth = 0)
 		{
-			if (m_RowMeasurementDirty && (m_AutoSizeToContent || m_SizeToContents))
+			m_MaxWidth = maxWidth;
+			m_SizeToContents = true;
+			Invalidate();
+		}
+
+		protected override Size OnMeasure(Size availableSize)
+		{
+			if (IsDirty && (m_AutoSizeToContent || m_SizeToContents))
 			{
 				m_SizeToContents = false;
-				return DoSizeToContents(availableSize);
+
+				int height = 0;
+				int width = 0;
+
+				int[] columnWidth = new int[m_ColumnCount];
+
+				// Measure cells and determine max column widths
+				foreach (TableRow row in Children)
+				{
+					for (int i = 0; i < ColumnCount; i++)
+					{
+						ControlBase cell = row.GetCell(i);
+						if (cell != null)
+						{
+							cell.Measure(availableSize);
+							columnWidth[i] = Math.Max(columnWidth[i], cell.MeasuredSize.Width);
+						}
+					}
+				}
+
+				// Sum all column widths 
+				for (int i = 0; i < ColumnCount; i++)
+				{
+					width += columnWidth[i];
+				}
+
+				// Set column widths to all rows and measure rows
+				foreach (TableRow row in Children)
+				{
+					for (int i = 0; i < ColumnCount; i++)
+					{
+						if (i < ColumnCount - 1 || m_MaxWidth == 0)
+							row.SetColumnWidth(i, columnWidth[i]);
+						else
+							row.SetColumnWidth(i, columnWidth[i] + Math.Max(0, m_MaxWidth - width));
+					}
+
+					row.Measure(availableSize);
+
+					height += row.MeasuredSize.Height;
+				}
+
+				IsDirty = false;
+
+				if (m_MaxWidth == 0 || m_MaxWidth < width)
+					return new Size(width, height);
+				else
+					return new Size(m_MaxWidth, height);
 			}
 			else
 			{
@@ -182,7 +464,7 @@ namespace Gwen.Control
 				int width = 0;
 				foreach (TableRow row in Children)
 				{
-					row.DoMeasure(availableSize);
+					row.Measure(availableSize);
 
 					width = Math.Max(width, row.MeasuredSize.Width);
 					height += row.MeasuredSize.Height;
@@ -192,7 +474,7 @@ namespace Gwen.Control
 			}
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
 			int y = 0;
 			int width = 0;
@@ -205,7 +487,7 @@ namespace Gwen.Control
 					even = !even;
 				}
 
-				row.DoArrange(new Rectangle(0, y, finalSize.Width, row.MeasuredSize.Height));
+				row.Arrange(new Rectangle(0, y, finalSize.Width, row.MeasuredSize.Height));
 				width = Math.Max(width, row.MeasuredSize.Width);
 				y += row.MeasuredSize.Height;
 			}
@@ -213,67 +495,63 @@ namespace Gwen.Control
 			return new Size(finalSize.Width, y);
 		}
 
-		/// <summary>
-		/// Sizes to fit contents.
-		/// </summary>
-		public void SizeToContent(int maxWidth = 0)
+		protected override void OnScaleChanged()
 		{
-			m_MaxWidth = maxWidth;
-			m_SizeToContents = true;
-			Invalidate();
+			base.OnScaleChanged();
+
+			IsDirty = true;
 		}
 
-		protected Size DoSizeToContents(Size availableSize)
+		private void InitCollection()
 		{
-			int height = 0;
-			int width = 0;
+			Clear();
 
-			for (int i = 0; i < ColumnCount; i++)
-				m_ColumnWidth[i] = 0;
+			if (m_ItemsSource == null)
+				return;
 
-			foreach (TableRow row in Children)
-			{
-				row.DoMeasure(availableSize);
-
-				for (int i = 0; i < ColumnCount; i++)
-				{
-					ControlBase cell = row.GetColumn(i);
-					if (null != cell)
-					{
-						m_ColumnWidth[i] = Math.Max(m_ColumnWidth[i], cell.MeasuredSize.Width);
-					}
-				}
-			}
-
-			// sum all column widths 
-			for (int i = 0; i < ColumnCount; i++)
-			{
-				width += m_ColumnWidth[i];
-			}
-
-			width = 0;
-			foreach (TableRow row in Children)
-			{
-				for (int i = 0; i < ColumnCount; i++)
-				{
-					if (i < ColumnCount - 1 || m_MaxWidth == 0)
-						row.SetColumnWidth(i, m_ColumnWidth[i]);
-					else
-						row.SetColumnWidth(i, m_ColumnWidth[i] + Math.Max(0, m_MaxWidth - width));
-				}
-
-				row.DoMeasure(availableSize);
-
-				width = Math.Max(width, row.MeasuredSize.Width);
-				height += row.MeasuredSize.Height;
-			}
-
-			m_RowMeasurementDirty = false;
-
-			if (m_MaxWidth == 0 || m_MaxWidth < width)
-				return new Size(width, height);
+			if (m_DisplayMembers == null || m_DisplayMembers.Length == 0)
+				ColumnCount = 1;
 			else
-				return new Size(m_MaxWidth, height);
+				ColumnCount = m_DisplayMembers.Length;
+
+			foreach (object item in m_ItemsSource)
+			{
+				AddRow(item);
+			}
+		}
+
+		private void OnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.OldItems != null)
+			{
+				foreach (var item in e.OldItems)
+				{
+					RemoveRow(item);
+				}
+			}
+			if (e.NewItems != null)
+			{
+				int index = e.NewStartingIndex;
+				foreach (var item in e.NewItems)
+				{
+					InsertRow(index++, item);
+				}
+			}
+		}
+
+		private string GetPropertyValue(object obj, string propertyName)
+		{
+			try
+			{
+				Type type = obj.GetType();
+				PropertyInfo propertyInfo = type.GetProperty(propertyName);
+				object property = propertyInfo.GetValue(obj, null);
+				return property.ToString();
+			}
+			catch (Exception)
+			{
+				return "[NA]";
+			}
 		}
 	}
 }

@@ -93,11 +93,11 @@ namespace Gwen.Control
             SetPosition(mouse.X, mouse.Y);
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
 			availableSize.Height = Math.Min(availableSize.Height, GetCanvas().ActualHeight - this.Top);
 
-			Size size = base.Measure(availableSize);
+			Size size = base.OnMeasure(availableSize);
 
 			size.Width = Math.Min(this.Content.MeasuredSize.Width + Padding.Left + Padding.Right, availableSize.Width);
 			size.Height = Math.Min(this.Content.MeasuredSize.Height + Padding.Top + Padding.Bottom, availableSize.Height);

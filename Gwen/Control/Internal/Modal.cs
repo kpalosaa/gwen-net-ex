@@ -22,16 +22,16 @@ namespace Gwen.Control.Internal
 			BackgroundColor = null;
         }
 
-		protected override Size Measure(Size availableSize)
+		protected override Size OnMeasure(Size availableSize)
 		{
-			base.Measure(availableSize);
+			base.OnMeasure(availableSize);
 
 			return availableSize;
 		}
 
-		protected override Size Arrange(Size finalSize)
+		protected override Size OnArrange(Size finalSize)
 		{
-			base.Arrange(finalSize);
+			base.OnArrange(finalSize);
 
 			return finalSize;
 		}

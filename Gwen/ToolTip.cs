@@ -20,8 +20,8 @@ namespace Gwen
 
 			ControlBase toolTip = control.ToolTip;
 			g_ToolTip = control;
-			toolTip.DoMeasure(Size.Infinity);
-			toolTip.DoArrange(new Rectangle(Point.Zero, toolTip.MeasuredSize));
+			toolTip.Measure(Size.Infinity);
+			toolTip.Arrange(new Rectangle(Point.Zero, toolTip.MeasuredSize));
 		}
 
 		/// <summary>
