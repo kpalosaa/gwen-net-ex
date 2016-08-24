@@ -26,6 +26,8 @@ namespace Gwen.UnitTest.Android
 		
 		public static void UpdateIdValues()
 		{
+			global::Gwen.Renderer.Android.OpenTK.Resource.String.ApplicationName = global::Gwen.UnitTest.Android.Resource.String.ApplicationName;
+			global::Gwen.Renderer.Android.OpenTK.Resource.String.Hello = global::Gwen.UnitTest.Android.Resource.String.Hello;
 		}
 		
 		public partial class Attribute
@@ -76,8 +78,11 @@ namespace Gwen.UnitTest.Android
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f040001
+			public const int ApplicationName = 2130968577;
+			
 			// aapt resource value: 0x7f040000
-			public const int ApplicationName = 2130968576;
+			public const int Hello = 2130968576;
 			
 			static String()
 			{

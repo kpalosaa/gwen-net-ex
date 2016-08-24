@@ -3,6 +3,7 @@
 
 Binaries/
 #lib/
+packages/
 
 # User-specific files
 *.suo
