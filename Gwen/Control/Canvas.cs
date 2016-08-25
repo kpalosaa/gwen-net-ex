@@ -72,6 +72,8 @@ namespace Gwen.Control
 			ShouldDrawBackground = false;
 
 			m_DisposeQueue = new List<IDisposable>();
+
+			FontCache.CreateCache(skin.Renderer);
 		}
 
 		public override void Dispose()

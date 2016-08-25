@@ -142,9 +142,9 @@ namespace Gwen
 		/// <param name="size">Font size.</param>
 		/// <param name="style">Font style.</param>
 		/// <returns>Font.</returns>
-		public static Font Create(Renderer.RendererBase renderer, string faceName, int size = 10, FontStyle style = 0)
+		public static Font Create(string faceName, int size = 10, FontStyle style = 0)
 		{
-			return FontCache.GetFont(renderer, faceName, size, style);
+			return FontCache.GetFont(faceName, size, style);
 		}
 	}
 }

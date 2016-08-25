@@ -349,9 +349,9 @@ namespace Gwen.Xml
 					}
 
 					if (element is Gwen.Control.ControlBase)
-						return Font.Create(((Gwen.Control.ControlBase)element).Skin.Renderer, name, size, style);
+						return Font.Create(name, size, style);
 					else if (element is Gwen.Xml.Component)
-						return Font.Create(((Gwen.Xml.Component)element).View.Skin.Renderer, name, size, style);
+						return Font.Create(name, size, style);
 					else
 						throw new Exception("Can't create a font. The renderer is unknown.");
 				}
