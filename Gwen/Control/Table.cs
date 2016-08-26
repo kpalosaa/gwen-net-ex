@@ -208,6 +208,7 @@ namespace Gwen.Control
 		public TableRow AddRow(string text = null, string name = "", object userData = null)
 		{
 			TableRow row = text != null ? m_RowFactory.Create(text, name, userData) : m_RowFactory.Create();
+			row.Parent = this;
 			IsDirty = true;
 			Invalidate();
 			return row;
@@ -221,6 +222,7 @@ namespace Gwen.Control
 		public TableRow AddRow(object item)
 		{
 			TableRow row = m_RowFactory.Create(item);
+			row.Parent = this;
 			IsDirty = true;
 			Invalidate();
 			return row;
@@ -509,12 +511,12 @@ namespace Gwen.Control
 				m_Table = table;
 			}
 
-			public TableRow Create()
+			public virtual TableRow Create()
 			{
 				return CreateRow();
 			}
 
-			public TableRow Create(object item)
+			public virtual TableRow Create(object item)
 			{
 				if (item == null)
 					return null;
@@ -525,6 +527,7 @@ namespace Gwen.Control
 				if (displayMembers == null || displayMembers.Length == 0)
 				{
 					string col = item.ToString();
+					row.Text = col;
 					row.Name = col;
 					row.UserData = item;
 				}
@@ -560,7 +563,7 @@ namespace Gwen.Control
 				return row;
 			}
 
-			public TableRow Create(string text, string name = "", object userData = null)
+			public virtual TableRow Create(string text, string name = "", object userData = null)
 			{
 				TableRow row = CreateRow();
 				row.Text = text;

@@ -60,7 +60,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// List of selected rows.
 		/// </summary>
-		public IEnumerable<TableRow> SelectedRows { get { return m_SelectedRows; } }
+		public IEnumerable<ListBoxRow> SelectedRows { get { return m_SelectedRows; } }
 
 		/// <summary>
 		/// First selected row (and only if list is not multiselectable).
@@ -187,7 +187,7 @@ namespace Gwen.Control
 			AutoHideBars = true;
 
 			m_Table = new Table(this);
-			m_Table.RowFactory = rowFactory != null ? rowFactory : new ListRowFactory(this, m_Table);
+			m_Table.RowFactory = rowFactory != null ? rowFactory : new ListRowFactory(this);
 			m_Table.AutoSizeToContent = true;
 			m_Table.ColumnCount = 1;
 
@@ -446,6 +446,24 @@ namespace Gwen.Control
 		}
 
 		/// <summary>
+		/// Gets the index of a specified row.
+		/// </summary>
+		/// <param name="row">Row to search for.</param>
+		/// <returns>Row index if found, -1 otherwise.</returns>
+		public int GetRowIndex(ListBoxRow row)
+		{
+			return m_Table.GetRowIndex(row);
+		}
+
+		/// <summary>
+		/// Sizes to fit contents.
+		/// </summary>
+		public void SizeToContent(int maxWidth = 0)
+		{
+			m_Table.SizeToContent(maxWidth);
+		}
+
+		/// <summary>
 		/// Sets the column width (in pixels).
 		/// </summary>
 		/// <param name="column">Column index.</param>
@@ -453,6 +471,16 @@ namespace Gwen.Control
 		public void SetColumnWidth(int column, int width)
 		{
 			m_Table.SetColumnWidth(column, width);
+		}
+
+		/// <summary>
+		/// Gets the column width (in pixels).
+		/// </summary>
+		/// <param name="columnIndex">Column index.</param>
+		/// <returns>Column width.</returns>
+		public int GetColumnWidth(int columnIndex)
+		{
+			return m_Table.GetColumnWidth(columnIndex);
 		}
 
 		/// <summary>
@@ -520,8 +548,8 @@ namespace Gwen.Control
 		{
 			private ListBox m_ListBox;
 
-			public ListRowFactory(ListBox listBox, Table table)
-				: base(table)
+			public ListRowFactory(ListBox listBox)
+				: base(listBox.m_Table)
 			{
 				m_ListBox = listBox;
 			}
