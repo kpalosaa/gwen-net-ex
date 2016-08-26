@@ -25,7 +25,7 @@ namespace Gwen.Control
 		private string m_DisplayMember;
 		private string[] m_DisplayMembers;
 
-		private CreateRow m_CreateRow;
+		private ITableRowFactory m_RowFactory;
 
 		/// <summary>
 		/// Column count (default 1).
@@ -70,10 +70,15 @@ namespace Gwen.Control
 		public TableRow this[int index] { get { return Children[index] as TableRow; } }
 
 		/// <summary>
+		/// Return a row factory used to create rows for this table.
+		/// </summary>
+		public ITableRowFactory RowFactory { get { return m_RowFactory; } set { m_RowFactory = value; } }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="Table"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public Table(ControlBase parent, CreateRow createRow = null) : base(parent)
+		public Table(ControlBase parent, ITableRowFactory rowFactory = null) : base(parent)
 		{
 			m_ColumnCount = 1;
 
@@ -82,10 +87,10 @@ namespace Gwen.Control
 			m_AutoSizeToContent = false;
 			m_SizeToContents = false;
 
-			if (createRow == null)
-				m_CreateRow = CreateRowDefault;
+			if (rowFactory == null)
+				m_RowFactory = new TableRowFactory(this);
 			else
-				m_CreateRow = createRow;
+				m_RowFactory = rowFactory;
 		}
 
 		/// <summary>
@@ -181,24 +186,6 @@ namespace Gwen.Control
 			return m_ColumnWidth[columnIndex];
 		}
 
-		private TableRow CreateRowDefault()
-		{
-			TableRow row = new TableRow(this);
-			row.ColumnCount = m_ColumnCount;
-			IsDirty = true;
-			Invalidate();
-			return row;
-		}
-
-		/// <summary>
-		/// Adds a new empty row.
-		/// </summary>
-		/// <returns>Newly created row.</returns>
-		public TableRow AddRow()
-		{
-			return m_CreateRow();
-		}
-
 		/// <summary>
 		/// Adds a row.
 		/// </summary>
@@ -214,16 +201,13 @@ namespace Gwen.Control
 		/// <summary>
 		/// Adds a new row with specified text in first column.
 		/// </summary>
-		/// <param name="text">Text to add.</param>
+		/// <param name="text">Text to add. If null, create an empty row.</param>
 		/// <param name="name">Internal control name.</param>
 		/// <param name="userData">User data for newly created row.</param>
 		/// <returns>New row.</returns>
-		public TableRow AddRow(string text, string name = "", object userData = null)
+		public TableRow AddRow(string text = null, string name = "", object userData = null)
 		{
-			var row = m_CreateRow();
-			row.SetCellText(0, text);
-			row.Name = name;
-			row.UserData = userData;
+			TableRow row = text != null ? m_RowFactory.Create(text, name, userData) : m_RowFactory.Create();
 			IsDirty = true;
 			Invalidate();
 			return row;
@@ -236,33 +220,9 @@ namespace Gwen.Control
 		/// <returns>New row.</returns>
 		public TableRow AddRow(object item)
 		{
-			if (item == null)
-				return null;
-
-			TableRow row = m_CreateRow();
-
-			if (m_DisplayMembers == null || m_DisplayMembers.Length == 0)
-			{
-				string col = item.ToString();
-				row.Name = col;
-				row.UserData = item;
-			}
-			else
-			{
-				string col = GetPropertyValue(item, m_DisplayMembers[0]);
-				row.Name = col;
-				row.UserData = item;
-				row.SetCellText(0, col);
-
-				for (int i = 1; i < m_DisplayMembers.Length; i++)
-				{
-					row.SetCellText(i, GetPropertyValue(item, m_DisplayMembers[i]));
-				}
-			}
-
+			TableRow row = m_RowFactory.Create(item);
 			IsDirty = true;
 			Invalidate();
-
 			return row;
 		}
 
@@ -539,18 +499,94 @@ namespace Gwen.Control
 			}
 		}
 
-		private string GetPropertyValue(object obj, string propertyName)
+		public class TableRowFactory : ITableRowFactory
 		{
-			try
+			private Table m_Table;
+			protected Table Table { get { return m_Table; } }
+
+			public TableRowFactory(Table table)
 			{
-				Type type = obj.GetType();
-				PropertyInfo propertyInfo = type.GetProperty(propertyName);
-				object property = propertyInfo.GetValue(obj, null);
-				return property.ToString();
+				m_Table = table;
 			}
-			catch (Exception)
+
+			public TableRow Create()
 			{
-				return "[NA]";
+				return CreateRow();
+			}
+
+			public TableRow Create(object item)
+			{
+				if (item == null)
+					return null;
+
+				TableRow row = CreateRow();
+				string[] displayMembers = m_Table.DisplayMembers;
+
+				if (displayMembers == null || displayMembers.Length == 0)
+				{
+					string col = item.ToString();
+					row.Name = col;
+					row.UserData = item;
+				}
+				else
+				{
+					if (item is IDictionary)
+					{
+						IDictionary dict = item as IDictionary;
+						string col = dict[displayMembers[0]].ToString();
+						row.Name = col;
+						row.UserData = item;
+						row.SetCellText(0, col);
+
+						for (int i = 1; i < displayMembers.Length; i++)
+						{
+							row.SetCellText(i, dict[displayMembers[i]].ToString());
+						}
+					}
+					else
+					{
+						string col = GetPropertyValue(item, displayMembers[0]);
+						row.Name = col;
+						row.UserData = item;
+						row.SetCellText(0, col);
+
+						for (int i = 1; i < displayMembers.Length; i++)
+						{
+							row.SetCellText(i, GetPropertyValue(item, displayMembers[i]));
+						}
+					}
+				}
+
+				return row;
+			}
+
+			public TableRow Create(string text, string name = "", object userData = null)
+			{
+				TableRow row = CreateRow();
+				row.Text = text;
+				row.Name = name;
+				row.UserData = userData;
+				return row;
+			}
+
+			protected virtual TableRow CreateRow()
+			{
+				return new TableRow(m_Table) { ColumnCount = m_Table.ColumnCount };
+			}
+
+			private string GetPropertyValue(object obj, string propertyName)
+			{
+				try
+				{
+					Type type = obj.GetType();
+					PropertyInfo propertyInfo = type.GetProperty(propertyName);
+					object property = propertyInfo.GetValue(obj, null);
+					return property.ToString();
+				}
+				catch (Exception)
+				{
+					return "[NA]";
+				}
 			}
 		}
 	}

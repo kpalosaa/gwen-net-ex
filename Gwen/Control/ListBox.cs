@@ -148,6 +148,11 @@ namespace Gwen.Control
 		public string[] DisplayMembers { get { return m_Table.DisplayMembers; } set { m_Table.DisplayMembers = value; } }
 
 		/// <summary>
+		/// Return a row factory used to create rows for this ListBox.
+		/// </summary>
+		public ITableRowFactory RowFactory { get { return m_Table.RowFactory; } set { m_Table.RowFactory = value; } }
+
+		/// <summary>
 		/// Invoked when a row has been selected.
 		/// </summary>
 		[Xml.XmlEvent]
@@ -169,7 +174,7 @@ namespace Gwen.Control
 		/// Initializes a new instance of the <see cref="ListBox"/> class.
 		/// </summary>
 		/// <param name="parent">Parent control.</param>
-		public ListBox(ControlBase parent)
+		public ListBox(ControlBase parent, ITableRowFactory rowFactory = null)
 			: base(parent)
 		{
 			MinimumSize = new Size(16, 16);
@@ -181,7 +186,8 @@ namespace Gwen.Control
 			EnableScroll(false, true);
 			AutoHideBars = true;
 
-			m_Table = new Table(this, CreateRow);
+			m_Table = new Table(this);
+			m_Table.RowFactory = rowFactory != null ? rowFactory : new ListRowFactory(this, m_Table);
 			m_Table.AutoSizeToContent = true;
 			m_Table.ColumnCount = 1;
 
@@ -316,32 +322,20 @@ namespace Gwen.Control
 				RowUnselected.Invoke(this, new ItemSelectedEventArgs(row));
 		}
 
-		private ListBoxRow CreateRow()
-		{
-			ListBoxRow row = new ListBoxRow(this);
-			row.ColumnCount = ColumnCount;
-			row.Selected += OnRowSelected;
-			row.DoubleClicked += OnRowDoubleClicked;
-			return row;
-		}
-
 		/// <summary>
 		/// Adds a new row.
 		/// </summary>
-		/// <param name="label">Row text.</param>
+		/// <param name="text">Row text. If null, create an empty row.</param>
 		/// <param name="name">Internal control name.</param>
-		/// <param name="UserData">User data for newly created row</param>
+		/// <param name="userData">User data for newly created row</param>
 		/// <returns>Newly created control.</returns>
-		public ListBoxRow AddRow(string label, string name = "", object UserData = null)
+		public ListBoxRow AddRow(string text = null, string name = "", object userData = null)
 		{
-			ListBoxRow row = CreateRow();
-			row.SetCellText(0, label);
-			row.Name = name;
-			row.UserData = UserData;
-
-			m_Table.AddRow(row);
-
-			return row;
+			var row = m_Table.AddRow(text, name, userData);
+			if (row is ListBoxRow)
+				return row as ListBoxRow;
+			else
+				throw new InvalidCastException("ListBox row factory returned row that is not a ListBoxRow.");
 		}
 
 		/// <summary>
@@ -350,8 +344,6 @@ namespace Gwen.Control
 		/// <param name="row">Row.</param>
 		public void AddRow(ListBoxRow row)
 		{
-			row.Parent = this;
-
 			m_Table.AddRow(row);
 
 			row.Selected += OnRowSelected;
@@ -365,27 +357,28 @@ namespace Gwen.Control
 		/// <returns>New row.</returns>
 		public ListBoxRow AddRow(object item)
 		{
-			return m_Table.AddRow(item) as ListBoxRow;
+			var row = m_Table.AddRow(item);
+			if (row is ListBoxRow)
+				return row as ListBoxRow;
+			else
+				throw new InvalidCastException("ListBox row factory returned row that is not a ListBoxRow.");
 		}
 
 		/// <summary>
 		/// Insert a new row to specified index.
 		/// </summary>
 		/// <param name="index">Index where to insert.</param>
-		/// <param name="label">Row text.</param>
+		/// <param name="text">Row text. If null, create an empty row.</param>
 		/// <param name="name">Internal control name.</param>
-		/// <param name="UserData">User data for newly created row</param>
+		/// <param name="userData">User data for newly created row</param>
 		/// <returns>Newly created row.</returns>
-		public ListBoxRow InsertRow(int index, string label, string name = "", object UserData = null)
+		public ListBoxRow InsertRow(int index, string text = null, string name = "", object userData = null)
 		{
-			ListBoxRow row = CreateRow();
-			row.SetCellText(0, label);
-			row.Name = name;
-			row.UserData = UserData;
-
-			m_Table.InsertRow(index, row);
-
-			return row;
+			var row = m_Table.InsertRow(index, text, name, userData);
+			if (row is ListBoxRow)
+				return row as ListBoxRow;
+			else
+				throw new InvalidCastException("ListBox row factory returned row that is not a ListBoxRow.");
 		}
 
 		/// <summary>
@@ -395,8 +388,6 @@ namespace Gwen.Control
 		/// <param name="row">Row.</param>
 		public void InsertRow(int index, ListBoxRow row)
 		{
-			row.Parent = this;
-
 			m_Table.InsertRow(index, row);
 
 			row.Selected += OnRowSelected;
@@ -411,7 +402,11 @@ namespace Gwen.Control
 		/// <returns>New row.</returns>
 		public ListBoxRow InsertRow(int index, object item)
 		{
-			return m_Table.InsertRow(index, item) as ListBoxRow;
+			var row = m_Table.InsertRow(index, item);
+			if (row is ListBoxRow)
+				return row as ListBoxRow;
+			else
+				throw new InvalidCastException("ListBox row factory returned row that is not a ListBoxRow.");
 		}
 
 		/// <summary>
@@ -519,6 +514,25 @@ namespace Gwen.Control
 				}
 			}
 			return element;
+		}
+
+		public class ListRowFactory : Table.TableRowFactory
+		{
+			private ListBox m_ListBox;
+
+			public ListRowFactory(ListBox listBox, Table table)
+				: base(table)
+			{
+				m_ListBox = listBox;
+			}
+
+			protected override TableRow CreateRow()
+			{
+				ListBoxRow row = new ListBoxRow(Table) { ColumnCount = m_ListBox.ColumnCount };
+				row.Selected += m_ListBox.OnRowSelected;
+				row.DoubleClicked += m_ListBox.OnRowDoubleClicked;
+				return row;
+			}
 		}
 	}
 }
