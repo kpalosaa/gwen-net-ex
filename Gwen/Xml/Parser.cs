@@ -260,10 +260,17 @@ namespace Gwen.Xml
 				}
 				else
 				{
-					AttributeValueConverter converter;
-					if (m_AttributeValueConverters.TryGetValue(type, out converter))
+					AttributeValueConverter attributeConverter;
+					if (m_AttributeValueConverters.TryGetValue(type, out attributeConverter))
 					{
-						if (component.SetValue(attribute, converter(component, value)))
+						if (component.SetValue(attribute, attributeConverter(component, value)))
+							return true;
+					}
+
+					EventHandlerConverter eventConverter;
+					if (m_EventHandlerConverters.TryGetValue(type, out eventConverter))
+					{
+						if (component.SetValue(attribute, eventConverter(attribute, value)))
 							return true;
 					}
 				}
