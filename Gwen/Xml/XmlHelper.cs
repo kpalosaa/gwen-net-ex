@@ -78,6 +78,33 @@ namespace Gwen.Xml
 						throw new System.Xml.XmlException("Attribute value error. Parsing the value as integer failed.");
 				}
 			},
+			{ typeof(uint), (element, value) =>
+				{
+					uint result;
+					if (UInt32.TryParse(value, NumberStyles.Integer, Parser.NumberFormatInfo, out result))
+						return result;
+					else
+						throw new System.Xml.XmlException("Attribute value error. Parsing the value as unsigned integer failed.");
+				}
+			},
+			{ typeof(long), (element, value) =>
+				{
+					long result;
+					if (Int64.TryParse(value, NumberStyles.Integer, Parser.NumberFormatInfo, out result))
+						return result;
+					else
+						throw new System.Xml.XmlException("Attribute value error. Parsing the value as long failed.");
+				}
+			},
+			{ typeof(ulong), (element, value) =>
+				{
+					ulong result;
+					if (UInt64.TryParse(value, NumberStyles.Integer, Parser.NumberFormatInfo, out result))
+						return result;
+					else
+						throw new System.Xml.XmlException("Attribute value error. Parsing the value as unsigned long failed.");
+				}
+			},
 			{ typeof(float), (element, value) =>
 				{
 					float result;
@@ -85,6 +112,15 @@ namespace Gwen.Xml
 						return result;
 					else
 						throw new System.Xml.XmlException("Attribute value error. Parsing the value as single failed.");
+				}
+			},
+			{ typeof(double), (element, value) =>
+				{
+					double result;
+					if (Double.TryParse(value, NumberStyles.Float, Parser.NumberFormatInfo, out result))
+						return result;
+					else
+						throw new System.Xml.XmlException("Attribute value error. Parsing the value as double failed.");
 				}
 			},
 			{ typeof(string), (element, value) =>

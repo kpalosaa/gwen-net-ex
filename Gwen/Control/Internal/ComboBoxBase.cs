@@ -40,6 +40,8 @@ namespace Gwen.Control.Internal
 		/// </summary>
 		public bool IsOpen { get { return m_Menu != null && !m_Menu.IsCollapsed; } }
 
+		public override bool IsDisabled { set { if (value && m_Menu != null) m_Menu.Collapse(); base.IsDisabled = value; } }
+
 		internal override bool IsMenuComponent
 		{
 			get { return true; }

@@ -187,7 +187,7 @@ namespace Gwen.Control
 				ControlBase page2 = m_CurrentButton.Page;
 				if (page2 != null)
 				{
-					page2.IsHidden = true;
+					page2.Hide();
 				}
 				m_CurrentButton.Redraw();
 				m_CurrentButton = null;
@@ -195,7 +195,7 @@ namespace Gwen.Control
 
 			m_CurrentButton = button;
 
-			page.IsHidden = false;
+			page.Show();
 		}
 
 		protected override Size OnArrange(Size finalSize)
@@ -244,7 +244,15 @@ namespace Gwen.Control
 			if (m_CurrentButton == button)
 				m_CurrentButton = null;
 
-			//TODO: Select a tab if any exist.
+			if (TabCount > 0)
+			{
+				button = m_TabStrip.Children[0] as TabButton;
+				if (button != null)
+				{
+					button.Page.Show();
+					m_CurrentButton = button;
+				}
+			}
 
 			if (TabRemoved != null)
 				TabRemoved.Invoke(this, EventArgs.Empty);

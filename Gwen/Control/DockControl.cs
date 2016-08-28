@@ -7,12 +7,12 @@ namespace Gwen.Control
     /// <summary>
     /// Base for dockable containers.
     /// </summary>
-    public class DockBase : ControlBase
+    public class DockControl : ControlBase
     {
-        private DockBase m_Left;
-        private DockBase m_Right;
-        private DockBase m_Top;
-        private DockBase m_Bottom;
+        private DockControl m_Left;
+        private DockControl m_Right;
+        private DockControl m_Top;
+        private DockControl m_Bottom;
         private Resizer m_Sizer;
 
         // Only CHILD dockpanels have a tabcontrol.
@@ -27,36 +27,44 @@ namespace Gwen.Control
         /// <summary>
         /// Control docked on the left side.
         /// </summary>
-        public DockBase LeftDock { get { return GetChildDock(Dock.Left); } }
+        public DockControl LeftDock { get { return GetChildDock(Dock.Left); } }
 
         /// <summary>
         /// Control docked on the right side.
         /// </summary>
-        public DockBase RightDock { get { return GetChildDock(Dock.Right); } }
+        public DockControl RightDock { get { return GetChildDock(Dock.Right); } }
 
         /// <summary>
         /// Control docked on the top side.
         /// </summary>
-        public DockBase TopDock { get { return GetChildDock(Dock.Top); } }
+        public DockControl TopDock { get { return GetChildDock(Dock.Top); } }
 
         /// <summary>
         /// Control docked on the bottom side.
         /// </summary>
-        public DockBase BottomDock { get { return GetChildDock(Dock.Bottom); } }
-
-        public TabControl TabControl { get { return m_DockedTabControl; } }
+        public DockControl BottomDock { get { return GetChildDock(Dock.Bottom); } }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DockBase"/> class.
+        /// Initializes a new instance of the <see cref="DockControl"/> class.
         /// </summary>
         /// <param name="parent">Parent control.</param>
-        public DockBase(ControlBase parent)
+        public DockControl(ControlBase parent)
             : base(parent)
         {
             Padding = Padding.One;
 			MinimumSize = new Size(30, 30);
 			MouseInputEnabled = true;
         }
+
+		/// <summary>
+		/// Add a new dock control.
+		/// </summary>
+		/// <param name="title">Title visible on title bar or tab.</param>
+		/// <param name="control">Control to add.</param>
+		public void Add(string title, ControlBase control)
+		{
+			m_DockedTabControl.AddPage(title, control);
+		}
 
         /// <summary>
         /// Handler for Space keyboard event.
@@ -120,16 +128,16 @@ namespace Gwen.Control
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        protected virtual DockBase GetChildDock(Dock pos)
+        protected virtual DockControl GetChildDock(Dock pos)
         {
             // todo: verify
-            DockBase dock = null;
+            DockControl dock = null;
             switch (pos)
             {
                 case Dock.Left:
                     if (m_Left == null)
                     {
-                        m_Left = new DockBase(this);
+                        m_Left = new DockControl(this);
 						m_Left.Width = 200;
                         m_Left.SetupChildDock(pos);
                     }
@@ -139,7 +147,7 @@ namespace Gwen.Control
                 case Dock.Right:
                     if (m_Right == null)
                     {
-                        m_Right = new DockBase(this);
+                        m_Right = new DockControl(this);
 						m_Right.Width = 200;
 						m_Right.SetupChildDock(pos);
                     }
@@ -149,7 +157,7 @@ namespace Gwen.Control
                 case Dock.Top:
                     if (m_Top == null)
                     {
-                        m_Top = new DockBase(this);
+                        m_Top = new DockControl(this);
 						m_Top.Height = 200;
 						m_Top.SetupChildDock(pos);
                     }
@@ -159,7 +167,7 @@ namespace Gwen.Control
                 case Dock.Bottom:
                     if (m_Bottom == null)
                     {
-                        m_Bottom = new DockBase(this);
+                        m_Bottom = new DockControl(this);
 						m_Bottom.Height = 200;
 						m_Bottom.SetupChildDock(pos);
                     }
@@ -167,8 +175,8 @@ namespace Gwen.Control
                     break;
             }
 
-            if (dock != null)
-                dock.IsCollapsed = false;
+			if (dock != null)
+				dock.Show();
 
             return dock;
         }
@@ -232,7 +240,7 @@ namespace Gwen.Control
 
             if (dir != Dock.Fill)
             {
-                DockBase dock = GetChildDock(dir);
+                DockControl dock = GetChildDock(dir);
                 addTo = dock.m_DockedTabControl;
 
                 if (!m_DropFar)
@@ -292,7 +300,7 @@ namespace Gwen.Control
         {
             if (!IsEmpty) return;
 
-            DockBase pDockParent = Parent as DockBase;
+            DockControl pDockParent = Parent as DockControl;
             if (null == pDockParent) return;
 
             pDockParent.OnRedundantChildDock(this);
@@ -301,8 +309,8 @@ namespace Gwen.Control
         protected virtual void DoConsolidateCheck()
         {
             if (IsEmpty) return;
-            if (null == m_DockedTabControl) return;
-            if (m_DockedTabControl.TabCount > 0) return;
+            if (m_DockedTabControl == null) return;
+			if (m_DockedTabControl.TabCount > 0) return;
 
             if (m_Bottom != null && !m_Bottom.IsEmpty)
             {
@@ -329,7 +337,7 @@ namespace Gwen.Control
             }
         }
 
-        protected virtual void OnRedundantChildDock(DockBase dock)
+        protected virtual void OnRedundantChildDock(DockControl dock)
         {
             dock.IsCollapsed = true;
             DoRedundancyCheck();

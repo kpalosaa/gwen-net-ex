@@ -377,7 +377,7 @@ namespace Gwen.Control
 		/// Indicates whether the control is disabled.
 		/// </summary>
 		[Xml.XmlProperty]
-		public bool IsDisabled { get { return IsSetInternalFlag(InternalFlags.Disabled); } set { SetInternalFlag(InternalFlags.Disabled, value); } }
+		public virtual bool IsDisabled { get { return IsSetInternalFlag(InternalFlags.Disabled); } set { SetInternalFlag(InternalFlags.Disabled, value); } }
 
 		/// <summary>
 		/// Indicates whether the control is hidden.

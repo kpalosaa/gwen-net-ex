@@ -32,7 +32,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Indicates whether this is a root node.
 		/// </summary>
-		public bool IsRoot { get { return m_Root; } set { m_Root = value; } }
+		public bool IsRoot { get { return m_Root; } }
 
 		/// <summary>
 		/// Determines whether the node is selectable.

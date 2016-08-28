@@ -29,7 +29,23 @@ namespace Gwen.Control
 		/// Make window modal and set background color. If alpha value is zero, make background dimmed.
 		/// </summary>
 		[Xml.XmlProperty]
-		public Color ModalBackground { set { if (value.A == 0) MakeModal(true); else MakeModal(true, value); } }
+		public Color ModalBackground
+		{
+			get
+			{
+				if (m_Modal != null && m_Modal.BackgroundColor != null)
+					return (Color)m_Modal.BackgroundColor;
+				else
+					return Color.Transparent;
+			}
+			set
+			{
+				if (value.A == 0)
+					MakeModal(true);
+				else
+					MakeModal(true, value);
+			}
+		}
 
 		/// <summary>
 		/// Set true to make window modal.

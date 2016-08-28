@@ -27,18 +27,18 @@ namespace Gwen.UnitTest
 		{
 			Dock = Dock.Fill;
 
-			DockBase dock = new DockBase(this);
+			DockControl dock = new DockControl(this);
 			dock.Dock = Dock.Fill;
 
 			m_List = new Control.CollapsibleList(this);
 
-			dock.LeftDock.TabControl.AddPage("Unit tests", m_List);
+			dock.LeftDock.Add("Unit tests", m_List);
 			dock.LeftDock.Width = 150;
 
 			m_TextOutput = new Control.ListBox(this);
 			m_TextOutput.AlternateColor = false;
 
-			dock.BottomDock.TabControl.AddPage("Output", m_TextOutput);
+			dock.BottomDock.Add("Output", m_TextOutput);
 			dock.BottomDock.Height = 200;
 
 			m_StatusBar = new Control.StatusBar(this);

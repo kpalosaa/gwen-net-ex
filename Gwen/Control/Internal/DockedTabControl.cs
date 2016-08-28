@@ -1,7 +1,7 @@
 ﻿using System;
 using Gwen.Control.Internal;
 
-namespace Gwen.Control
+namespace Gwen.Control.Internal
 {
     /// <summary>
     /// Docked tab control.
@@ -31,6 +31,16 @@ namespace Gwen.Control
 			AllowReorder = true;
 		}
 
+		internal override void OnTabPressed(ControlBase control, EventArgs args)
+		{
+			base.OnTabPressed(control, args);
+
+			TabButton button = control as TabButton;
+			if (null == button) return;
+
+			m_TitleBar.Text = button.Text;
+		}
+
 		protected override Size OnMeasure(Size availableSize)
 		{
 			TabStrip.Collapse(TabCount <= 1, false);
@@ -58,14 +68,14 @@ namespace Gwen.Control
 
         public override void DragAndDrop_EndDragging(bool success, int x, int y)
         {
-			IsCollapsed = false;
+			Show();
             if (!success)
             {
-                Parent.IsCollapsed = false;
+				Parent.Show();
             }
         }
 
-        public void MoveTabsTo(DockedTabControl target)
+        internal void MoveTabsTo(DockedTabControl target)
         {
             var children = TabStrip.Children.ToArray(); // copy because collection will be modified
             foreach (ControlBase child in children)
