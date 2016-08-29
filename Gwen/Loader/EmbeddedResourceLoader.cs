@@ -13,9 +13,9 @@ namespace Gwen.Loader
 		public EmbeddedResourceLoader(Assembly resourceAssembly = null, string textureNamespace = null, string xmlNamespace = null)
 		{
 			m_ResourceAssembly = resourceAssembly ?? Assembly.GetCallingAssembly();
-			string nameSpace = m_ResourceAssembly.FullName.Split(',')[0];
-			m_TextureBaseNamespace = textureNamespace != null ? nameSpace + "." + textureNamespace : nameSpace;
-			m_XmlBaseNamespace = xmlNamespace != null ? nameSpace + "." + xmlNamespace : nameSpace;
+			string assemblyName = m_ResourceAssembly.FullName.Split(',')[0];
+			m_TextureBaseNamespace = textureNamespace != null ? textureNamespace : assemblyName;
+			m_XmlBaseNamespace = xmlNamespace != null ? xmlNamespace : assemblyName;
 		}
 
 		public override Stream GetTextureStream(string name)
