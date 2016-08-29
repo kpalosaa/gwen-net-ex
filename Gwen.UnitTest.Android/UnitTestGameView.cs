@@ -43,7 +43,8 @@ namespace Gwen.UnitTest.Android
 		{
 			base.OnLoad(e);
 
-			Platform.Platform.Init(new Platform.Android());
+			Platform.Platform.Init(new Platform.Android.AndroidPlatform());
+			Loader.LoaderBase.Init(new Platform.Android.AssetLoader());
 
 			m_Renderer = new Gwen.Renderer.Android.OpenTK.OpenTK(false);
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");

@@ -5,12 +5,12 @@ using System.Windows.Forms;
 using System.IO;
 using System.Linq;
 
-namespace Gwen.Platform
+namespace Gwen.Platform.Windows
 {
 	/// <summary>
 	/// Windows platform specific functions.
 	/// </summary>
-	public class Windows : IPlatform
+	public class WindowsPlatform : IPlatform
 	{
 		private DateTime m_FirstTime = DateTime.Now;
 

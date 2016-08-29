@@ -543,23 +543,6 @@ namespace Gwen.Renderer.Android.OpenTK
 			bmp.UnlockPixels();
 		}
 
-		public override void LoadTexture(Texture t)
-		{
-			Bitmap bmp;
-			try
-			{
-				bmp = BitmapFactory.DecodeStream(Application.Context.Assets.Open(t.Name));
-			}
-			catch (Exception)
-			{
-				t.Failed = true;
-				return;
-			}
-
-			LoadTextureInternal(t, bmp);
-			bmp.Dispose();
-		}
-
 		public override void LoadTextureStream(Texture t, System.IO.Stream data)
 		{
 			Bitmap bmp;

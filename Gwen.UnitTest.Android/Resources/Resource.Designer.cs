@@ -26,6 +26,8 @@ namespace Gwen.UnitTest.Android
 		
 		public static void UpdateIdValues()
 		{
+			global::Gwen.Platform.Android.Resource.String.ApplicationName = global::Gwen.UnitTest.Android.Resource.String.ApplicationName;
+			global::Gwen.Platform.Android.Resource.String.Hello = global::Gwen.UnitTest.Android.Resource.String.Hello;
 			global::Gwen.Renderer.Android.OpenTK.Resource.String.ApplicationName = global::Gwen.UnitTest.Android.Resource.String.ApplicationName;
 			global::Gwen.Renderer.Android.OpenTK.Resource.String.Hello = global::Gwen.UnitTest.Android.Resource.String.Hello;
 		}

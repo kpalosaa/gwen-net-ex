@@ -53,7 +53,7 @@ namespace Gwen.Xml
 
 		public Stream GetStream()
 		{
-			return GetFileStream(m_fileName, false);
+			return Loader.LoaderBase.Loader.GetXmlStream(m_fileName);
 		}
 
 		private string m_fileName;

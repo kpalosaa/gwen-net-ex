@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Gwen.Platform
+namespace Gwen.Platform.Android
 {
-	public class Android : IPlatform
+	public class AndroidPlatform : IPlatform
 	{
 		private DateTime m_FirstTime = DateTime.Now;
 

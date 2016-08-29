@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gwen.Platform.Android\Gwen.Platform.Android.csproj">
-      <Project>{2C91C2A4-5287-4EF9-B1C9-2F5C56C6BCAD}</Project>
+      <Project>{50cc0ce4-a33f-4080-bf0e-b74bf39e2868}</Project>
       <Name>Gwen.Platform.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gwen.Renderer.Android.OpenTK\Gwen.Renderer.Android.OpenTK.csproj">

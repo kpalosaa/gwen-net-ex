@@ -598,33 +598,6 @@ namespace Gwen.Renderer.iOS.OpenTK
 			}
 		}
 
-		public override void LoadTexture(Texture t)
-		{
-			string path = NSBundle.MainBundle.PathForResource(Path.GetFileNameWithoutExtension(t.Name), "png");
-
-			CGDataProvider dataProvider = null;
-			CGImage image = null;
-			try
-			{
-				dataProvider = CGDataProvider.FromFile(path);
-				image = CGImage.FromPNG(dataProvider, null, false, CGColorRenderingIntent.Default);
-
-				LoadTextureFromImage(t, image);
-			}
-			catch (Exception)
-			{
-				t.Failed = true;
-				return;
-			}
-			finally
-			{
-				if (dataProvider != null)
-					dataProvider.Dispose();
-				if (image != null)
-					image.Dispose();
-			}
-		}
-
 		public override void LoadTextureStream(Texture t, System.IO.Stream stream)
 		{
 			NSData data = null;

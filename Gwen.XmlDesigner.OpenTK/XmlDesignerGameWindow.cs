@@ -119,7 +119,8 @@ namespace Gwen.XmlDesigner.OpenTK
 		{
 			GL.ClearColor(System.Drawing.Color.MidnightBlue);
 
-			Platform.Platform.Init(new Platform.Windows());
+			Platform.Platform.Init(new Platform.Windows.WindowsPlatform());
+			Loader.LoaderBase.Init(new Platform.Windows.FileLoader());
 
 			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL10();
 			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();

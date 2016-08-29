@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Gwen.Platform
+namespace Gwen.Platform.iOS
 {
-	public class iOS : IPlatform
+	public class iOSPlatform : IPlatform
 	{
 		private DateTime m_FirstTime = DateTime.Now;
 

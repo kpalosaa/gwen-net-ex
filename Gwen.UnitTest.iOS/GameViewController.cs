@@ -109,7 +109,8 @@ namespace Gwen.UnitTest.iOS
 
 			var view = (GLKView)View;
 
-			Platform.Platform.Init(new Platform.iOS());
+			Platform.Platform.Init(new Platform.iOS.iOSPlatform());
+			Loader.LoaderBase.Init(new Platform.iOS.BundleLoader());
 
 			m_Renderer = new Gwen.Renderer.iOS.OpenTK.OpenTK(false);
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
