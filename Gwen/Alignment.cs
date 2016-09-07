@@ -3,6 +3,7 @@ using Gwen.Control;
 
 namespace Gwen
 {
+	[Flags]
 	public enum Alignment
 	{
 		Left = ControlBase.InternalFlags.AlignHLeft,
