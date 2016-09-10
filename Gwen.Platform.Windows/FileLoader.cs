@@ -32,6 +32,8 @@ namespace Gwen.Platform.Windows
 				return File.Open(name, FileMode.Open, FileAccess.Read);
 			}
 
+			name = name.Replace('/', Path.DirectorySeparatorChar).Replace('\\', Path.DirectorySeparatorChar);
+
 			string path = Path.Combine(basePath, name);
 			return File.Open(path, FileMode.Open, FileAccess.Read);
 		}

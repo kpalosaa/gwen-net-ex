@@ -797,6 +797,7 @@ namespace Gwen.Control
 			tooltip.TextColorOverride = Skin.Colors.TooltipText;
 			tooltip.Padding = new Padding(5, 3, 5, 3);
 
+			MouseInputEnabled = true;
 			ToolTip = tooltip;
 		}
 

@@ -154,13 +154,13 @@ namespace Gwen.Control
 
 			for (int i = 0; i < m_ColumnCount; i++)
 			{
+				width += m_Columns[i].Width;
+
 				ControlBase control = m_Columns[i].Control;
 				if (control == null)
 					continue;
 
 				control.Measure(new Size(m_Columns[i].Width, availableSize.Height));
-
-				width += m_Columns[i].Width;
 				height = Math.Max(height, control.MeasuredSize.Height);
 			}
 
@@ -175,19 +175,15 @@ namespace Gwen.Control
 			for (int i = 0; i < m_ColumnCount; i++)
 			{
 				ControlBase control = m_Columns[i].Control;
-				if (control == null)
-					continue;
-
-				if (i == m_ColumnCount - 1)
+				if (control != null)
 				{
-					control.Arrange(new Rectangle(x, 0, Math.Max(0, finalSize.Width - x), control.MeasuredSize.Height));
+					if (i == m_ColumnCount - 1)
+						control.Arrange(new Rectangle(x, 0, Math.Max(0, finalSize.Width - x), control.MeasuredSize.Height));
+					else
+						control.Arrange(new Rectangle(x, 0, m_Columns[i].Width, control.MeasuredSize.Height));
+					height = Math.Max(height, control.MeasuredSize.Height);
 				}
-				else
-				{
-					control.Arrange(new Rectangle(x, 0, m_Columns[i].Width, control.MeasuredSize.Height));
-					x += m_Columns[i].Width;
-				}
-				height = Math.Max(height, control.MeasuredSize.Height);
+				x += m_Columns[i].Width;
 			}
 
 			return new Size(finalSize.Width, height);

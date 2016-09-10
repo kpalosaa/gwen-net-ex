@@ -40,7 +40,6 @@ namespace Gwen.UnitTest
             }
             {
                 Control.Label label = new Control.Label(layout);
-                label.MouseInputEnabled = true; // needed for tooltip
                 label.Text = "Wow, Coloured Text (and tooltip)";
                 label.TextColor = Color.Blue;
                 label.SetToolTipText("I'm a tooltip");

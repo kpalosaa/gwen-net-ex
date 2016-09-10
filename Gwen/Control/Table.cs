@@ -13,8 +13,8 @@ namespace Gwen.Control
 	{
 		public delegate TableRow CreateRow();
 
-		private bool m_AutoSizeToContent;
-		private bool m_SizeToContents;
+		private bool m_AutoSizeColumnsToContent;
+		private bool m_SizeColumnsToContents;
 		private bool m_AlternateColor;
 		private int m_ColumnCount;
 		private int m_MaxWidth; // for autosizing, if nonzero - fills last cell up to this size
@@ -40,7 +40,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Adjust the size of the control to fit all rows and columns.
 		/// </summary>
-		public bool AutoSizeToContent { get { return m_AutoSizeToContent; } set { m_AutoSizeToContent = value; } }
+		public bool AutoSizeColumnsToContent { get { return m_AutoSizeColumnsToContent; } set { m_AutoSizeColumnsToContent = value; } }
 
 		/// <summary>
 		/// Alternate row background colors.
@@ -84,8 +84,8 @@ namespace Gwen.Control
 
 			m_ColumnWidth = new int[m_ColumnCount];
 
-			m_AutoSizeToContent = false;
-			m_SizeToContents = false;
+			m_AutoSizeColumnsToContent = false;
+			m_SizeColumnsToContents = false;
 
 			if (rowFactory == null)
 				m_RowFactory = new TableRowFactory(this);
@@ -208,9 +208,12 @@ namespace Gwen.Control
 		public TableRow AddRow(string text = null, string name = "", object userData = null)
 		{
 			TableRow row = text != null ? m_RowFactory.Create(text, name, userData) : m_RowFactory.Create();
-			row.Parent = this;
-			IsDirty = true;
-			Invalidate();
+			if (row != null)
+			{
+				row.Parent = this;
+				IsDirty = true;
+				Invalidate();
+			}
 			return row;
 		}
 
@@ -222,9 +225,12 @@ namespace Gwen.Control
 		public TableRow AddRow(object item)
 		{
 			TableRow row = m_RowFactory.Create(item);
-			row.Parent = this;
-			IsDirty = true;
-			Invalidate();
+			if (row != null)
+			{
+				row.Parent = this;
+				IsDirty = true;
+				Invalidate();
+			}
 			return row;
 		}
 
@@ -239,8 +245,8 @@ namespace Gwen.Control
 				throw new ArgumentOutOfRangeException("index");
 
 			TableRow row = AddRow();
-
-			row.MoveChildToIndex(index);
+			if (row != null)
+				row.MoveChildToIndex(index);
 
 			return row;
 		}
@@ -256,8 +262,8 @@ namespace Gwen.Control
 				throw new ArgumentOutOfRangeException("index");
 
 			AddRow(row);
-
-			row.MoveChildToIndex(index);
+			if (row != null)
+				row.MoveChildToIndex(index);
 		}
 
 		/// <summary>
@@ -274,8 +280,8 @@ namespace Gwen.Control
 				throw new ArgumentOutOfRangeException("index");
 
 			TableRow row = AddRow(text, name, userData);
-
-			row.MoveChildToIndex(index);
+			if (row != null)
+				row.MoveChildToIndex(index);
 
 			return row;
 		}
@@ -292,8 +298,8 @@ namespace Gwen.Control
 				throw new ArgumentOutOfRangeException("index");
 
 			TableRow row = AddRow(item);
-
-			row.MoveChildToIndex(index);
+			if (row != null)
+				row.MoveChildToIndex(index);
 
 			return row;
 		}
@@ -359,36 +365,44 @@ namespace Gwen.Control
 		/// <summary>
 		/// Sizes to fit contents.
 		/// </summary>
-		public void SizeToContent(int maxWidth = 0)
+		public void SizeColumnsToContent(int maxWidth = 0)
 		{
 			m_MaxWidth = maxWidth;
-			m_SizeToContents = true;
+			m_SizeColumnsToContents = true;
 			Invalidate();
 		}
 
 		protected override Size OnMeasure(Size availableSize)
 		{
-			if (IsDirty && (m_AutoSizeToContent || m_SizeToContents))
+			if (IsDirty)
 			{
-				m_SizeToContents = false;
-
 				int height = 0;
 				int width = 0;
+				int[] columnWidth;
 
-				int[] columnWidth = new int[m_ColumnCount];
-
-				// Measure cells and determine max column widths
-				foreach (TableRow row in Children)
+				if (m_AutoSizeColumnsToContent || m_SizeColumnsToContents)
 				{
-					for (int i = 0; i < ColumnCount; i++)
+					columnWidth = new int[m_ColumnCount];
+
+					// Measure cells and determine max column widths
+					foreach (TableRow row in Children)
 					{
-						ControlBase cell = row.GetCell(i);
-						if (cell != null)
+						for (int i = 0; i < ColumnCount; i++)
 						{
-							cell.Measure(availableSize);
-							columnWidth[i] = Math.Max(columnWidth[i], cell.MeasuredSize.Width);
+							ControlBase cell = row.GetCell(i);
+							if (cell != null)
+							{
+								cell.Measure(availableSize);
+								columnWidth[i] = Math.Max(columnWidth[i], cell.MeasuredSize.Width);
+							}
 						}
 					}
+
+					m_SizeColumnsToContents = false;
+				}
+				else
+				{
+					columnWidth = m_ColumnWidth;
 				}
 
 				// Sum all column widths 

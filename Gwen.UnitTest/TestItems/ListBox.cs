@@ -18,7 +18,6 @@ namespace Gwen.UnitTest
 			{
                 Control.ListBox ctrl = new Control.ListBox(hlayout);
 				ctrl.Margin = Margin.Three;
-				ctrl.AutoSizeToContent = true;
 				ctrl.AllowMultiSelect = true;
 
 				ctrl.AddRow("First");
@@ -60,12 +59,11 @@ namespace Gwen.UnitTest
                 ctrl.AddRow("I'm autosized");
                 ctrl.AddRow("Last");
 
-                ctrl.SizeToContent();
+                ctrl.SizeColumnsToContent();
             }
             {
                 Control.ListBox ctrl = new Control.ListBox(hlayout);
 				ctrl.Margin = Margin.Three;
-				ctrl.AutoSizeToContent = true;
 				ctrl.ColumnCount = 3;
                 ctrl.RowSelected += RowSelected;
                 ctrl.RowUnselected += RowUnSelected;
@@ -92,11 +90,11 @@ namespace Gwen.UnitTest
                 Control.ListBox ctrl = new Control.ListBox(vlayout);
 				ctrl.Margin = Margin.Three;
 				ctrl.Height = 90;
-				//ctrl.AutoSizeToContent = true;
+				ctrl.AutoSizeColumnsToContent = false;
 				ctrl.HorizontalAlignment = HorizontalAlignment.Left;
                 ctrl.ColumnCount = 3;
 
-                ctrl.SetColumnWidth(0, 150);
+                ctrl.SetColumnWidth(0, 120);
                 ctrl.SetColumnWidth(1, 150);
                 ctrl.SetColumnWidth(2, 150);
 
@@ -114,8 +112,8 @@ namespace Gwen.UnitTest
                 // autosized list box
                 Control.ListBox ctrl = new Control.ListBox(vlayout);
 				ctrl.Margin = Margin.Three;
-				ctrl.AutoSizeToContent = true;
 				ctrl.HorizontalAlignment = HorizontalAlignment.Left;
+				ctrl.AutoSizeToContent = true;
 				ctrl.ColumnCount = 3;
 
                 var row1 = ctrl.AddRow("Row 1");

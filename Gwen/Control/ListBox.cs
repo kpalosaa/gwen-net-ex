@@ -51,6 +51,11 @@ namespace Gwen.Control
 		public int RowCount { get { return m_Table.RowCount; } }
 
 		/// <summary>
+		/// Adjust the size of the control to fit all rows and columns.
+		/// </summary>
+		public bool AutoSizeColumnsToContent { get { return m_Table.AutoSizeColumnsToContent; } set { m_Table.AutoSizeColumnsToContent = value; } }
+
+		/// <summary>
 		/// Returns specific row of the ListBox.
 		/// </summary>
 		/// <param name="index">Row index.</param>
@@ -188,7 +193,7 @@ namespace Gwen.Control
 
 			m_Table = new Table(this);
 			m_Table.RowFactory = rowFactory != null ? rowFactory : new ListRowFactory(this);
-			m_Table.AutoSizeToContent = true;
+			m_Table.AutoSizeColumnsToContent = true;
 			m_Table.ColumnCount = 1;
 
 			m_MultiSelect = false;
@@ -460,7 +465,7 @@ namespace Gwen.Control
 		/// </summary>
 		public void SizeToContent(int maxWidth = 0)
 		{
-			m_Table.SizeToContent(maxWidth);
+			m_Table.SizeColumnsToContent(maxWidth);
 		}
 
 		/// <summary>
@@ -481,6 +486,14 @@ namespace Gwen.Control
 		public int GetColumnWidth(int columnIndex)
 		{
 			return m_Table.GetColumnWidth(columnIndex);
+		}
+
+		/// <summary>
+		/// Sizes to fit contents.
+		/// </summary>
+		public void SizeColumnsToContent(int maxWidth = 0)
+		{
+			m_Table.SizeColumnsToContent(maxWidth);
 		}
 
 		/// <summary>
