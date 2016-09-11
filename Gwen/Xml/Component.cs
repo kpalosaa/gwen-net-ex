@@ -29,7 +29,8 @@ namespace Gwen.Xml
 		/// <typeparam name="T">Type of component.</typeparam>
 		/// <param name="name">Optional name for component. By default the name is component type name.</param>
 		/// <param name="data">Optional data used when creating a component instance.</param>
-		public static void Register<T>(string name = null, params object[] data)
+		/// <returns>True if component registered successfully. False if component already registered or duplicate name.</returns>
+		public static bool Register<T>(string name = null, params object[] data)
 		{
 			if (name == null)
 				name = typeof(T).Name;
@@ -37,8 +38,13 @@ namespace Gwen.Xml
 			if (!m_registerdComponents.ContainsKey(name))
 			{
 				if (Parser.RegisterElement(name, typeof(T), ElementHandler))
+				{
 					m_registerdComponents[name] = new ComponentDef(typeof(T), data);
+					return true;
+				}
 			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -46,7 +52,8 @@ namespace Gwen.Xml
 		/// </summary>
 		/// <typeparam name="T">Type of component.</typeparam>
 		/// <param name="name">Optional name for component. By default the name is component type name.</param>
-		public static void Unregister<T>(string name = null)
+		/// <returns>True if component unregisterd successfully. False if component not found.</returns>
+		public static bool Unregister<T>(string name = null)
 		{
 			if (name == null)
 				name = typeof(T).Name;
@@ -54,8 +61,10 @@ namespace Gwen.Xml
 			if (m_registerdComponents.ContainsKey(name))
 			{
 				m_registerdComponents.Remove(name);
-				Parser.UnregisterElement(name);
+				return Parser.UnregisterElement(name);
 			}
+
+			return false;
 		}
 
 		/// <summary>
@@ -277,10 +286,10 @@ namespace Gwen.Xml
 			if (m_registerdComponents.TryGetValue(parser.Name, out compDef))
 			{
 				Component component;
-				if (compDef.Data != null)
-					component = Create(compDef.Type, parent, compDef.Data);
+				if (compDef.Data != null && compDef.Data.Length > 0)
+					component = Activator.CreateInstance(compDef.Type, new object[] { parent }.Concat(compDef.Data).ToArray()) as Component;
 				else
-					component = Create(compDef.Type, parent);
+					component = Activator.CreateInstance(compDef.Type, parent) as Component;
 
 				parser.ParseComponentAttributes(component);
 
@@ -291,6 +300,11 @@ namespace Gwen.Xml
 						component.OnChildAdded(parser.ParseElement(component.View));
 					}
 				}
+
+				if (component.View == null)
+					throw new NullReferenceException("Unable to create a component. Component contains no view.");
+
+				component.OnCreated();
 
 				return component.View;
 			}
