@@ -123,6 +123,28 @@ namespace Gwen.Control
 		}
 
 		/// <summary>
+		/// Returns the current image name (or null if no image set) or set a new image.
+		/// </summary>
+		[Xml.XmlProperty]
+		public string ImageName
+		{
+			get
+			{
+				if (m_Title != null)
+					return m_Title.ImageName;
+				else
+					return null;
+			}
+			set
+			{
+				if (m_Title != null && m_Title.ImageName == value)
+					return;
+
+				SetImage(value);
+			}
+		}
+
+		/// <summary>
 		/// Invoked when the node label has been pressed.
 		/// </summary>
 		[Xml.XmlEvent]
@@ -474,6 +496,10 @@ namespace Gwen.Control
 			IsSelected = !IsSelected;
 		}
 
+		/// <summary>
+		/// Set tree node image.
+		/// </summary>
+		/// <param name="textureName">Image name.</param>
 		public void SetImage(string textureName) 
 		{
 			m_Title.SetImage(textureName);
