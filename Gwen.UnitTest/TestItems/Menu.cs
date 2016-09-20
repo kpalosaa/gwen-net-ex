@@ -20,83 +20,83 @@ namespace Gwen.UnitTest
 				/* File */
 				{
 					Control.MenuItem root = menu.AddItem("File");
-					root.Menu.AddItem("Load", "test16.png", "Ctrl+L").SetAction(MenuItemSelect);
-					root.Menu.AddItem("Save", String.Empty, "Ctrl+S").SetAction(MenuItemSelect);
-					root.Menu.AddItem("Save As..", String.Empty, "Ctrl+A").SetAction(MenuItemSelect);
-					root.Menu.AddItem("Quit", String.Empty, "Ctrl+Q").SetAction(MenuItemSelect);
+					root.AddItem("Load", "test16.png", "Ctrl+L").Selected += MenuItemSelect;
+					root.AddItem("Save", String.Empty, "Ctrl+S").Selected += MenuItemSelect;
+					root.AddItem("Save As..", String.Empty, "Ctrl+A").Selected += MenuItemSelect;
+					root.AddItem("Quit", String.Empty, "Ctrl+Q").Selected += MenuItemSelect;
 				}
 
 				/* Russian */
 				{
 					Control.MenuItem pRoot = menu.AddItem("\u043F\u0438\u0440\u0430\u0442\u0441\u0442\u0432\u043E");
-					pRoot.Menu.AddItem("\u5355\u5143\u6D4B\u8BD5").SetAction(MenuItemSelect);
-					pRoot.Menu.AddItem("\u0111\u01A1n v\u1ECB th\u1EED nghi\u1EC7m", "test16.png").SetAction(MenuItemSelect);
+					pRoot.AddItem("\u5355\u5143\u6D4B\u8BD5").Selected += MenuItemSelect;
+					pRoot.AddItem("\u0111\u01A1n v\u1ECB th\u1EED nghi\u1EC7m", "test16.png").Selected += MenuItemSelect;
 				}
 
 				/* Embdedded Menu Items */
 				{
 					Control.MenuItem pRoot = menu.AddItem("Submenu");
 
-					Control.MenuItem pCheckable = pRoot.Menu.AddItem("Checkable");
+					Control.MenuItem pCheckable = pRoot.AddItem("Checkable");
 					pCheckable.IsCheckable = true;
 					pCheckable.IsCheckable = true;
 
 					{
-						Control.MenuItem pRootB = pRoot.Menu.AddItem("Two");
-						pRootB.Menu.AddItem("Two.One");
-						pRootB.Menu.AddItem("Two.Two");
-						pRootB.Menu.AddItem("Two.Three");
-						pRootB.Menu.AddItem("Two.Four");
-						pRootB.Menu.AddItem("Two.Five");
-						pRootB.Menu.AddItem("Two.Six");
-						pRootB.Menu.AddItem("Two.Seven");
-						pRootB.Menu.AddItem("Two.Eight");
-						pRootB.Menu.AddItem("Two.Nine", "test16.png");
+						Control.MenuItem pRootB = pRoot.AddItem("Two");
+						pRootB.AddItem("Two.One");
+						pRootB.AddItem("Two.Two");
+						pRootB.AddItem("Two.Three");
+						pRootB.AddItem("Two.Four");
+						pRootB.AddItem("Two.Five");
+						pRootB.AddItem("Two.Six");
+						pRootB.AddItem("Two.Seven");
+						pRootB.AddItem("Two.Eight");
+						pRootB.AddItem("Two.Nine", "test16.png");
 					}
 
-					pRoot.Menu.AddItem("Three");
-					pRoot.Menu.AddItem("Four");
-					pRoot.Menu.AddItem("Five");
+					pRoot.AddItem("Three");
+					pRoot.AddItem("Four");
+					pRoot.AddItem("Five");
 
 					{
-						Control.MenuItem pRootB = pRoot.Menu.AddItem("Six");
-						pRootB.Menu.AddItem("Six.One");
-						pRootB.Menu.AddItem("Six.Two");
-						pRootB.Menu.AddItem("Six.Three");
-						pRootB.Menu.AddItem("Six.Four");
-						pRootB.Menu.AddItem("Six.Five", "test16.png");
+						Control.MenuItem pRootB = pRoot.AddItem("Six");
+						pRootB.AddItem("Six.One");
+						pRootB.AddItem("Six.Two");
+						pRootB.AddItem("Six.Three");
+						pRootB.AddItem("Six.Four");
+						pRootB.AddItem("Six.Five", "test16.png");
 
 						{
-							Control.MenuItem pRootC = pRootB.Menu.AddItem("Six.Six");
-							pRootC.Menu.AddItem("Sheep");
-							pRootC.Menu.AddItem("Goose");
+							Control.MenuItem pRootC = pRootB.AddItem("Six.Six");
+							pRootC.AddItem("Sheep");
+							pRootC.AddItem("Goose");
 							{
-								Control.MenuItem pRootD = pRootC.Menu.AddItem("Camel");
-								pRootD.Menu.AddItem("Eyes");
-								pRootD.Menu.AddItem("Nose");
+								Control.MenuItem pRootD = pRootC.AddItem("Camel");
+								pRootD.AddItem("Eyes");
+								pRootD.AddItem("Nose");
 								{
-									Control.MenuItem pRootE = pRootD.Menu.AddItem("Hair");
-									pRootE.Menu.AddItem("Blonde");
-									pRootE.Menu.AddItem("Black");
+									Control.MenuItem pRootE = pRootD.AddItem("Hair");
+									pRootE.AddItem("Blonde");
+									pRootE.AddItem("Black");
 									{
-										Control.MenuItem pRootF = pRootE.Menu.AddItem("Red");
-										pRootF.Menu.AddItem("Light");
-										pRootF.Menu.AddItem("Medium");
-										pRootF.Menu.AddItem("Dark");
+										Control.MenuItem pRootF = pRootE.AddItem("Red");
+										pRootF.AddItem("Light");
+										pRootF.AddItem("Medium");
+										pRootF.AddItem("Dark");
 									}
-									pRootE.Menu.AddItem("Brown");
+									pRootE.AddItem("Brown");
 								}
-								pRootD.Menu.AddItem("Ears");
+								pRootD.AddItem("Ears");
 							}
-							pRootC.Menu.AddItem("Duck");
+							pRootC.AddItem("Duck");
 						}
 
-						pRootB.Menu.AddItem("Six.Seven");
-						pRootB.Menu.AddItem("Six.Eight");
-						pRootB.Menu.AddItem("Six.Nine");
+						pRootB.AddItem("Six.Seven");
+						pRootB.AddItem("Six.Eight");
+						pRootB.AddItem("Six.Nine");
 					}
 
-					pRoot.Menu.AddItem("Seven");
+					pRoot.AddItem("Seven");
 				}
 			}
 

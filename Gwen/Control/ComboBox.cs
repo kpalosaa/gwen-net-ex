@@ -62,7 +62,7 @@ namespace Gwen.Control
 		/// Internal handler for item selected event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected override void OnItemSelected(ControlBase control, ItemSelectedEventArgs args)
+		protected override void OnItemSelected(ControlBase control, EventArgs args)
 		{
 			if (!IsDisabled)
 			{

@@ -118,7 +118,7 @@ namespace Gwen.Control.Internal
 		/// Internal handler for item selected event.
 		/// </summary>
 		/// <param name="control">Event source.</param>
-		protected virtual void OnItemSelected(ControlBase control, ItemSelectedEventArgs args)
+		protected virtual void OnItemSelected(ControlBase control, EventArgs args)
 		{
 			if (!IsDisabled)
 			{
@@ -130,7 +130,7 @@ namespace Gwen.Control.Internal
 				m_Menu.IsCollapsed = true;
 
 				if (ItemSelected != null)
-					ItemSelected.Invoke(this, args);
+					ItemSelected.Invoke(this, new ItemSelectedEventArgs(item));
 
 				Focus();
 			}

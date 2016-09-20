@@ -2080,6 +2080,15 @@ namespace Gwen.Control
 		}
 
 		/// <summary>
+		/// Removes keyboard accelerator.
+		/// </summary>
+		/// <param name="accelerator">Accelerator text.</param>
+		public void RemoveAccelerator(string accelerator)
+		{
+			m_Accelerators.Remove(accelerator);
+		}
+
+		/// <summary>
 		/// Re-renders the control, invalidates cached texture.
 		/// </summary>
 		public virtual void Redraw()

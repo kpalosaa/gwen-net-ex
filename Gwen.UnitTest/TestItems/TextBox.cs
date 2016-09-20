@@ -181,10 +181,10 @@ namespace Gwen.UnitTest
 				Control.MenuStrip menuStrip = new MenuStrip(layout);
 				menuStrip.Dock = Dock.Top;
 				Control.MenuItem fileMenu = menuStrip.AddItem("File");
-				fileMenu.Menu.AddItem("Open...", String.Empty, "Ctrl+O").SetAction((s, a) => OnOpen(s, a));
-				fileMenu.Menu.AddItem("Save", String.Empty, "Ctrl+S").SetAction((s, a) => OnSave(s, a));
-				fileMenu.Menu.AddItem("Save As...").SetAction((s, a) => OnSaveAs(s, a));
-				fileMenu.Menu.AddItem("Quit", String.Empty, "Ctrl+Q").SetAction((s, a) => Close());
+				fileMenu.Menu.AddItem("Open...", String.Empty, "Ctrl+O").Selected += (s, a) => OnOpen(s, a);
+				fileMenu.Menu.AddItem("Save", String.Empty, "Ctrl+S").Selected += (s, a) => OnSave(s, a);
+				fileMenu.Menu.AddItem("Save As...").Selected += (s, a) => OnSaveAs(s, a);
+				fileMenu.Menu.AddItem("Quit", String.Empty, "Alt+F4").Selected += (s, a) => Close();
 
 				m_Font = Skin.DefaultFont.Copy();
 				m_Font.FaceName = "Courier New";

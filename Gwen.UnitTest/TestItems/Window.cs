@@ -97,15 +97,15 @@ namespace Gwen.UnitTest
 				root.Menu.AddItem("Load", "test16.png", "Ctrl+L");
 				root.Menu.AddItem("Save", String.Empty, "Ctrl+S");
 				root.Menu.AddItem("Save As..", String.Empty, "Ctrl+A");
-				root.Menu.AddItem("Quit", String.Empty, "Ctrl+Q").SetAction((c ,a) => window.Close());
+				root.Menu.AddItem("Quit", String.Empty, "Alt+F4").Selected += (c ,a) => window.Close();
 			}
 			/* Resizing */
 			{
 				Control.MenuItem root = menuStrip.AddItem("Resizing");
-				root.Menu.AddItem("Disabled").SetAction((c, a) => window.Resizing = Resizing.None);
-				root.Menu.AddItem("Width").SetAction((c, a) => window.Resizing = Resizing.Width);
-				root.Menu.AddItem("Height").SetAction((c, a) => window.Resizing = Resizing.Height);
-				root.Menu.AddItem("Both").SetAction((c, a) => window.Resizing = Resizing.Both);
+				root.Menu.AddItem("Disabled").Selected += (c, a) => window.Resizing = Resizing.None;
+				root.Menu.AddItem("Width").Selected += (c, a) => window.Resizing = Resizing.Width;
+				root.Menu.AddItem("Height").Selected += (c, a) => window.Resizing = Resizing.Height;
+				root.Menu.AddItem("Both").Selected += (c, a) => window.Resizing = Resizing.Both;
 			}
 
 			Control.StatusBar statusBar = new Control.StatusBar(layout);
