@@ -35,7 +35,7 @@ namespace Gwen.Control
 		/// <summary>
 		/// Selected color.
 		/// </summary>
-		public Color SelectedColor { get { return m_LerpBox.SelectedColor; } }
+		public Color SelectedColor { get { return m_LerpBox.SelectedColor; } set { SetColor(value); } }
 
 		/// <summary>
 		/// Show / hide default color box
