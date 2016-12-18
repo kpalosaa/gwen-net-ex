@@ -416,6 +416,9 @@ namespace Gwen.Skin
 			Colors.Category.LineAlt.Button          = Renderer.PixelColor(m_Texture, 4 + 8*25, 508, Color.Yellow);
 			Colors.Category.LineAlt.Button_Hover    = Renderer.PixelColor(m_Texture, 4 + 8*24, 500, Color.Yellow);
 			Colors.Category.LineAlt.Button_Selected = Renderer.PixelColor(m_Texture, 4 + 8*25, 500, Color.Yellow);
+
+			Colors.GroupBox.Dark = Renderer.PixelColor(m_Texture, 4 + 8 * 3, 500, Color.Yellow);
+			Colors.GroupBox.Light = Renderer.PixelColor(m_Texture, 4 + 8 * 2, 500, Color.Yellow);
 		}
 
 		private void InitializeTextures()
@@ -660,19 +663,16 @@ namespace Gwen.Skin
 			rect.Y += (int)(textHeight * 0.5f);
 			rect.Height -= (int)(textHeight * 0.5f);
 
-			Color m_colDarker = new Color(50, 0, 50, 60);
-			Color m_colLighter = new Color(150, 255, 255, 255);
-
-			Renderer.DrawColor = m_colLighter;
+			Renderer.DrawColor = Colors.GroupBox.Light;
 
 			Renderer.DrawFilledRect(new Rectangle(rect.X + 1, rect.Y + 1, textStart - 3, 1));
 			Renderer.DrawFilledRect(new Rectangle(rect.X + 1 + textStart + textWidth, rect.Y + 1, rect.Width - textStart + textWidth - 2, 1));
-			Renderer.DrawFilledRect(new Rectangle(rect.X + 1, (rect.Y + rect.Height) - 1, rect.X + rect.Width - 2, 1));
+			Renderer.DrawFilledRect(new Rectangle(rect.X + 1, (rect.Y + rect.Height) - 2, rect.X + rect.Width - 2, 1));
 
 			Renderer.DrawFilledRect(new Rectangle(rect.X + 1, rect.Y + 1, 1, rect.Height));
 			Renderer.DrawFilledRect(new Rectangle((rect.X + rect.Width) - 2, rect.Y + 1, 1, rect.Height - 1));
 
-			Renderer.DrawColor = m_colDarker;
+			Renderer.DrawColor = Colors.GroupBox.Dark;
 
 			Renderer.DrawFilledRect(new Rectangle(rect.X + 1, rect.Y, textStart - 3, 1));
 			Renderer.DrawFilledRect(new Rectangle(rect.X + 1 + textStart + textWidth, rect.Y, rect.Width - textStart - textWidth - 2, 1));

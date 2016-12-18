@@ -71,30 +71,6 @@ namespace Gwen.Skin
 		}
 #endif
 
-		/// <summary>
-		/// Releases the specified font.
-		/// </summary>
-		/// <param name="font">Font to release.</param>
-		protected virtual void ReleaseFont(Font font)
-		{
-			if (font == null)
-				return;
-			if (m_Renderer == null)
-				return;
-			m_Renderer.FreeFont(font);
-		}
-		
-		/// <summary>
-		/// Sets the default text font.
-		/// </summary>
-		/// <param name="faceName">Font name. Meaning can vary depending on the renderer.</param>
-		/// <param name="size">Font size.</param>
-		public virtual void SetDefaultFont(string faceName, int size = 10)
-		{
-			m_DefaultFont.FaceName = faceName;
-			m_DefaultFont.Size = size;
-		}
-
 		#region UI elements
 		public virtual void DrawButton(Control.ControlBase control, bool depressed, bool hovered, bool disabled) { }
 		public virtual void DrawTabButton(Control.ControlBase control, bool active, Dock dir) { }

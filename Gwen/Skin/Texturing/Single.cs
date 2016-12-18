@@ -43,23 +43,5 @@ namespace Gwen.Skin.Texturing
             render.DrawColor = col;
             render.DrawTexturedRect(m_Texture, r, m_uv[0], m_uv[1], m_uv[2], m_uv[3]);
         }
-
-        public void DrawCenter(Renderer.RendererBase render, Rectangle r)
-        {
-            if (m_Texture == null)
-                return;
-
-            DrawCenter(render, r, Color.White);
-        }
-
-        public void DrawCenter(Renderer.RendererBase render, Rectangle r, Color col)
-        {
-            r.X += (int)((r.Width - m_Width) * 0.5);
-            r.Y += (int)((r.Height - m_Height) * 0.5);
-            r.Width = m_Width;
-            r.Height = m_Height;
-
-            Draw(render, r, col);
-        }
     }
 }

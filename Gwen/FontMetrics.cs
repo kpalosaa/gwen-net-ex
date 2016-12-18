@@ -21,11 +21,11 @@ namespace Gwen
 
 		public FontMetrics(Font font)
 		{
-			EmHeightPixels = font.RealSize;
+			AscentPixels = font.RealSize;
+			DescentPixels = 0.25f * AscentPixels;
+			EmHeightPixels = AscentPixels + DescentPixels;
 			InternalLeadingPixels = 0.0f;
 			ExternalLeadingPixels = 0.0f;
-			DescentPixels = 0.0f;
-			AscentPixels = EmHeightPixels;
 			CellHeightPixels = EmHeightPixels;
 			LineSpacingPixels = EmHeightPixels;
 		}

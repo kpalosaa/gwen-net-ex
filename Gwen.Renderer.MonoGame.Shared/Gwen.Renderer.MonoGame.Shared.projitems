@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>825e0a83-1e9c-40fe-9b58-0d45f5e3d855</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Gwen.Renderer.MonoGame</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Input\MonoGame.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Loader\MonoGameAssetLoader.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\MonoGamePlatform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer\GwenEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Renderer\MonoGame.cs" />
+  </ItemGroup>
+</Project>

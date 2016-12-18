@@ -116,6 +116,12 @@ namespace Gwen.Skin
             public _LineAlt LineAlt;
         }
 
+		public struct _GroupBox
+		{
+			public Color Dark;
+			public Color Light;
+		}
+
         public Color ModalBackground;
         public Color TooltipText;
 
@@ -128,5 +134,6 @@ namespace Gwen.Skin
         public _Tree Tree;
         public _Properties Properties;
         public _Category Category;
+		public _GroupBox GroupBox;
     }
 }
