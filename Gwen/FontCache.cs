@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gwen
 {
-	public sealed class FontCache : IDisposable
+	internal sealed class FontCache : IDisposable
 	{
 		internal static void CreateCache(Renderer.RendererBase renderer)
 		{

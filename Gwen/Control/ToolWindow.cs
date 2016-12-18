@@ -57,8 +57,6 @@ namespace Gwen.Control
 		/// <param name="skin">Skin to use.</param>
 		protected override void Render(Skin.SkinBase skin)
 		{
-			bool hasFocus = IsOnTop;
-
 			skin.DrawToolWindow(this, m_vertical, m_vertical ? m_DragBar.ActualHeight : m_DragBar.ActualWidth);
 		}
 

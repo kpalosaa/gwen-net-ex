@@ -173,6 +173,7 @@ namespace Gwen.Control
         {
             Alignment = Alignment.Center;
             TextPadding = new Padding(3, 3, 3, 3);
+			m_ImageAlign = ImageAlign.LeftSide;
         }
 
 		private void EnsureText()

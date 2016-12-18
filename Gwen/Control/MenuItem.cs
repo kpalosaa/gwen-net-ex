@@ -16,6 +16,12 @@ namespace Gwen.Control
 		private Label m_Accelerator;
 
 		/// <summary>
+		/// Set or get keyboard accelerator text on MenuItem.
+		/// </summary>
+		[Xml.XmlProperty]
+		public string Accelerator { get { return m_Accelerator != null ? m_Accelerator.Text : null; } set { SetAccelerator(value); } }
+
+		/// <summary>
 		/// Indicates whether the item is on a menu strip.
 		/// </summary>
 		public bool IsOnStrip { get { return Parent is MenuStrip; } }
@@ -68,7 +74,7 @@ namespace Gwen.Control
 		{
 			get
 			{
-				if (null == m_Menu)
+				if (m_Menu == null)
 				{
 					m_Menu = new Menu(GetCanvas());
 					m_Menu.ParentMenuItem = this;
@@ -89,7 +95,23 @@ namespace Gwen.Control
 		/// Invoked when the item is selected.
 		/// </summary>
 		[Xml.XmlEvent]
-		public event GwenEventHandler<ItemSelectedEventArgs> Selected;
+		public event GwenEventHandler<EventArgs> Selected
+		{
+			add
+			{
+				if (m_Accelerator != null)
+					AddAccelerator(m_Accelerator.Text, value);
+
+				InternalSelected += value;
+			}
+			remove
+			{
+				if (m_Accelerator != null)
+					RemoveAccelerator(m_Accelerator.Text);
+
+				InternalSelected -= value;
+			}
+		}
 
 		/// <summary>
 		/// Invoked when the item is checked.
@@ -109,6 +131,8 @@ namespace Gwen.Control
 		[Xml.XmlEvent]
 		public event GwenEventHandler<EventArgs> CheckChanged;
 
+		private event GwenEventHandler<EventArgs> InternalSelected;
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MenuItem"/> class.
 		/// </summary>
@@ -119,6 +143,27 @@ namespace Gwen.Control
 			IsTabable = false;
 			IsCheckable = false;
 			IsChecked = false;
+		}
+
+		/// <summary>
+		/// Adds a new child menu item.
+		/// </summary>
+		/// <param name="text">Item text.</param>
+		/// <param name="iconName">Icon texture name.</param>
+		/// <param name="accelerator">Accelerator for this item.</param>
+		/// <returns>Newly created control.</returns>
+		public virtual MenuItem AddItem(string text, string iconName = null, string accelerator = null)
+		{
+			return this.Menu.AddItem(text, iconName, accelerator);
+		}
+
+		/// <summary>
+		/// Adds a child menu item.
+		/// </summary>
+		/// <param name="item">Item.</param>
+		public virtual void AddItem(MenuItem item)
+		{
+			this.Menu.AddItem(item);
 		}
 
 		/// <summary>
@@ -170,8 +215,8 @@ namespace Gwen.Control
 			else if (!IsOnStrip)
 			{
 				IsChecked = !IsChecked;
-				if (Selected != null)
-					Selected.Invoke(this, new ItemSelectedEventArgs(this));
+				if (InternalSelected != null)
+					InternalSelected.Invoke(this, new ItemSelectedEventArgs(this));
 				GetCanvas().CloseMenus();
 			}
 			base.OnClicked(x, y);
@@ -226,18 +271,7 @@ namespace Gwen.Control
 			m_Menu.CloseAll();
 		}
 
-		public MenuItem SetAction(GwenEventHandler<EventArgs> handler)
-		{
-			if (m_Accelerator != null)
-			{
-				AddAccelerator(m_Accelerator.Text, handler);
-			}
-
-			Selected += handler;
-			return this;
-		}
-
-		public void SetAccelerator(string acc)
+		internal void SetAccelerator(string acc)
 		{
 			if (m_Accelerator != null)
 			{
