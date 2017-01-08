@@ -9,9 +9,9 @@
 		<string>GameThumbnail.png</string>
 	</array>
 	<key>CFBundleIdentifier</key>
-	<string>project.MonoGame.Gwen.UnitTest.MonoGame.iOS</string>
+	<string>com.GwenUnitTestMonoGameiOS</string>
 	<key>MinimumOSVersion</key>
-	<string>7.0</string>
+	<string>10.1</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -19,5 +19,14 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string></string>
 </dict>
 </plist>
