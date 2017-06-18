@@ -12,7 +12,7 @@ namespace Gwen.UnitTest.MonoGame
 {
     public class UnitTestGame : Game
     {
-		GraphicsDeviceManager m_Gaphics;
+		GraphicsDeviceManager m_Graphics;
 
 		bool m_ChangeGraphicsSettings;
 
@@ -28,16 +28,16 @@ namespace Gwen.UnitTest.MonoGame
 
 		public UnitTestGame()
 		{
-			m_Gaphics = new GraphicsDeviceManager(this);
-			m_Gaphics.PreferredBackBufferWidth = 1024;
-			m_Gaphics.PreferredBackBufferHeight = 768;
-			m_Gaphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(SetToPreserve‌​);
+			m_Graphics = new GraphicsDeviceManager(this);
+			m_Graphics.PreferredBackBufferWidth = 1024;
+			m_Graphics.PreferredBackBufferHeight = 768;
+			m_Graphics.PreparingDeviceSettings += new EventHandler<PreparingDeviceSettingsEventArgs>(SetToPreserve‌​);
 
 #if ANDROID
-			m_Gaphics.IsFullScreen = true;
+			m_Graphics.IsFullScreen = true;
 #endif
 
-			m_Gaphics.SynchronizeWithVerticalRetrace = false;
+			m_Graphics.SynchronizeWithVerticalRetrace = false;
 			this.IsFixedTimeStep = false;
 
 			Content.RootDirectory = "Content";
@@ -83,7 +83,7 @@ namespace Gwen.UnitTest.MonoGame
 			Loader.LoaderBase.Init(new Gwen.Loader.MonoGame.MonoGameAssetLoader(Content));
 
 			m_Renderer = new Gwen.Renderer.MonoGame.MonoGame(GraphicsDevice, Content, Content.Load<Effect>("GwenEffect"));
-			m_Renderer.Resize(m_Gaphics.PreferredBackBufferWidth, m_Gaphics.PreferredBackBufferHeight);
+			m_Renderer.Resize(m_Graphics.PreferredBackBufferWidth, m_Graphics.PreferredBackBufferHeight);
 
 			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "Skins/DefaultSkin");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
@@ -91,7 +91,7 @@ namespace Gwen.UnitTest.MonoGame
 			m_Input = new Gwen.Renderer.MonoGame.Input.MonoGame(this);
 			m_Input.Initialize(m_Canvas);
 
-			m_Canvas.SetSize(m_Gaphics.PreferredBackBufferWidth, m_Gaphics.PreferredBackBufferHeight);
+			m_Canvas.SetSize(m_Graphics.PreferredBackBufferWidth, m_Graphics.PreferredBackBufferHeight);
 			m_Canvas.ShouldDrawBackground = true;
 			m_Canvas.BackgroundColor = new Color(255, 150, 170, 170);
 
@@ -132,7 +132,7 @@ namespace Gwen.UnitTest.MonoGame
 		{
 			if (m_ChangeGraphicsSettings)
 			{
-				m_Gaphics.ApplyChanges();
+				m_Graphics.ApplyChanges();
 				m_ChangeGraphicsSettings = false;
 			}
 
@@ -177,13 +177,13 @@ namespace Gwen.UnitTest.MonoGame
 
 		private void OnClientSizeChanged(object sender, EventArgs e)
 		{
-			m_Gaphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-			m_Gaphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+			m_Graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+			m_Graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
 
 			m_ChangeGraphicsSettings = true;
 
-			m_Renderer.Resize(m_Gaphics.PreferredBackBufferWidth, m_Gaphics.PreferredBackBufferHeight);
-			m_Canvas.SetSize(m_Gaphics.PreferredBackBufferWidth, m_Gaphics.PreferredBackBufferHeight);
+			m_Renderer.Resize(m_Graphics.PreferredBackBufferWidth, m_Graphics.PreferredBackBufferHeight);
+			m_Canvas.SetSize(m_Graphics.PreferredBackBufferWidth, m_Graphics.PreferredBackBufferHeight);
 		}
 	}
 }

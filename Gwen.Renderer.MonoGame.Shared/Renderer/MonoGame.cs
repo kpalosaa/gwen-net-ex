@@ -525,9 +525,7 @@ namespace Gwen.Renderer.MonoGame
 			var viewport = m_GraphicsDevice.Viewport;
 
 			var projection = Matrix.CreateOrthographicOffCenter(0, viewport.Width, viewport.Height, 0, 0, 1);
-			var halfPixelOffset = Matrix.CreateTranslation(-0.5f, -0.5f, 0);
-
-			m_Effect.MatrixTransform = halfPixelOffset * projection;
+			m_Effect.MatrixTransform = projection;
 		}
 	}
 }

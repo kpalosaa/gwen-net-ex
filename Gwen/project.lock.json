@@ -1,5 +1,4 @@
 {
-  "locked": false,
   "version": 2,
   "targets": {
     ".NETPortable,Version=v4.0,Profile=Profile47": {}
@@ -8,5 +7,20 @@
   "projectFileDependencyGroups": {
     "": [],
     ".NETPortable,Version=v4.0,Profile=Profile47": []
+  },
+  "packageFolders": {
+    "C:\\Users\\kpalo\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "restore": {
+      "projectUniqueName": "C:\\Users\\kpalo\\Documents\\Sources\\gwen-net-ex\\Gwen\\Gwen.csproj",
+      "projectName": "Gwen",
+      "projectPath": "C:\\Users\\kpalo\\Documents\\Sources\\gwen-net-ex\\Gwen\\Gwen.csproj",
+      "projectJsonPath": "C:\\Users\\kpalo\\Documents\\Sources\\gwen-net-ex\\Gwen\\project.json",
+      "projectStyle": "ProjectJson"
+    },
+    "frameworks": {
+      "portable40-net45+sl5+win8": {}
+    }
   }
 }

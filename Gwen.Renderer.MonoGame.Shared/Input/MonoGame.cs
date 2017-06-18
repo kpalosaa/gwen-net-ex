@@ -62,9 +62,9 @@ namespace Gwen.Renderer.MonoGame.Input
 				result = ProcessMouseButtons(true, false);
 
 			if (state.RightButton == ButtonState.Pressed && m_OldMouseState.RightButton == ButtonState.Released)
-				result = ProcessMouseButtons(true, true);
+				result = ProcessMouseButtons(false, true);
 			else if (state.RightButton == ButtonState.Released && m_OldMouseState.RightButton == ButtonState.Pressed)
-				result = ProcessMouseButtons(true, false);
+				result = ProcessMouseButtons(false, false);
 
 			if (state.ScrollWheelValue != m_OldMouseState.ScrollWheelValue)
 				result = ProcessMouseWheel(m_OldMouseState.ScrollWheelValue - state.ScrollWheelValue);
