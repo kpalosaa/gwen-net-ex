@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Skin>
+
+	<Bordered Name="Shadow" Rect="448, 0, 31, 31" Margin="8" />
+	<Bordered Name="Tooltip" Rect="128, 320, 127, 31" Margin="8" />
+	<Bordered Name="StatusBar" Rect="128, 288, 127, 31" Margin="8" />
+	<Bordered Name="Selection" Rect="384, 32, 31, 31" Margin="8" />
+
+	<Bordered Name="Panel.Normal" Rect="256, 0, 63, 63" Margin="16" />
+	<Bordered Name="Panel.Bright" Rect="320, 0, 63, 63" Margin="16" />
+	<Bordered Name="Panel.Dark" Rect="256, 64, 63, 63" Margin="16" />
+	<Bordered Name="Panel.Highlight" Rect="320, 64, 63, 63" Margin="16" />
+
+	<Bordered Name="Window.Normal.TitleBar" Rect="0, 0, 127, 24" Margin="8" />
+	<Bordered Name="Window.Normal.Client" Rect="0, 24, 127, 103" Margin="8" />
+	<Bordered Name="Window.Inactive.TitleBar" Rect="128, 0, 127, 24" Margin="8" />
+	<Bordered Name="Window.Inactive.Client" Rect="128, 24, 127, 103" Margin="8" />
+
+	<Bordered Name="ToolWindow.H.DragBar" Rect="384, 464, 17, 31" Margin="8" />
+	<Bordered Name="ToolWindow.H.Client" Rect="401, 464, 110, 31" Margin="8" />
+	<Bordered Name="ToolWindow.V.DragBar" Rect="256, 384, 31, 17" Margin="8" />
+	<Bordered Name="ToolWindow.V.Client" Rect="256, 401, 31, 110" Margin="8" />
+
+	<Single Name="CheckBox.Active.Checked" Rect="448, 32, 15, 15" />
+	<Single Name="CheckBox.Active.Normal" Rect="464, 32, 15, 15" />
+	<Single Name="CheckBox.Disabled.Normal" Rect="448, 48, 15, 15" />
+	<Single Name="CheckBox.Disabled.Normal" Rect="464, 48, 15, 15" />
+
+	<Single Name="RadioButton.Active.Checked" Rect="448, 64, 15, 15" />
+	<Single Name="RadioButton.Active.Normal" Rect="464, 64, 15, 15" />
+	<Single Name="RadioButton.Disabled.Normal" Rect="448, 80, 15, 15" />
+	<Single Name="RadioButton.Disabled.Normal" Rect="464, 80, 15, 15" />
+
+	<Bordered Name="TextBox.Normal" Rect="0, 150, 127, 21" Margin="4" />
+	<Bordered Name="TextBox.Focus" Rect="0, 172, 127, 21" Margin="4" />
+	<Bordered Name="TextBox.Disabled" Rect="0, 193, 127, 21" Margin="4" />
+
+	<Bordered Name="Menu.Strip" Rect="0, 128, 127, 21" Margin="1" />
+	<Bordered Name="Menu.BackgroundWithMargin" Rect="128, 128, 127, 63" Margin="24, 8, 8, 8" />
+	<Bordered Name="Menu.Background" Rect="128, 192, 127, 63" Margin="8" />
+	<Bordered Name="Menu.Hover" Rect="128, 256, 127, 31" Margin="8" />
+	<Single Name="Menu.RightArrow" Rect="464, 112, 15, 15" />
+	<Single Name="Menu.Check" Rect="448, 112, 15, 15" />
+
+	<Bordered Name="Tab.Control" Rect="0, 256, 127, 127" Margin="8" />
+	<Bordered Name="Tab.Bottom.Active" Rect="0, 416, 63, 31" Margin="8" />
+	<Bordered Name="Tab.Bottom.Inactive" Rect="128, 416, 63, 31" Margin="8" />
+	<Bordered Name="Tab.Top.Active" Rect="0, 384, 63, 31" Margin="8" />
+	<Bordered Name="Tab.Top.Inactive" Rect="128, 384, 63, 31" Margin="8" />
+	<Bordered Name="Tab.Left.Active" Rect="64, 384, 31, 63" Margin="8" />
+	<Bordered Name="Tab.Left.Inactive" Rect="192, 384, 31, 63" Margin="8" />
+	<Bordered Name="Tab.Right.Active" Rect="96, 384, 31, 63" Margin="8" />
+	<Bordered Name="Tab.Right.Inactive" Rect="224, 384, 31, 63" Margin="8" />
+	<Bordered Name="Tab.HeaderBar" Rect="128, 352, 127, 31" Margin="4" />
+
+	<Single Name="Window.Close" Rect="0, 224, 24, 24" />
+	<Single Name="Window.Close_Hover" Rect="32, 224, 24, 24" />
+	<Single Name="Window.Close_Down" Rect="64, 224, 24, 24" />
+	<Single Name="Window.Close_Disabled" Rect="96, 224, 24, 24" />
+
+	<Bordered Name="Scroller.TrackV" Rect="384, 208, 15, 127" Margin="4" />
+	<Bordered Name="Scroller.ButtonV_Normal" Rect="400, 208, 15, 127" Margin="4" />
+	<Bordered Name="Scroller.ButtonV_Hover" Rect="416, 208, 15, 127" Margin="4" />
+	<Bordered Name="Scroller.ButtonV_Down" Rect="432, 208, 15, 127" Margin="4" />
+	<Bordered Name="Scroller.ButtonV_Disabled" Rect="448, 208, 15, 127" Margin="4" />
+	<Bordered Name="Scroller.TrackH" Rect="384, 128, 127, 15" Margin="4" />
+	<Bordered Name="Scroller.ButtonH_Normal" Rect="384, 144, 127, 15" Margin="4" />
+	<Bordered Name="Scroller.ButtonH_Hover" Rect="384, 160, 127, 15" Margin="4" />
+	<Bordered Name="Scroller.ButtonH_Down" Rect="384, 176, 127, 15" Margin="4" />
+	<Bordered Name="Scroller.ButtonH_Disabled" Rect="384, 192, 127, 15" Margin="4" />
+
+	<Bordered Name="Tree.Background" Rect="256, 128, 127, 127" Margin="16" />
+	<Single Name="Tree.Plus" Rect="448, 96, 15, 15" />
+	<Single Name="Tree.Minus" Rect="464, 96, 15, 15" />
+
+	<Bordered Name="Input.Button.Normal" Rect="480, 0, 31, 31" Margin="8" />
+	<Bordered Name="Input.Button.Hovered" Rect="480, 32, 31, 31" Margin="8" />
+	<Bordered Name="Input.Button.Disabled" Rect="480, 64, 31, 31" Margin="8" />
+	<Bordered Name="Input.Button.Pressed" Rect="480, 96, 31, 31" Margin="8" />
+
+	<Bordered Name="Scroller.Button.Left.Normal" Rect="464, 208, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Left.Hover" Rect="480, 208, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Left.Down" Rect="464, 272, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Left.Disabled" Rect="528, 272, 15, 15" Margin="2" />
+	
+	<Bordered Name="Scroller.Button.Top.Normal" Rect="464, 224, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Top.Hover" Rect="480, 224, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Top.Down" Rect="464, 288, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Top.Disabled" Rect="528, 288, 15, 15" Margin="2" />
+
+	<Bordered Name="Scroller.Button.Right.Normal" Rect="464, 240, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Right.Hover" Rect="480, 240, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Right.Down" Rect="464, 304, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Right.Disabled" Rect="528, 304, 15, 15" Margin="2" />
+
+	<Bordered Name="Scroller.Button.Bottom.Normal" Rect="464, 256, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Bottom.Hover" Rect="480, 256, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Bottom.Down" Rect="464, 320, 15, 15" Margin="2" />
+	<Bordered Name="Scroller.Button.Bottom.Disabled" Rect="528, 320, 15, 15" Margin="2" />
+
+	<Bordered Name="Input.ListBox.Background" Rect="256, 256, 63, 127" Margin="8" />
+	<Bordered Name="Input.ListBox.Hovered" Rect="320, 320, 31, 31" Margin="8" />
+	<Bordered Name="Input.ListBox.EvenLine" Rect="352, 256, 31, 31" Margin="8" />
+	<Bordered Name="Input.ListBox.OddLine" Rect="352, 288, 31, 31" Margin="8" />
+	<Bordered Name="Input.ListBox.EvenLineSelected" Rect="320, 270, 31, 31" Margin="8" />
+	<Bordered Name="Input.ListBox.OddLineSelected" Rect="320, 288, 31, 31" Margin="8" />
+
+	<Bordered Name="Input.ComboBox.Normal" Rect="384, 336, 127, 31" Margin="8, 8, 32, 8" />
+	<Bordered Name="Input.ComboBox.Hover" Rect="384, 368, 127, 31" Margin="8, 8, 32, 8" />
+	<Bordered Name="Input.ComboBox.Down" Rect="384, 400, 127, 31" Margin="8, 8, 32, 8" />
+	<Bordered Name="Input.ComboBox.Disabled" Rect="384, 432, 127, 31" Margin="8, 8, 32, 8" />
+
+	<Single Name="Input.ComboBox.Button.Normal" Rect="496, 272, 15, 15" />
+	<Single Name="Input.ComboBox.Button.Hover" Rect="496, 288, 15, 15" />
+	<Single Name="Input.ComboBox.Button.Down" Rect="496, 304, 15, 15" />
+	<Single Name="Input.ComboBox.Button.Disabled" Rect="496, 320, 15, 15" />
+
+	<Single Name="Input.UpDown.Up.Normal" Rect="384, 112, 7, 7" />
+	<Single Name="Input.UpDown.Up.Hover" Rect="392, 112, 7, 7" />
+	<Single Name="Input.UpDown.Up.Down" Rect="400, 112, 7, 7" />
+	<Single Name="Input.UpDown.Up.Disabled" Rect="408, 112, 7, 7" />
+	<Single Name="Input.UpDown.Down.Normal" Rect="384, 120, 7, 7" />
+	<Single Name="Input.UpDown.Down.Hover" Rect="392, 120, 7, 7" />
+	<Single Name="Input.UpDown.Down.Down" Rect="400, 120, 7, 7" />
+	<Single Name="Input.UpDown.Down.Disabled" Rect="408, 120, 7, 7" />
+
+	<Bordered Name="ProgressBar.Back" Rect="384, 0, 31, 31" Margin="2" />
+	<Bordered Name="ProgressBar.Front" Rect="416, 0, 31, 31" Margin="2" />
+
+	<Single Name="Input.Slider.H.Normal" Rect="416, 32, 15, 15" />
+	<Single Name="Input.Slider.H.Hover" Rect="416, 48, 15, 15" />
+	<Single Name="Input.Slider.H.Down" Rect="416, 64, 15, 15" />
+	<Single Name="Input.Slider.H.Disabled" Rect="416, 80, 15, 15" />
+
+	<Single Name="Input.Slider.V.Normal" Rect="432, 32, 15, 15" />
+	<Single Name="Input.Slider.V.Hover" Rect="432, 48, 15, 15" />
+	<Single Name="Input.Slider.V.Down" Rect="432, 64, 15, 15" />
+	<Single Name="Input.Slider.V.Disabled" Rect="432, 80, 15, 15" />
+
+	<Bordered Name="CategoryList.Outer" Rect="256, 256, 63, 127" Margin="8" />
+	<Bordered Name="CategoryList.Inner.Header" Rect="320, 384, 63, 20" Margin="8" />
+	<Bordered Name="CategoryList.Inner.Client" Rect="320, 404, 63, 43" Margin="8" />
+	<Bordered Name="CategoryList.Header" Rect="320, 352, 63, 31" Margin="8" />
+	
+	<Color Name="Window.TitleActive" Pos="4, 508" />
+	<Color Name="Window.TitleInactive" Pos="12, 508" />
+
+	<Color Name="Button.Normal" Pos="20, 508" />
+	<Color Name="Button.Hover" Pos="28, 508" />
+	<Color Name="Button.Down" Pos="20, 500" />
+	<Color Name="Button.Disabled" Pos="28, 500" />
+
+	<Color Name="Tab.Active.Normal" Pos="36, 508" />
+	<Color Name="Tab.Active.Hover" Pos="44, 508" />
+	<Color Name="Tab.Active.Down" Pos="36, 500" />
+	<Color Name="Tab.Active.Disabled" Pos="44, 500" />
+	<Color Name="Tab.Inactive.Normal" Pos="52, 508" />
+	<Color Name="Tab.Inactive.Hover" Pos="60, 508" />
+	<Color Name="Tab.Inactive.Down" Pos="52, 500" />
+	<Color Name="Tab.Inactive.Disabled" Pos="60, 500" />
+
+	<Color Name="Label.Default" Pos="68, 508" />
+	<Color Name="Label.Bright" Pos="76, 508" />
+	<Color Name="Label.Dark" Pos="68, 500" />
+	<Color Name="Label.Highlight" Pos="76, 500" />
+
+	<Color Name="TextBox.Text" Pos="68, 508" />
+	<Color Name="TextBox.Background_Selected" Pos="84, 500" />
+	<Color Name="TextBox.Caret" Pos="68, 508" />
+
+	<Color Name="ListBox.Text_Normal" Pos="92, 508" />
+	<Color Name="ListBox.Text_Selected" Pos="92, 500" />
+
+	<Color Name="Tree.Lines" Pos="84, 508" />
+	<Color Name="Tree.Normal" Pos="92, 508" />
+	<Color Name="Tree.Hover" Pos="84, 500" />
+	<Color Name="Tree.Selected" Pos="92, 500" />
+
+	<Color Name="Properties.Line_Normal" Pos="100, 508" />
+	<Color Name="Properties.Line_Selected" Pos="108, 508" />
+	<Color Name="Properties.Line_Hover" Pos="100, 500" />
+	<Color Name="Properties.Title" Pos="108, 500" />
+	<Color Name="Properties.Column_Normal" Pos="116, 508" />
+	<Color Name="Properties.Column_Selected" Pos="124, 508" />
+	<Color Name="Properties.Column_Hover" Pos="116, 500" />
+	<Color Name="Properties.Border" Pos="124, 500" />
+	<Color Name="Properties.Label_Normal" Pos="132, 508" />
+	<Color Name="Properties.Label_Selected" Pos="140, 508" />
+	<Color Name="Properties.Label_Hover" Pos="132, 500" />
+
+	<Color Name="ModalBackground" Pos="148, 508" />
+	
+	<Color Name="TooltipText" Pos="156, 508" />
+
+	<Color Name="Category.Header" Pos="148, 500" />
+	<Color Name="Category.Header_Closed" Pos="156, 500" />
+	<Color Name="Category.Line.Text" Pos="164, 508" />
+	<Color Name="Category.Line.Text_Hover" Pos="172, 508" />
+	<Color Name="Category.Line.Text_Selected" Pos="164, 500" />
+	<Color Name="Category.Line.Button" Pos="172, 500" />
+	<Color Name="Category.Line.Button_Hover" Pos="180, 508" />
+	<Color Name="Category.Line.Button_Selected" Pos="188, 508" />
+	<Color Name="Category.LineAlt.Text" Pos="180, 500" />
+	<Color Name="Category.LineAlt.Text_Hover" Pos="188, 500" />
+	<Color Name="Category.LineAlt.Text_Selected" Pos="196, 508" />
+	<Color Name="Category.LineAlt.Button" Pos="204, 508" />
+	<Color Name="Category.LineAlt.Button_Hover" Pos="196, 500" />
+	<Color Name="Category.LineAlt.Button_Selected" Pos="204, 500" />
+
+	<Color Name="GroupBox.Dark" Pos="28, 500" />
+	<Color Name="GroupBox.Light" Pos="20, 500" />
+	
+</Skin>
+

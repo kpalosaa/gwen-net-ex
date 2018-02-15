@@ -176,6 +176,7 @@
     <Compile Include="Platform\Platform.cs" />
     <Compile Include="RichText\LineBreakPart.cs" />
     <Compile Include="Control\TableRowFactory.cs" />
+    <Compile Include="Skin\ISkinElement.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Rectangle.cs" />

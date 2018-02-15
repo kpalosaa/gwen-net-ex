@@ -47,7 +47,7 @@ namespace Gwen.UnitTest.Android
 			Loader.LoaderBase.Init(new Platform.Android.AssetLoader());
 
 			m_Renderer = new Gwen.Renderer.Android.OpenTK.OpenTK(false);
-			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
+			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png", "DefaultSkinDefinition.xml");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.Android.OpenTK.Input.OpenTK(this);

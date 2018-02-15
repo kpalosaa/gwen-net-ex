@@ -5,8 +5,8 @@ namespace Gwen.Skin.Texturing
     /// <summary>
     /// Single textured element.
     /// </summary>
-    public struct Single
-    {
+    public struct Single : ISkinElement
+	{
         private readonly Texture m_Texture;
         private readonly float[] m_uv;
         private readonly int m_Width;

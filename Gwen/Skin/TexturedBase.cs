@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using Gwen.Control;
 using Gwen.Skin.Texturing;
 using Single = Gwen.Skin.Texturing.Single;
@@ -9,23 +11,23 @@ namespace Gwen.Skin
 	#region UI element textures
 	public struct SkinTextures
 	{
-		public Bordered StatusBar;
-		public Bordered Selection;
-		public Bordered Shadow;
-		public Bordered Tooltip;
+		public ISkinElement StatusBar;
+		public ISkinElement Selection;
+		public ISkinElement Shadow;
+		public ISkinElement Tooltip;
 
 		public struct _ToolWindow
 		{
 			public struct _H
 			{
-				public Bordered DragBar;
-				public Bordered Client;
+				public ISkinElement DragBar;
+				public ISkinElement Client;
 			}
 
 			public struct _V
 			{
-				public Bordered DragBar;
-				public Bordered Client;
+				public ISkinElement DragBar;
+				public ISkinElement Client;
 			}
 
 			public _H H;
@@ -36,46 +38,46 @@ namespace Gwen.Skin
 
 		public struct _Panel
 		{
-			public Bordered Normal;
-			public Bordered Bright;
-			public Bordered Dark;
-			public Bordered Highlight;
+			public ISkinElement Normal;
+			public ISkinElement Bright;
+			public ISkinElement Dark;
+			public ISkinElement Highlight;
 		}
 
 		public struct _Window
 		{
 			public struct _Normal
 			{
-				public Bordered TitleBar;
-				public Bordered Client;
+				public ISkinElement TitleBar;
+				public ISkinElement Client;
 			}
 
 			public struct _Inactive
 			{
-				public Bordered TitleBar;
-				public Bordered Client;
+				public ISkinElement TitleBar;
+				public ISkinElement Client;
 			}
 
 			public _Normal Normal;
 			public _Inactive Inactive;
 
-			public Single Close;
-			public Single Close_Hover;
-			public Single Close_Down;
-			public Single Close_Disabled;
+			public ISkinElement Close;
+			public ISkinElement Close_Hover;
+			public ISkinElement Close_Down;
+			public ISkinElement Close_Disabled;
 		}
 
 		public struct _CheckBox
 		{
 			public struct _Active
 			{
-				public Single Normal;
-				public Single Checked;
+				public ISkinElement Normal;
+				public ISkinElement Checked;
 			}
 			public struct _Disabled
 			{
-				public Single Normal;
-				public Single Checked;
+				public ISkinElement Normal;
+				public ISkinElement Checked;
 			}
 
 			public _Active Active;
@@ -86,13 +88,13 @@ namespace Gwen.Skin
 		{
 			public struct _Active
 			{
-				public Single Normal;
-				public Single Checked;
+				public ISkinElement Normal;
+				public ISkinElement Checked;
 			}
 			public struct _Disabled
 			{
-				public Single Normal;
-				public Single Checked;
+				public ISkinElement Normal;
+				public ISkinElement Checked;
 			}
 
 			public _Active Active;
@@ -101,43 +103,43 @@ namespace Gwen.Skin
 
 		public struct _TextBox
 		{
-			public Bordered Normal;
-			public Bordered Focus;
-			public Bordered Disabled;
+			public ISkinElement Normal;
+			public ISkinElement Focus;
+			public ISkinElement Disabled;
 		}
 
 		public struct _Tree
 		{
-			public Bordered Background;
-			public Single Minus;
-			public Single Plus;
+			public ISkinElement Background;
+			public ISkinElement Minus;
+			public ISkinElement Plus;
 		}
 
 		public struct _ProgressBar
 		{
-			public Bordered Back;
-			public Bordered Front;
+			public ISkinElement Back;
+			public ISkinElement Front;
 		}
 
 		public struct _Scroller
 		{
-			public Bordered TrackV;
-			public Bordered TrackH;
-			public Bordered ButtonV_Normal;
-			public Bordered ButtonV_Hover;
-			public Bordered ButtonV_Down;
-			public Bordered ButtonV_Disabled;
-			public Bordered ButtonH_Normal;
-			public Bordered ButtonH_Hover;
-			public Bordered ButtonH_Down;
-			public Bordered ButtonH_Disabled;
+			public ISkinElement TrackV;
+			public ISkinElement TrackH;
+			public ISkinElement ButtonV_Normal;
+			public ISkinElement ButtonV_Hover;
+			public ISkinElement ButtonV_Down;
+			public ISkinElement ButtonV_Disabled;
+			public ISkinElement ButtonH_Normal;
+			public ISkinElement ButtonH_Hover;
+			public ISkinElement ButtonH_Down;
+			public ISkinElement ButtonH_Disabled;
 
 			public struct _Button
 			{
-				public Bordered[] Normal;
-				public Bordered[] Hover;
-				public Bordered[] Down;
-				public Bordered[] Disabled;
+				public ISkinElement[] Normal;
+				public ISkinElement[] Hover;
+				public ISkinElement[] Down;
+				public ISkinElement[] Disabled;
 			}
 
 			public _Button Button;
@@ -145,38 +147,38 @@ namespace Gwen.Skin
 
 		public struct _Menu
 		{
-			public Single RightArrow;
-			public Single Check;
+			public ISkinElement RightArrow;
+			public ISkinElement Check;
 
-			public Bordered Strip;
-			public Bordered Background;
-			public Bordered BackgroundWithMargin;
-			public Bordered Hover;
+			public ISkinElement Strip;
+			public ISkinElement Background;
+			public ISkinElement BackgroundWithMargin;
+			public ISkinElement Hover;
 		}
 
 		public struct _Input
 		{
 			public struct _Button
 			{
-				public Bordered Normal;
-				public Bordered Hovered;
-				public Bordered Disabled;
-				public Bordered Pressed;
+				public ISkinElement Normal;
+				public ISkinElement Hovered;
+				public ISkinElement Disabled;
+				public ISkinElement Pressed;
 			}
 
 			public struct _ComboBox
 			{
-				public Bordered Normal;
-				public Bordered Hover;
-				public Bordered Down;
-				public Bordered Disabled;
+				public ISkinElement Normal;
+				public ISkinElement Hover;
+				public ISkinElement Down;
+				public ISkinElement Disabled;
 
 				public struct _Button
 				{
-					public Single Normal;
-					public Single Hover;
-					public Single Down;
-					public Single Disabled;
+					public ISkinElement Normal;
+					public ISkinElement Hover;
+					public ISkinElement Down;
+					public ISkinElement Disabled;
 				}
 
 				public _Button Button;
@@ -186,18 +188,18 @@ namespace Gwen.Skin
 			{
 				public struct _H
 				{
-					public Single Normal;
-					public Single Hover;
-					public Single Down;
-					public Single Disabled;
+					public ISkinElement Normal;
+					public ISkinElement Hover;
+					public ISkinElement Down;
+					public ISkinElement Disabled;
 				}
 
 				public struct _V
 				{
-					public Single Normal;
-					public Single Hover;
-					public Single Down;
-					public Single Disabled;
+					public ISkinElement Normal;
+					public ISkinElement Hover;
+					public ISkinElement Down;
+					public ISkinElement Disabled;
 				}
 
 				public _H H;
@@ -206,30 +208,30 @@ namespace Gwen.Skin
 
 			public struct _ListBox
 			{
-				public Bordered Background;
-				public Bordered Hovered;
-				public Bordered EvenLine;
-				public Bordered OddLine;
-				public Bordered EvenLineSelected;
-				public Bordered OddLineSelected;
+				public ISkinElement Background;
+				public ISkinElement Hovered;
+				public ISkinElement EvenLine;
+				public ISkinElement OddLine;
+				public ISkinElement EvenLineSelected;
+				public ISkinElement OddLineSelected;
 			}
 
 			public struct _UpDown
 			{
 				public struct _Up
 				{
-					public Single Normal;
-					public Single Hover;
-					public Single Down;
-					public Single Disabled;
+					public ISkinElement Normal;
+					public ISkinElement Hover;
+					public ISkinElement Down;
+					public ISkinElement Disabled;
 				}
 
 				public struct _Down
 				{
-					public Single Normal;
-					public Single Hover;
-					public Single Down;
-					public Single Disabled;
+					public ISkinElement Normal;
+					public ISkinElement Hover;
+					public ISkinElement Down;
+					public ISkinElement Disabled;
 				}
 
 				public _Up Up;
@@ -247,26 +249,26 @@ namespace Gwen.Skin
 		{
 			public struct _Bottom
 			{
-				public Bordered Inactive;
-				public Bordered Active;
+				public ISkinElement Inactive;
+				public ISkinElement Active;
 			}
 
 			public struct _Top
 			{
-				public Bordered Inactive;
-				public Bordered Active;
+				public ISkinElement Inactive;
+				public ISkinElement Active;
 			}
 
 			public struct _Left
 			{
-				public Bordered Inactive;
-				public Bordered Active;
+				public ISkinElement Inactive;
+				public ISkinElement Active;
 			}
 
 			public struct _Right
 			{
-				public Bordered Inactive;
-				public Bordered Active;
+				public ISkinElement Inactive;
+				public ISkinElement Active;
 			}
 
 			public _Bottom Bottom;
@@ -274,21 +276,45 @@ namespace Gwen.Skin
 			public _Left Left;
 			public _Right Right;
 
-			public Bordered Control;
-			public Bordered HeaderBar;
+			public ISkinElement Control;
+			public ISkinElement HeaderBar;
 		}
 
 		public struct _CategoryList
 		{
 			public struct _Inner
 			{
-				public Bordered Header;
-				public Bordered Client;
+				public ISkinElement Header;
+				public ISkinElement Client;
 			}
 
-			public Bordered Outer;
+			public ISkinElement Outer;
 			public _Inner Inner;
-			public Bordered Header;
+			public ISkinElement Header;
+		}
+
+		public struct _Page
+		{
+			public struct _Navigation
+			{
+				public ISkinElement Title;
+				public ISkinElement Client;
+			}
+
+			public _Navigation Navigation;
+			public ISkinElement Content;
+		}
+
+		public struct _NavigationBar
+		{
+			public struct _Button
+			{
+				public ISkinElement Back;
+				public ISkinElement Options;
+				public ISkinElement Menu;
+			}
+
+			public _Button Button;
 		}
 
 		public _Panel Panel;
@@ -320,24 +346,29 @@ namespace Gwen.Skin
 		/// </summary>
 		/// <param name="renderer">Renderer to use.</param>
 		/// <param name="textureName">Name of the skin texture map.</param>
-		public TexturedBase(Renderer.RendererBase renderer, string textureName)
+		/// <param name="xmlName">Name of the skin definition file.</param>
+		public TexturedBase(Renderer.RendererBase renderer, string textureName, string xmlName)
 			: base(renderer)
 		{
 			m_Texture = new Texture(Renderer);
 			m_Texture.Load(textureName);
 
-			InitializeColors();
-			InitializeTextures();
+			ReadXml(Loader.LoaderBase.Loader.GetXmlStream(xmlName));
 		}
 
-		public TexturedBase(Renderer.RendererBase renderer, Stream textureData)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TexturedBase"/> class.
+		/// </summary>
+		/// <param name="renderer">Renderer to use.</param>
+		/// <param name="textureData">Stream of the skin texture map.</param>
+		/// <param name="xmlStream">Stream of the skin definition file.</param>
+		public TexturedBase(Renderer.RendererBase renderer, Stream textureData, Stream xmlStream)
 			: base(renderer)
 		{
 			m_Texture = new Texture(Renderer);
 			m_Texture.LoadStream(textureData);
 
-			InitializeColors();
-			InitializeTextures();
+			ReadXml(xmlStream);
 		}
 
 		/// <summary>
@@ -350,212 +381,330 @@ namespace Gwen.Skin
 		}
 
 		#region Initialization
-		private void InitializeColors()
+
+		private void ReadXml(Stream xmlStream)
 		{
-			Colors.Window.TitleActive   = Renderer.PixelColor(m_Texture, 4 + 8*0, 508, Color.Red);
-			Colors.Window.TitleInactive = Renderer.PixelColor(m_Texture, 4 + 8*1, 508, Color.Yellow);
+			Dictionary<string, ISkinElement> skinElements = new Dictionary<string, ISkinElement>();
+			Dictionary<string, Point> colors = new Dictionary<string, Point>();
 
-			Colors.Button.Normal   = Renderer.PixelColor(m_Texture, 4 + 8*2, 508, Color.Yellow);
-			Colors.Button.Hover    = Renderer.PixelColor(m_Texture, 4 + 8*3, 508, Color.Yellow);
-			Colors.Button.Down     = Renderer.PixelColor(m_Texture, 4 + 8*2, 500, Color.Yellow);
-			Colors.Button.Disabled = Renderer.PixelColor(m_Texture, 4 + 8*3, 500, Color.Yellow);
+			string name = null;
+			Rectangle rect = new Rectangle();
+			Margin margin = new Margin();
+			Point pos = new Point();
 
-			Colors.Tab.Active.Normal     = Renderer.PixelColor(m_Texture, 4 + 8*4, 508, Color.Yellow);
-			Colors.Tab.Active.Hover      = Renderer.PixelColor(m_Texture, 4 + 8*5, 508, Color.Yellow);
-			Colors.Tab.Active.Down       = Renderer.PixelColor(m_Texture, 4 + 8*4, 500, Color.Yellow);
-			Colors.Tab.Active.Disabled   = Renderer.PixelColor(m_Texture, 4 + 8*5, 500, Color.Yellow);
-			Colors.Tab.Inactive.Normal   = Renderer.PixelColor(m_Texture, 4 + 8*6, 508, Color.Yellow);
-			Colors.Tab.Inactive.Hover    = Renderer.PixelColor(m_Texture, 4 + 8*7, 508, Color.Yellow);
-			Colors.Tab.Inactive.Down     = Renderer.PixelColor(m_Texture, 4 + 8*6, 500, Color.Yellow);
-			Colors.Tab.Inactive.Disabled = Renderer.PixelColor(m_Texture, 4 + 8*7, 500, Color.Yellow);
+			XDocument doc = XDocument.Load(xmlStream);
 
-			Colors.Label.Default   = Renderer.PixelColor(m_Texture, 4 + 8*8, 508, Color.Yellow);
-			Colors.Label.Bright    = Renderer.PixelColor(m_Texture, 4 + 8*9, 508, Color.Yellow);
-			Colors.Label.Dark      = Renderer.PixelColor(m_Texture, 4 + 8*8, 500, Color.Yellow);
-			Colors.Label.Highlight = Renderer.PixelColor(m_Texture, 4 + 8*9, 500, Color.Yellow);
-
-			Colors.TextBox.Text                = Renderer.PixelColor(m_Texture, 4 + 8 * 8, 508, Color.Yellow);
-			Colors.TextBox.Background_Selected = Renderer.PixelColor(m_Texture, 4 + 8 * 10, 500, Color.Yellow);
-			Colors.TextBox.Caret               = Renderer.PixelColor(m_Texture, 4 + 8 * 8, 508, Color.Yellow);
-
-			Colors.ListBox.Text_Normal   = Renderer.PixelColor(m_Texture, 4 + 8 * 11, 508, Color.Yellow);
-			Colors.ListBox.Text_Selected = Renderer.PixelColor(m_Texture, 4 + 8 * 11, 500, Color.Yellow);
-
-			Colors.Tree.Lines    = Renderer.PixelColor(m_Texture, 4 + 8*10, 508, Color.Yellow);
-			Colors.Tree.Normal   = Renderer.PixelColor(m_Texture, 4 + 8*11, 508, Color.Yellow);
-			Colors.Tree.Hover    = Renderer.PixelColor(m_Texture, 4 + 8*10, 500, Color.Yellow);
-			Colors.Tree.Selected = Renderer.PixelColor(m_Texture, 4 + 8*11, 500, Color.Yellow);
-
-			Colors.Properties.Line_Normal     = Renderer.PixelColor(m_Texture, 4 + 8*12, 508, Color.Yellow);
-			Colors.Properties.Line_Selected   = Renderer.PixelColor(m_Texture, 4 + 8*13, 508, Color.Yellow);
-			Colors.Properties.Line_Hover      = Renderer.PixelColor(m_Texture, 4 + 8*12, 500, Color.Yellow);
-			Colors.Properties.Title           = Renderer.PixelColor(m_Texture, 4 + 8*13, 500, Color.Yellow);
-			Colors.Properties.Column_Normal   = Renderer.PixelColor(m_Texture, 4 + 8*14, 508, Color.Yellow);
-			Colors.Properties.Column_Selected = Renderer.PixelColor(m_Texture, 4 + 8*15, 508, Color.Yellow);
-			Colors.Properties.Column_Hover    = Renderer.PixelColor(m_Texture, 4 + 8*14, 500, Color.Yellow);
-			Colors.Properties.Border          = Renderer.PixelColor(m_Texture, 4 + 8*15, 500, Color.Yellow);
-			Colors.Properties.Label_Normal    = Renderer.PixelColor(m_Texture, 4 + 8*16, 508, Color.Yellow);
-			Colors.Properties.Label_Selected  = Renderer.PixelColor(m_Texture, 4 + 8*17, 508, Color.Yellow);
-			Colors.Properties.Label_Hover     = Renderer.PixelColor(m_Texture, 4 + 8*16, 500, Color.Yellow);
-
-			Colors.ModalBackground = Renderer.PixelColor(m_Texture, 4 + 8*18, 508, Color.Yellow);
-			
-			Colors.TooltipText = Renderer.PixelColor(m_Texture, 4 + 8*19, 508, Color.Yellow);
-
-			Colors.Category.Header                  = Renderer.PixelColor(m_Texture, 4 + 8*18, 500, Color.Yellow);
-			Colors.Category.Header_Closed           = Renderer.PixelColor(m_Texture, 4 + 8*19, 500, Color.Yellow);
-			Colors.Category.Line.Text               = Renderer.PixelColor(m_Texture, 4 + 8*20, 508, Color.Yellow);
-			Colors.Category.Line.Text_Hover         = Renderer.PixelColor(m_Texture, 4 + 8*21, 508, Color.Yellow);
-			Colors.Category.Line.Text_Selected      = Renderer.PixelColor(m_Texture, 4 + 8*20, 500, Color.Yellow);
-			Colors.Category.Line.Button             = Renderer.PixelColor(m_Texture, 4 + 8*21, 500, Color.Yellow);
-			Colors.Category.Line.Button_Hover       = Renderer.PixelColor(m_Texture, 4 + 8*22, 508, Color.Yellow);
-			Colors.Category.Line.Button_Selected    = Renderer.PixelColor(m_Texture, 4 + 8*23, 508, Color.Yellow);
-			Colors.Category.LineAlt.Text            = Renderer.PixelColor(m_Texture, 4 + 8*22, 500, Color.Yellow);
-			Colors.Category.LineAlt.Text_Hover      = Renderer.PixelColor(m_Texture, 4 + 8*23, 500, Color.Yellow);
-			Colors.Category.LineAlt.Text_Selected   = Renderer.PixelColor(m_Texture, 4 + 8*24, 508, Color.Yellow);
-			Colors.Category.LineAlt.Button          = Renderer.PixelColor(m_Texture, 4 + 8*25, 508, Color.Yellow);
-			Colors.Category.LineAlt.Button_Hover    = Renderer.PixelColor(m_Texture, 4 + 8*24, 500, Color.Yellow);
-			Colors.Category.LineAlt.Button_Selected = Renderer.PixelColor(m_Texture, 4 + 8*25, 500, Color.Yellow);
-
-			Colors.GroupBox.Dark = Renderer.PixelColor(m_Texture, 4 + 8 * 3, 500, Color.Yellow);
-			Colors.GroupBox.Light = Renderer.PixelColor(m_Texture, 4 + 8 * 2, 500, Color.Yellow);
-		}
-
-		private void InitializeTextures()
-		{
-			Textures.Shadow    = new Bordered(m_Texture, 448, 0, 31, 31, Margin.Eight);
-			Textures.Tooltip   = new Bordered(m_Texture, 128, 320, 127, 31, Margin.Eight);
-			Textures.StatusBar = new Bordered(m_Texture, 128, 288, 127, 31, Margin.Eight);
-			Textures.Selection = new Bordered(m_Texture, 384, 32, 31, 31, Margin.Four);
-
-			Textures.Panel.Normal    = new Bordered(m_Texture, 256, 0, 63, 63, new Margin(16, 16, 16, 16));
-			Textures.Panel.Bright    = new Bordered(m_Texture, 256 + 64, 0, 63, 63, new Margin(16, 16, 16, 16));
-			Textures.Panel.Dark      = new Bordered(m_Texture, 256, 64, 63, 63, new Margin(16, 16, 16, 16));
-			Textures.Panel.Highlight = new Bordered(m_Texture, 256 + 64, 64, 63, 63, new Margin(16, 16, 16, 16));
-
-			Textures.Window.Normal.TitleBar   = new Bordered(m_Texture, 0, 0, 127, 24, new Margin(8, 8, 8, 8));
-			Textures.Window.Normal.Client     = new Bordered(m_Texture, 0, 24, 127, 127 - 24, new Margin(8, 8, 8, 8));
-			Textures.Window.Inactive.TitleBar = new Bordered(m_Texture, 128, 0, 127, 24, new Margin(8, 8, 8, 8));
-			Textures.Window.Inactive.Client   = new Bordered(m_Texture, 128, 24, 127, 127 - 24, new Margin(8, 8, 8, 8));
-
-			Textures.ToolWindow.H.DragBar = new Bordered(m_Texture, 384, 464, 17, 31, new Margin(8, 8, 8, 8));
-			Textures.ToolWindow.H.Client  = new Bordered(m_Texture, 384 + 17, 464, 127 - 17, 31, new Margin(8, 8, 8, 8));
-			Textures.ToolWindow.V.DragBar = new Bordered(m_Texture, 256, 384, 31, 17, new Margin(8, 8, 8, 8));
-			Textures.ToolWindow.V.Client  = new Bordered(m_Texture, 256, 384 + 17, 31, 127 - 17, new Margin(8, 8, 8, 8));
-
-			Textures.CheckBox.Active.Checked  = new Single(m_Texture, 448, 32, 15, 15);
-			Textures.CheckBox.Active.Normal   = new Single(m_Texture, 464, 32, 15, 15);
-			Textures.CheckBox.Disabled.Normal = new Single(m_Texture, 448, 48, 15, 15);
-			Textures.CheckBox.Disabled.Normal = new Single(m_Texture, 464, 48, 15, 15);
-
-			Textures.RadioButton.Active.Checked  = new Single(m_Texture, 448, 64, 15, 15);
-			Textures.RadioButton.Active.Normal   = new Single(m_Texture, 464, 64, 15, 15);
-			Textures.RadioButton.Disabled.Normal = new Single(m_Texture, 448, 80, 15, 15);
-			Textures.RadioButton.Disabled.Normal = new Single(m_Texture, 464, 80, 15, 15);
-
-			Textures.TextBox.Normal   = new Bordered(m_Texture, 0, 150, 127, 21, Margin.Four);
-			Textures.TextBox.Focus    = new Bordered(m_Texture, 0, 172, 127, 21, Margin.Four);
-			Textures.TextBox.Disabled = new Bordered(m_Texture, 0, 193, 127, 21, Margin.Four);
-
-			Textures.Menu.Strip                = new Bordered(m_Texture, 0, 128, 127, 21, Margin.One);
-			Textures.Menu.BackgroundWithMargin = new Bordered(m_Texture, 128, 128, 127, 63, new Margin(24, 8, 8, 8));
-			Textures.Menu.Background           = new Bordered(m_Texture, 128, 192, 127, 63, Margin.Eight);
-			Textures.Menu.Hover                = new Bordered(m_Texture, 128, 256, 127, 31, Margin.Eight);
-			Textures.Menu.RightArrow           = new Single(m_Texture, 464, 112, 15, 15);
-			Textures.Menu.Check                = new Single(m_Texture, 448, 112, 15, 15);
-
-			Textures.Tab.Control         = new Bordered(m_Texture, 0, 256, 127, 127, Margin.Eight);
-			Textures.Tab.Bottom.Active   = new Bordered(m_Texture, 0, 416, 63, 31, Margin.Eight);
-			Textures.Tab.Bottom.Inactive = new Bordered(m_Texture, 0 + 128, 416, 63, 31, Margin.Eight);
-			Textures.Tab.Top.Active      = new Bordered(m_Texture, 0, 384, 63, 31, Margin.Eight);
-			Textures.Tab.Top.Inactive    = new Bordered(m_Texture, 0 + 128, 384, 63, 31, Margin.Eight);
-			Textures.Tab.Left.Active     = new Bordered(m_Texture, 64, 384, 31, 63, Margin.Eight);
-			Textures.Tab.Left.Inactive   = new Bordered(m_Texture, 64 + 128, 384, 31, 63, Margin.Eight);
-			Textures.Tab.Right.Active    = new Bordered(m_Texture, 96, 384, 31, 63, Margin.Eight);
-			Textures.Tab.Right.Inactive  = new Bordered(m_Texture, 96 + 128, 384, 31, 63, Margin.Eight);
-			Textures.Tab.HeaderBar       = new Bordered(m_Texture, 128, 352, 127, 31, Margin.Four);
-
-			Textures.Window.Close          = new Single(m_Texture, 0, 224, 24, 24);
-			Textures.Window.Close_Hover    = new Single(m_Texture, 32, 224, 24, 24);
-			Textures.Window.Close_Down     = new Single(m_Texture, 64, 224, 24, 24);
-			Textures.Window.Close_Disabled = new Single(m_Texture, 96, 224, 24, 24);
-
-			Textures.Scroller.TrackV           = new Bordered(m_Texture, 384, 208, 15, 127, Margin.Four);
-			Textures.Scroller.ButtonV_Normal   = new Bordered(m_Texture, 384 + 16, 208, 15, 127, Margin.Four);
-			Textures.Scroller.ButtonV_Hover    = new Bordered(m_Texture, 384 + 32, 208, 15, 127, Margin.Four);
-			Textures.Scroller.ButtonV_Down     = new Bordered(m_Texture, 384 + 48, 208, 15, 127, Margin.Four);
-			Textures.Scroller.ButtonV_Disabled = new Bordered(m_Texture, 384 + 64, 208, 15, 127, Margin.Four);
-			Textures.Scroller.TrackH           = new Bordered(m_Texture, 384, 128, 127, 15, Margin.Four);
-			Textures.Scroller.ButtonH_Normal   = new Bordered(m_Texture, 384, 128 + 16, 127, 15, Margin.Four);
-			Textures.Scroller.ButtonH_Hover    = new Bordered(m_Texture, 384, 128 + 32, 127, 15, Margin.Four);
-			Textures.Scroller.ButtonH_Down     = new Bordered(m_Texture, 384, 128 + 48, 127, 15, Margin.Four);
-			Textures.Scroller.ButtonH_Disabled = new Bordered(m_Texture, 384, 128 + 64, 127, 15, Margin.Four);
-
-			Textures.Scroller.Button.Normal   = new Bordered[4];
-			Textures.Scroller.Button.Disabled = new Bordered[4];
-			Textures.Scroller.Button.Hover    = new Bordered[4];
-			Textures.Scroller.Button.Down     = new Bordered[4];
-
-			Textures.Tree.Background = new Bordered(m_Texture, 256, 128, 127, 127, new Margin(16, 16, 16, 16));
-			Textures.Tree.Plus       = new Single(m_Texture, 448, 96, 15, 15);
-			Textures.Tree.Minus      = new Single(m_Texture, 464, 96, 15, 15);
-
-			Textures.Input.Button.Normal   = new Bordered(m_Texture, 480, 0, 31, 31, Margin.Eight);
-			Textures.Input.Button.Hovered  = new Bordered(m_Texture, 480, 32, 31, 31, Margin.Eight);
-			Textures.Input.Button.Disabled = new Bordered(m_Texture, 480, 64, 31, 31, Margin.Eight);
-			Textures.Input.Button.Pressed  = new Bordered(m_Texture, 480, 96, 31, 31, Margin.Eight);
-
-			for (int i = 0; i < 4; i++)
+			foreach (var rootElement in doc.Elements())
 			{
-				Textures.Scroller.Button.Normal[i]   = new Bordered(m_Texture, 464 + 0, 208 + i * 16, 15, 15, Margin.Two);
-				Textures.Scroller.Button.Hover[i]    = new Bordered(m_Texture, 480, 208 + i * 16, 15, 15, Margin.Two);
-				Textures.Scroller.Button.Down[i]     = new Bordered(m_Texture, 464, 272 + i * 16, 15, 15, Margin.Two);
-				Textures.Scroller.Button.Disabled[i] = new Bordered(m_Texture, 480 + 48, 272 + i * 16, 15, 15, Margin.Two);
+				switch (rootElement.Name.LocalName)
+				{
+					case "Skin":
+						foreach (var skinElement in rootElement.Elements())
+						{
+							switch (skinElement.Name.LocalName)
+							{
+								case "Single":
+									foreach (var attrib in skinElement.Attributes())
+									{
+										switch (attrib.Name.LocalName)
+										{
+											case "Name": name = attrib.Value; break;
+											case "Rect": rect = Xml.XmlHelper.Parse<Rectangle>(attrib.Value); break;
+											default: throw new System.Xml.XmlException($"Unknown attribute '{attrib.Name.LocalName}'.");
+										}
+									}
+
+									skinElements[name] = new Single(m_Texture, rect.X, rect.Y, rect.Width, rect.Height);
+									break;
+
+								case "Bordered":
+									foreach (var attrib in skinElement.Attributes())
+									{
+										switch (attrib.Name.LocalName)
+										{
+											case "Name": name = attrib.Value; break;
+											case "Rect": rect = Xml.XmlHelper.Parse<Rectangle>(attrib.Value); break;
+											case "Margin": margin = Xml.XmlHelper.Parse<Margin>(attrib.Value); break;
+											default: throw new System.Xml.XmlException($"Unknown attribute '{attrib.Name.LocalName}'.");
+										}
+									}
+
+									skinElements[name] = new Bordered(m_Texture, rect.X, rect.Y, rect.Width, rect.Height, margin);
+									break;
+
+								case "Color":
+									foreach (var attrib in skinElement.Attributes())
+									{
+										switch (attrib.Name.LocalName)
+										{
+											case "Name": name = attrib.Value; break;
+											case "Pos": pos = Xml.XmlHelper.Parse<Point>(attrib.Value); break;
+											default: throw new System.Xml.XmlException($"Unknown attribute '{attrib.Name.LocalName}'.");
+										}
+									}
+
+									colors[name] = pos;
+									break;
+
+								default:
+									throw new System.Xml.XmlException($"Unknown element '{skinElement.Name.LocalName}'.");
+							}
+						}
+						break;
+
+					default:
+						throw new System.Xml.XmlException($"Unknown element '{rootElement.Name.LocalName}'.");
+				}
 			}
 
-			Textures.Input.ListBox.Background       = new Bordered(m_Texture, 256, 256, 63, 127, Margin.Eight);
-			Textures.Input.ListBox.Hovered          = new Bordered(m_Texture, 320, 320, 31, 31, Margin.Eight);
-			Textures.Input.ListBox.EvenLine         = new Bordered(m_Texture, 352, 256, 31, 31, Margin.Eight);
-			Textures.Input.ListBox.OddLine          = new Bordered(m_Texture, 352, 288, 31, 31, Margin.Eight);
-			Textures.Input.ListBox.EvenLineSelected = new Bordered(m_Texture, 320, 270, 31, 31, Margin.Eight);
-			Textures.Input.ListBox.OddLineSelected  = new Bordered(m_Texture, 320, 288, 31, 31, Margin.Eight);
+			xmlStream.Dispose();
 
-			Textures.Input.ComboBox.Normal   = new Bordered(m_Texture, 384, 336, 127, 31, new Margin(8, 8, 32, 8));
-			Textures.Input.ComboBox.Hover    = new Bordered(m_Texture, 384, 336 + 32, 127, 31, new Margin(8, 8, 32, 8));
-			Textures.Input.ComboBox.Down     = new Bordered(m_Texture, 384, 336 + 64, 127, 31, new Margin(8, 8, 32, 8));
-			Textures.Input.ComboBox.Disabled = new Bordered(m_Texture, 384, 336 + 96, 127, 31, new Margin(8, 8, 32, 8));
+			InitializeColors(colors);
+			InitializeTextures(skinElements);
+		}
 
-			Textures.Input.ComboBox.Button.Normal   = new Single(m_Texture, 496, 272, 15, 15);
-			Textures.Input.ComboBox.Button.Hover    = new Single(m_Texture, 496, 272 + 16, 15, 15);
-			Textures.Input.ComboBox.Button.Down     = new Single(m_Texture, 496, 272 + 32, 15, 15);
-			Textures.Input.ComboBox.Button.Disabled = new Single(m_Texture, 496, 272 + 48, 15, 15);
+		private Color ReadPixel(Dictionary<string, Point> colors, string key, Color def)
+		{
+			if (colors.TryGetValue(key, out Point pos))
+			{
+				return Renderer.PixelColor(m_Texture, (uint)pos.X, (uint)pos.Y, def);
+			}
 
-			Textures.Input.UpDown.Up.Normal     = new Single(m_Texture, 384, 112, 7, 7);
-			Textures.Input.UpDown.Up.Hover      = new Single(m_Texture, 384 + 8, 112, 7, 7);
-			Textures.Input.UpDown.Up.Down       = new Single(m_Texture, 384 + 16, 112, 7, 7);
-			Textures.Input.UpDown.Up.Disabled   = new Single(m_Texture, 384 + 24, 112, 7, 7);
-			Textures.Input.UpDown.Down.Normal   = new Single(m_Texture, 384, 120, 7, 7);
-			Textures.Input.UpDown.Down.Hover    = new Single(m_Texture, 384 + 8, 120, 7, 7);
-			Textures.Input.UpDown.Down.Down     = new Single(m_Texture, 384 + 16, 120, 7, 7);
-			Textures.Input.UpDown.Down.Disabled = new Single(m_Texture, 384 + 24, 120, 7, 7);
+			return def;
+		}
 
-			Textures.ProgressBar.Back  = new Bordered(m_Texture, 384, 0, 31, 31, Margin.Two);
-			Textures.ProgressBar.Front = new Bordered(m_Texture, 384 + 32, 0, 31, 31, Margin.Two);
+		private void InitializeColors(Dictionary<string, Point> colors)
+		{
+			Colors.Window.TitleActive   = ReadPixel(colors, "Window.TitleActive", Color.Red);
+			Colors.Window.TitleInactive = ReadPixel(colors, "Window.TitleInactive", Color.Yellow);
 
-			Textures.Input.Slider.H.Normal   = new Single(m_Texture, 416, 32, 15, 15);
-			Textures.Input.Slider.H.Hover    = new Single(m_Texture, 416, 32 + 16, 15, 15);
-			Textures.Input.Slider.H.Down     = new Single(m_Texture, 416, 32 + 32, 15, 15);
-			Textures.Input.Slider.H.Disabled = new Single(m_Texture, 416, 32 + 48, 15, 15);
+			Colors.Button.Normal   = ReadPixel(colors, "Button.Normal", Color.Yellow);
+			Colors.Button.Hover    = ReadPixel(colors, "Button.Hover", Color.Yellow);
+			Colors.Button.Down     = ReadPixel(colors, "Button.Down", Color.Yellow);
+			Colors.Button.Disabled = ReadPixel(colors, "Button.Disabled", Color.Yellow);
 
-			Textures.Input.Slider.V.Normal   = new Single(m_Texture, 416 + 16, 32, 15, 15);
-			Textures.Input.Slider.V.Hover    = new Single(m_Texture, 416 + 16, 32 + 16, 15, 15);
-			Textures.Input.Slider.V.Down     = new Single(m_Texture, 416 + 16, 32 + 32, 15, 15);
-			Textures.Input.Slider.V.Disabled = new Single(m_Texture, 416 + 16, 32 + 48, 15, 15);
+			Colors.Tab.Active.Normal     = ReadPixel(colors, "Tab.Active.Normal", Color.Yellow);
+			Colors.Tab.Active.Hover      = ReadPixel(colors, "Tab.Active.Hover", Color.Yellow);
+			Colors.Tab.Active.Down       = ReadPixel(colors, "Tab.Active.Down", Color.Yellow);
+			Colors.Tab.Active.Disabled   = ReadPixel(colors, "Tab.Active.Disabled", Color.Yellow);
+			Colors.Tab.Inactive.Normal   = ReadPixel(colors, "Tab.Inactive.Normal", Color.Yellow);
+			Colors.Tab.Inactive.Hover    = ReadPixel(colors, "Tab.Inactive.Hover", Color.Yellow);
+			Colors.Tab.Inactive.Down     = ReadPixel(colors, "Tab.Inactive.Down", Color.Yellow);
+			Colors.Tab.Inactive.Disabled = ReadPixel(colors, "Tab.Inactive.Disabled", Color.Yellow);
 
-			Textures.CategoryList.Outer	       = new Bordered(m_Texture, 256, 256, 63, 127, Margin.Eight);
-			Textures.CategoryList.Inner.Header = new Bordered(m_Texture, 256 + 64, 384, 63, 20, new Margin(8, 8, 8, 8));
-			Textures.CategoryList.Inner.Client = new Bordered(m_Texture, 256 + 64, 384 + 20, 63, 63 - 20, new Margin(8, 8, 8, 8));
-			Textures.CategoryList.Header       = new Bordered(m_Texture, 320, 352, 63, 31, Margin.Eight);
+			Colors.Label.Default   = ReadPixel(colors, "Label.Default", Color.Yellow);
+			Colors.Label.Bright    = ReadPixel(colors, "Label.Bright", Color.Yellow);
+			Colors.Label.Dark      = ReadPixel(colors, "Label.Dark", Color.Yellow);
+			Colors.Label.Highlight = ReadPixel(colors, "Label.Highlight", Color.Yellow);
+
+			Colors.TextBox.Text                = ReadPixel(colors, "TextBox.Text", Color.Yellow);
+			Colors.TextBox.Background_Selected = ReadPixel(colors, "TextBox.Background_Selected", Color.Yellow);
+			Colors.TextBox.Caret               = ReadPixel(colors, "TextBox.Caret", Color.Yellow);
+
+			Colors.ListBox.Text_Normal   = ReadPixel(colors, "ListBox.Text_Normal", Color.Yellow);
+			Colors.ListBox.Text_Selected = ReadPixel(colors, "ListBox.Text_Selected", Color.Yellow);
+
+			Colors.Tree.Lines    = ReadPixel(colors, "Tree.Lines", Color.Yellow);
+			Colors.Tree.Normal   = ReadPixel(colors, "Tree.Normal", Color.Yellow);
+			Colors.Tree.Hover    = ReadPixel(colors, "Tree.Hover", Color.Yellow);
+			Colors.Tree.Selected = ReadPixel(colors, "Tree.Selected", Color.Yellow);
+
+			Colors.Properties.Line_Normal     = ReadPixel(colors, "Properties.Line_Normal", Color.Yellow);
+			Colors.Properties.Line_Selected   = ReadPixel(colors, "Properties.Line_Selected", Color.Yellow);
+			Colors.Properties.Line_Hover      = ReadPixel(colors, "Properties.Line_Hover", Color.Yellow);
+			Colors.Properties.Title           = ReadPixel(colors, "Properties.Title", Color.Yellow);
+			Colors.Properties.Column_Normal   = ReadPixel(colors, "Properties.Column_Normal", Color.Yellow);
+			Colors.Properties.Column_Selected = ReadPixel(colors, "Properties.Column_Selected", Color.Yellow);
+			Colors.Properties.Column_Hover    = ReadPixel(colors, "Properties.Column_Hover", Color.Yellow);
+			Colors.Properties.Border          = ReadPixel(colors, "Properties.Border", Color.Yellow);
+			Colors.Properties.Label_Normal    = ReadPixel(colors, "Properties.Label_Normal", Color.Yellow);
+			Colors.Properties.Label_Selected  = ReadPixel(colors, "Properties.Label_Selected", Color.Yellow);
+			Colors.Properties.Label_Hover     = ReadPixel(colors, "Properties.Label_Hover", Color.Yellow);
+
+			Colors.ModalBackground = ReadPixel(colors, "ModalBackground", Color.Yellow);
+
+			Colors.TooltipText = ReadPixel(colors, "TooltipText", Color.Yellow);
+
+			Colors.Category.Header                  = ReadPixel(colors, "Category.Header", Color.Yellow);
+			Colors.Category.Header_Closed           = ReadPixel(colors, "Category.Header_Closed", Color.Yellow);
+			Colors.Category.Line.Text               = ReadPixel(colors, "Category.Line.Text", Color.Yellow);
+			Colors.Category.Line.Text_Hover         = ReadPixel(colors, "Category.Line.Text_Hover", Color.Yellow);
+			Colors.Category.Line.Text_Selected      = ReadPixel(colors, "Category.Line.Text_Selected", Color.Yellow);
+			Colors.Category.Line.Button             = ReadPixel(colors, "Category.Line.Button", Color.Yellow);
+			Colors.Category.Line.Button_Hover       = ReadPixel(colors, "Category.Line.Button_Hover", Color.Yellow);
+			Colors.Category.Line.Button_Selected    = ReadPixel(colors, "Category.Line.Button_Selected", Color.Yellow);
+			Colors.Category.LineAlt.Text            = ReadPixel(colors, "Category.LineAlt.Text", Color.Yellow);
+			Colors.Category.LineAlt.Text_Hover      = ReadPixel(colors, "Category.LineAlt.Text_Hover", Color.Yellow);
+			Colors.Category.LineAlt.Text_Selected   = ReadPixel(colors, "Category.LineAlt.Text_Selected", Color.Yellow);
+			Colors.Category.LineAlt.Button          = ReadPixel(colors, "Category.LineAlt.Button", Color.Yellow);
+			Colors.Category.LineAlt.Button_Hover    = ReadPixel(colors, "Category.LineAlt.Button_Hover", Color.Yellow);
+			Colors.Category.LineAlt.Button_Selected = ReadPixel(colors, "Category.LineAlt.Button_Selected", Color.Yellow);
+
+			Colors.GroupBox.Dark = ReadPixel(colors, "GroupBox.Dark", Color.Yellow);
+			Colors.GroupBox.Light = ReadPixel(colors, "GroupBox.Light", Color.Yellow);
+		}
+
+		private ISkinElement GetTexture(Dictionary<string, ISkinElement> skinElements, string key)
+		{
+			if (skinElements.TryGetValue(key, out ISkinElement skinElement))
+			{
+				return skinElement;
+			}
+
+			return new Single(m_Texture, 0, 0, 1, 1);
+		}
+
+		private void InitializeTextures(Dictionary<string, ISkinElement> skinElements)
+		{
+			Textures.Shadow    = GetTexture(skinElements, "Shadow");
+			Textures.Tooltip   = GetTexture(skinElements, "Tooltip");
+			Textures.StatusBar = GetTexture(skinElements, "StatusBar");
+			Textures.Selection = GetTexture(skinElements, "Selection");
+
+			Textures.Panel.Normal    = GetTexture(skinElements, "Panel.Normal");
+			Textures.Panel.Bright    = GetTexture(skinElements, "Panel.Bright");
+			Textures.Panel.Dark      = GetTexture(skinElements, "Panel.Dark");
+			Textures.Panel.Highlight = GetTexture(skinElements, "Panel.Highlight");
+
+			Textures.Window.Normal.TitleBar   = GetTexture(skinElements, "Window.Normal.TitleBar");
+			Textures.Window.Normal.Client     = GetTexture(skinElements, "Window.Normal.Client");
+			Textures.Window.Inactive.TitleBar = GetTexture(skinElements, "Window.Inactive.TitleBar");
+			Textures.Window.Inactive.Client   = GetTexture(skinElements, "Window.Inactive.Client");
+
+			Textures.ToolWindow.H.DragBar = GetTexture(skinElements, "ToolWindow.H.DragBar");
+			Textures.ToolWindow.H.Client  = GetTexture(skinElements, "ToolWindow.H.Client");
+			Textures.ToolWindow.V.DragBar = GetTexture(skinElements, "ToolWindow.V.DragBar");
+			Textures.ToolWindow.V.Client  = GetTexture(skinElements, "ToolWindow.V.Client");
+
+			Textures.CheckBox.Active.Checked  = GetTexture(skinElements, "CheckBox.Active.Checked");
+			Textures.CheckBox.Active.Normal   = GetTexture(skinElements, "CheckBox.Active.Normal");
+			Textures.CheckBox.Disabled.Normal = GetTexture(skinElements, "CheckBox.Disabled.Normal");
+			Textures.CheckBox.Disabled.Normal = GetTexture(skinElements, "CheckBox.Disabled.Normal");
+
+			Textures.RadioButton.Active.Checked  = GetTexture(skinElements, "RadioButton.Active.Checked");
+			Textures.RadioButton.Active.Normal   = GetTexture(skinElements, "RadioButton.Active.Normal");
+			Textures.RadioButton.Disabled.Normal = GetTexture(skinElements, "RadioButton.Disabled.Normal");
+			Textures.RadioButton.Disabled.Normal = GetTexture(skinElements, "RadioButton.Disabled.Normal");
+
+			Textures.TextBox.Normal   = GetTexture(skinElements, "TextBox.Normal");
+			Textures.TextBox.Focus    = GetTexture(skinElements, "TextBox.Focus");
+			Textures.TextBox.Disabled = GetTexture(skinElements, "TextBox.Disabled");
+
+			Textures.Menu.Strip                = GetTexture(skinElements, "Menu.Strip");
+			Textures.Menu.BackgroundWithMargin = GetTexture(skinElements, "Menu.BackgroundWithMargin");
+			Textures.Menu.Background           = GetTexture(skinElements, "Menu.Background");
+			Textures.Menu.Hover                = GetTexture(skinElements, "Menu.Hover");
+			Textures.Menu.RightArrow           = GetTexture(skinElements, "Menu.RightArrow");
+			Textures.Menu.Check                = GetTexture(skinElements, "Menu.Check");
+
+			Textures.Tab.Control         = GetTexture(skinElements, "Tab.Control");
+			Textures.Tab.Bottom.Active   = GetTexture(skinElements, "Tab.Bottom.Active");
+			Textures.Tab.Bottom.Inactive = GetTexture(skinElements, "Tab.Bottom.Inactive");
+			Textures.Tab.Top.Active      = GetTexture(skinElements, "Tab.Top.Active");
+			Textures.Tab.Top.Inactive    = GetTexture(skinElements, "Tab.Top.Inactive");
+			Textures.Tab.Left.Active     = GetTexture(skinElements, "Tab.Left.Active");
+			Textures.Tab.Left.Inactive   = GetTexture(skinElements, "Tab.Left.Inactive");
+			Textures.Tab.Right.Active    = GetTexture(skinElements, "Tab.Right.Active");
+			Textures.Tab.Right.Inactive  = GetTexture(skinElements, "Tab.Right.Inactive");
+			Textures.Tab.HeaderBar       = GetTexture(skinElements, "Tab.HeaderBar");
+
+			Textures.Window.Close          = GetTexture(skinElements, "Window.Close");
+			Textures.Window.Close_Hover    = GetTexture(skinElements, "Window.Close_Hover");
+			Textures.Window.Close_Down     = GetTexture(skinElements, "Window.Close_Down");
+			Textures.Window.Close_Disabled = GetTexture(skinElements, "Window.Close_Disabled");
+
+			Textures.Scroller.TrackV           = GetTexture(skinElements, "Scroller.TrackV");
+			Textures.Scroller.ButtonV_Normal   = GetTexture(skinElements, "Scroller.ButtonV_Normal");
+			Textures.Scroller.ButtonV_Hover    = GetTexture(skinElements, "Scroller.ButtonV_Hover");
+			Textures.Scroller.ButtonV_Down     = GetTexture(skinElements, "Scroller.ButtonV_Down");
+			Textures.Scroller.ButtonV_Disabled = GetTexture(skinElements, "Scroller.ButtonV_Disabled");
+			Textures.Scroller.TrackH           = GetTexture(skinElements, "Scroller.TrackH");
+			Textures.Scroller.ButtonH_Normal   = GetTexture(skinElements, "Scroller.ButtonH_Normal");
+			Textures.Scroller.ButtonH_Hover    = GetTexture(skinElements, "Scroller.ButtonH_Hover");
+			Textures.Scroller.ButtonH_Down     = GetTexture(skinElements, "Scroller.ButtonH_Down");
+			Textures.Scroller.ButtonH_Disabled = GetTexture(skinElements, "Scroller.ButtonH_Disabled");
+
+			Textures.Tree.Background = GetTexture(skinElements, "Tree.Background");
+			Textures.Tree.Plus       = GetTexture(skinElements, "Tree.Plus");
+			Textures.Tree.Minus      = GetTexture(skinElements, "Tree.Minus");
+
+			Textures.Input.Button.Normal   = GetTexture(skinElements, "Input.Button.Normal");
+			Textures.Input.Button.Hovered  = GetTexture(skinElements, "Input.Button.Hovered");
+			Textures.Input.Button.Disabled = GetTexture(skinElements, "Input.Button.Disabled");
+			Textures.Input.Button.Pressed  = GetTexture(skinElements, "Input.Button.Pressed");
+
+			Textures.Scroller.Button.Normal = new ISkinElement[]
+			{
+				GetTexture(skinElements, "Scroller.Button.Left.Normal"),
+				GetTexture(skinElements, "Scroller.Button.Top.Normal"),
+				GetTexture(skinElements, "Scroller.Button.Right.Normal"),
+				GetTexture(skinElements, "Scroller.Button.Bottom.Normal")
+			};
+			Textures.Scroller.Button.Disabled = new ISkinElement[]
+			{
+				GetTexture(skinElements, "Scroller.Button.Left.Disabled"),
+				GetTexture(skinElements, "Scroller.Button.Top.Disabled"),
+				GetTexture(skinElements, "Scroller.Button.Right.Disabled"),
+				GetTexture(skinElements, "Scroller.Button.Bottom.Disabled")
+			};
+			Textures.Scroller.Button.Hover = new ISkinElement[]
+			{
+				GetTexture(skinElements, "Scroller.Button.Left.Hover"),
+				GetTexture(skinElements, "Scroller.Button.Top.Hover"),
+				GetTexture(skinElements, "Scroller.Button.Right.Hover"),
+				GetTexture(skinElements, "Scroller.Button.Bottom.Hover")
+			};
+			Textures.Scroller.Button.Down = new ISkinElement[]
+			{
+				GetTexture(skinElements, "Scroller.Button.Left.Down"),
+				GetTexture(skinElements, "Scroller.Button.Top.Down"),
+				GetTexture(skinElements, "Scroller.Button.Right.Down"),
+				GetTexture(skinElements, "Scroller.Button.Bottom.Down")
+			};
+
+			Textures.Input.ListBox.Background       = GetTexture(skinElements, "Input.ListBox.Background");
+			Textures.Input.ListBox.Hovered          = GetTexture(skinElements, "Input.ListBox.Hovered");
+			Textures.Input.ListBox.EvenLine         = GetTexture(skinElements, "Input.ListBox.EvenLine");
+			Textures.Input.ListBox.OddLine          = GetTexture(skinElements, "Input.ListBox.OddLine");
+			Textures.Input.ListBox.EvenLineSelected = GetTexture(skinElements, "Input.ListBox.EvenLineSelected");
+			Textures.Input.ListBox.OddLineSelected  = GetTexture(skinElements, "Input.ListBox.OddLineSelected");
+
+			Textures.Input.ComboBox.Normal   = GetTexture(skinElements, "Input.ComboBox.Normal");
+			Textures.Input.ComboBox.Hover    = GetTexture(skinElements, "Input.ComboBox.Hover");
+			Textures.Input.ComboBox.Down     = GetTexture(skinElements, "Input.ComboBox.Down");
+			Textures.Input.ComboBox.Disabled = GetTexture(skinElements, "Input.ComboBox.Disabled");
+
+			Textures.Input.ComboBox.Button.Normal   = GetTexture(skinElements, "Input.ComboBox.Button.Normal");
+			Textures.Input.ComboBox.Button.Hover    = GetTexture(skinElements, "Input.ComboBox.Button.Hover");
+			Textures.Input.ComboBox.Button.Down     = GetTexture(skinElements, "Input.ComboBox.Button.Down");
+			Textures.Input.ComboBox.Button.Disabled = GetTexture(skinElements, "Input.ComboBox.Button.Disabled");
+
+			Textures.Input.UpDown.Up.Normal     = GetTexture(skinElements, "Input.UpDown.Up.Normal");
+			Textures.Input.UpDown.Up.Hover      = GetTexture(skinElements, "Input.UpDown.Up.Hover");
+			Textures.Input.UpDown.Up.Down       = GetTexture(skinElements, "Input.UpDown.Up.Down");
+			Textures.Input.UpDown.Up.Disabled   = GetTexture(skinElements, "Input.UpDown.Up.Disabled");
+			Textures.Input.UpDown.Down.Normal   = GetTexture(skinElements, "Input.UpDown.Down.Normal");
+			Textures.Input.UpDown.Down.Hover    = GetTexture(skinElements, "Input.UpDown.Down.Hover");
+			Textures.Input.UpDown.Down.Down     = GetTexture(skinElements, "Input.UpDown.Down.Down");
+			Textures.Input.UpDown.Down.Disabled = GetTexture(skinElements, "Input.UpDown.Down.Disabled");
+
+			Textures.ProgressBar.Back  = GetTexture(skinElements, "ProgressBar.Back");
+			Textures.ProgressBar.Front = GetTexture(skinElements, "ProgressBar.Front");
+
+			Textures.Input.Slider.H.Normal   = GetTexture(skinElements, "Input.Slider.H.Normal");
+			Textures.Input.Slider.H.Hover    = GetTexture(skinElements, "Input.Slider.H.Hover");
+			Textures.Input.Slider.H.Down     = GetTexture(skinElements, "Input.Slider.H.Down");
+			Textures.Input.Slider.H.Disabled = GetTexture(skinElements, "Input.Slider.H.Disabled");
+
+			Textures.Input.Slider.V.Normal   = GetTexture(skinElements, "Input.Slider.V.Normal");
+			Textures.Input.Slider.V.Hover    = GetTexture(skinElements, "Input.Slider.V.Hover");
+			Textures.Input.Slider.V.Down     = GetTexture(skinElements, "Input.Slider.V.Down");
+			Textures.Input.Slider.V.Disabled = GetTexture(skinElements, "Input.Slider.V.Disabled");
+
+			Textures.CategoryList.Outer	       = GetTexture(skinElements, "CategoryList.Outer");
+			Textures.CategoryList.Inner.Header = GetTexture(skinElements, "CategoryList.Inner.Header");
+			Textures.CategoryList.Inner.Client = GetTexture(skinElements, "CategoryList.Inner.Client");
+			Textures.CategoryList.Header       = GetTexture(skinElements, "CategoryList.Header");
 		}
 		#endregion
 
@@ -779,6 +928,29 @@ namespace Gwen.Skin
 				Textures.Window.Inactive.TitleBar.Draw(Renderer, titleRect);
 				Textures.Window.Inactive.Client.Draw(Renderer, clientRect);
 			}
+		}
+
+		public override void DrawWindowCloseButton(Control.ControlBase control, bool depressed, bool hovered, bool disabled)
+		{
+			if (disabled)
+			{
+				Textures.Window.Close_Disabled.Draw(Renderer, control.RenderBounds);
+				return;
+			}
+
+			if (depressed)
+			{
+				Textures.Window.Close_Down.Draw(Renderer, control.RenderBounds);
+				return;
+			}
+
+			if (hovered)
+			{
+				Textures.Window.Close_Hover.Draw(Renderer, control.RenderBounds);
+				return;
+			}
+
+			Textures.Window.Close.Draw(Renderer, control.RenderBounds);
 		}
 
 		public override void DrawToolWindow(Control.ControlBase control, bool vertical, int dragSize)
@@ -1199,29 +1371,6 @@ namespace Gwen.Skin
 			Rectangle rect = control.RenderBounds;
 			Renderer.DrawColor = new Color(100, 0, 0, 0);
 			Renderer.DrawFilledRect(rect);
-		}
-
-		public override void DrawWindowCloseButton(Control.ControlBase control, bool depressed, bool hovered, bool disabled)
-		{
-			if (disabled)
-			{
-				Textures.Window.Close_Disabled.Draw(Renderer, control.RenderBounds);
-				return;
-			}
-
-			if (depressed)
-			{
-				Textures.Window.Close_Down.Draw(Renderer, control.RenderBounds);
-				return;
-			}
-
-			if (hovered)
-			{
-				Textures.Window.Close_Hover.Draw(Renderer, control.RenderBounds);
-				return;
-			}
-
-			Textures.Window.Close.Draw(Renderer, control.RenderBounds);
 		}
 
 		public override void DrawSliderButton(Control.ControlBase control, bool depressed, bool horizontal)

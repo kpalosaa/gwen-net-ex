@@ -126,7 +126,7 @@ namespace Gwen.UnitTest.OpenTK
 			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();
 			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL40();
 
-			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png");
+			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "DefaultSkin.png", "DefaultSkinDefinition.xml");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);

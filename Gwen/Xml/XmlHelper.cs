@@ -34,6 +34,16 @@ namespace Gwen.Xml
 			return newValues;
 		}
 
+		public static T Parse<T>(string value, object element = null)
+		{
+			if (m_AttributeValueConverters.TryGetValue(typeof(T), out AttributeValueConverter converter))
+			{
+				return (T)converter(element, value);
+			}
+
+			return default(T);
+		}
+
 		private static Dictionary<Type, EventHandlerConverter> m_EventHandlerConverters = new Dictionary<Type, EventHandlerConverter>
 		{
 			{ typeof(EventArgs), (attribute, value) =>

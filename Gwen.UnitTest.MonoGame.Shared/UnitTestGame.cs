@@ -85,7 +85,7 @@ namespace Gwen.UnitTest.MonoGame
 			m_Renderer = new Gwen.Renderer.MonoGame.MonoGame(GraphicsDevice, Content, Content.Load<Effect>("GwenEffect"));
 			m_Renderer.Resize(m_Graphics.PreferredBackBufferWidth, m_Graphics.PreferredBackBufferHeight);
 
-			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "Skins/DefaultSkin");
+			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, "Skins/DefaultSkin", "Skins/DefaultSkinDefinition");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.MonoGame.Input.MonoGame(this);

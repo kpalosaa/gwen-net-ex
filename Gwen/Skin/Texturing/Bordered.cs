@@ -9,7 +9,7 @@ namespace Gwen.Skin.Texturing
     /// <summary>
     /// 3x3 texture grid.
     /// </summary>
-    public struct Bordered
+    public struct Bordered : ISkinElement
     {
         private Texture m_Texture;
 

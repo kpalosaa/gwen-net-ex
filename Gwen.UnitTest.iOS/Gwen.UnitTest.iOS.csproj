@@ -127,4 +127,9 @@
       <Link>DefaultSkin.png</Link>
     </BundleResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Media\Skins\DefaultSkinDefinition.xml">
+      <Link>DefaultSkinDefinition.xml</Link>
+    </Content>
+  </ItemGroup>
 </Project>

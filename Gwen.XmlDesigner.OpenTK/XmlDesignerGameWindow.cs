@@ -126,7 +126,7 @@ namespace Gwen.XmlDesigner.OpenTK
 			m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL20();
 			//m_Renderer = new Gwen.Renderer.OpenTK.OpenTKGL42();
 
-			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, Gwen.XmlDesigner.XmlDesigner.Settings.Skin);
+			m_Skin = new Gwen.Skin.TexturedBase(m_Renderer, Gwen.XmlDesigner.XmlDesigner.Settings.Skin, "DefaultSkinDefinition.xml");
 			m_Skin.DefaultFont = new Font(m_Renderer, "Arial", Configuration.RunningOnMacOS ? 20 : 11);
 			m_Canvas = new Canvas(m_Skin);
 			m_Input = new Gwen.Renderer.OpenTK.Input.OpenTK(this);

@@ -10,6 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\Binaries\MonoGame\Debug\Gwen.MonoGame.XmlContentPipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
@@ -70,42 +71,55 @@
 #begin Arial 11.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Arial 11.spritefont
 
 #begin Courier New 11.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Courier New 11.spritefont
 
 #begin Arial 16.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Arial 16.spritefont
 
 #begin Times New Roman 33.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Times New Roman 33.spritefont
 
 #begin Comic Sans MS 25.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Comic Sans MS 25.spritefont
 
 #begin French Script MT 35.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:French Script MT 35.spritefont
 
 #begin Courier New 10.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Courier New 10.spritefont
+
+#begin Skins/DefaultSkinDefinition.xml
+/importer:GwenXmlImporter
+/processor:GwenXmlProcessor
+/processorParam:Key=
+/build:Skins/DefaultSkinDefinition.xml
 
